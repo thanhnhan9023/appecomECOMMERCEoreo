@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "573354094617",
+    "project_id": "react-native-shop-ef377",
+    "storage_bucket": "react-native-shop-ef377.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:573354094617:android:3a8aa408bfd275b4cfba88",
+        "android_client_info": {
+          "package_name": "com.baitapvenha"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "573354094617-mo2v4hfurn70tfslj1urmtn36asru468.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.baitapvenha",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "573354094617-te6rkc4rv9oeofdi73kedr24bih1bmqg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwjxlfikKiZjE-DzbM81_nDcTs3fdkrjw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "573354094617-te6rkc4rv9oeofdi73kedr24bih1bmqg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
