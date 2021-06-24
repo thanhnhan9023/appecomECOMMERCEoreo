@@ -22,7 +22,6 @@ const  TypesAciton={
       ACTIOM_Fetch_LoaiSp,
       ACTION_Fetch_SanPham,
       ACTION_Fetch_SanPhamToLoaiSp,
-      
 }
 export  default TypesAciton
 

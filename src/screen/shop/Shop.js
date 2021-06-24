@@ -57,23 +57,23 @@ const data=[
                 borderRadius:8,
             }}
             onPress={() =>{
-                Utils.navigate(Config.ProductScreen,{maloai:item.MaLoai})
+                Utils.navigate(Config.ProductScreen)
             }}
             >
                 <View style={{paddingVertical:FontSize.scale(4),paddingHorizontal:FontSize.scale(7),flexDirection:'row',alignItems:'center'}}>
                 {/* <View  style={{width:FontSize.scale(50),height:FontSize.scale(50),borderWdth:1,backgroundColor:colors.white,overflow:'hidden'}}> */}
-                <Image  style={{width:FontSize.scale(70),height:FontSize.scale(70),resizeMode:'cover',borderRadius:70}}   source={{uri:item.Image}}></Image>
+                <Image  style={{width:FontSize.scale(70),height:FontSize.scale(70),resizeMode:'cover',borderRadius:70}}   source={{uri:item.imgproduct}}></Image>
                 {/* </View> */}
                 <View style={{width:FontSize.scale(10)}}>
                 </View>
                 <Text style={{fontSize:FontSize.reText(20)}}>
-                    {item.TenLoai}
+                    {item.nameproduct}
                 </Text>
                 
                 <View style={{flex:3}}>
                     </View>
                     <View style={{width:FontSize.scale(20),height:FontSize.scale(20),paddingVertical:FontSize.scale(2),paddingHorizontal:FontSize.scale(2),backgroundColor:colors.grayLight,borderRadius:FontSize.scale(5)}}>
-                        <Text style={{textAlign:'center'}}>{item.MoTa}</Text>
+                        <Text style={{textAlign:'center'}}>{item.nameproduct}</Text>
                     </View>
                     <View style={{width:FontSize.scale(10)}}>
                     </View>
@@ -113,11 +113,9 @@ const mapStateToProps =(state) =>{
       data:state.CartReducer.ListLoaisp
     }
   }
-  
   const mapDispatchToProps =(dispatch) =>{
     return {
       FetchLoaiSp:() => dispatch(CartAction.ActionFetchLoaiSpRequest()),
     }
   }
-
 export default connect(mapStateToProps,mapDispatchToProps)(Shop)

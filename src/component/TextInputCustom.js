@@ -2,14 +2,12 @@ import React, { Component } from 'react';
 import { View, Text,TextInput } from 'react-native';
 
 class  TextInputCustom extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
             isFocused: false,
         };
       }
- 
   handleFocus = () => this.setState({ isFocused: true });
   handleBlur = () => this.setState({ isFocused: false });
 

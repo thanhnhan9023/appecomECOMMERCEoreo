@@ -18,7 +18,6 @@ const ActionFetchSanPhamToLoaiSp=(data) =>{
         payload:data
     }
 }
-
 //  call api request loai sp
 const ActionFetchSanPhamRequest=() =>{
     return(dispatch) =>{
@@ -27,8 +26,6 @@ const ActionFetchSanPhamRequest=() =>{
             );
     };
 }
-
-
 // call api San Pham
 const ActionFetchSanPham=(data) =>{
 return{
@@ -36,13 +33,10 @@ return{
     payload:data,
     };
 }
-
-
-
 //  call api request loai sp
 const ActionFetchLoaiSpRequest=() =>{
     return(dispatch) =>{
-            return Utils.CallApi('get-all-loaisp','GET',null).then(
+            return Utils.CallApi('api/Category/getALLCategory','GET',null).then(
                 res => dispatch(ActionFetchLoaiSp(res.data))
             );
     };
@@ -54,7 +48,6 @@ const ActionFetchLoaiSp=(data) =>{
         payload:data,
     }
 }
-
 
 const ActionAddCart=(data) =>{
     return{
@@ -105,8 +98,6 @@ const ActionAdd_LikeProduct=(data) =>{
         payload:data
     }
 }
-
-
   const  CartAction ={
  ActionAddCart,
  ACTION_UpdateCart,

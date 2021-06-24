@@ -1,6 +1,5 @@
 import TypesAciton from "./TypeContStant";
 
-
 const actionCong=(data) =>{
     return{
         type:TypesAciton.ACTION_CONG,

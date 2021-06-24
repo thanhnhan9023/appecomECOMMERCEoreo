@@ -116,18 +116,21 @@ const dataProduct = [{
 const datablog=[
     {
        id:1,
+       Titele:'Vogue Utimate Fall Boot Guide I Here a',
        time:'2 year ago',
        img:IMAGES.imgBlog1,
     },
     {
-        id:1,
+        id:2,
+        Titele:'Virgil Abloh Latest Off-White',
         time:'2 year ago',
-        img:IMAGES.imgBlog1,
+        img:IMAGES.imgBlog2,
     },
     {
-        id:1,
+        id:3,
+        Titele:'20 Reasons to Reconsider the Ballet Flat',
         time:'2 year ago',
-        img:IMAGES.imgBlog1,
+        img:IMAGES.imgBlog3,
     }
 ]
 
@@ -135,9 +138,35 @@ class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            product:[],
         };
       }
+      _rendeitemblog=(item,index) =>{
+        return(
+          <TouchableOpacity key={index} 
+          style={{flexDirection:'row',
+          paddingHorizontal:FontSize.scale(15),
+          paddingVertical:FontSize.scale(20),
+          borderBottomWidth:0.8,
+          borderBottomColor:colors.colorGrayBgr
+          }}
+          onPress={() => Utils.navigate(Config.DetalisBlog,{img:item.img})}
+          >
+              <Image source={item.img} 
+              style={{width:FontSize.scale(140),height:FontSize.scale(120)}}  
+              /> 
+              <View  style={{flex:1,paddingHorizontal:FontSize.scale(10),
+              }}>
+                  <Text  
+                  style={{fontSize:FontSize.reText(20),
+                  }}>{item.Titele}
+                  </Text>
+                  <View style={{height:FontSize.scale(10)}}></View>
+                  <Text style={{color:colors.colorGrayLight }}>{item.time}</Text>
+              </View>
+              
+          </TouchableOpacity>
+        )
+    }
     render() {
         return ( 
              <Context.Consumer>
@@ -271,11 +300,9 @@ class Home extends Component {
                      <View>
                      <View style={{flexDirection:'row',justifyContent:'space-between',paddingHorizontal:FontSize.scale(10)}}>
                                         <Text style={styles.textMeidum}>{'Blogs'}</Text>
-                                        <Text style={styles.txtSmall}>{'Show all'}</Text>
-                            <FlatList
-                            renderItem={}
-                            />
+                          
                         </View>
+                         {datablog.map(this._rendeitemblog)}
                      </View>
 
                 </ScrollView>

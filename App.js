@@ -66,11 +66,10 @@ const App=() => {
         <ThemeProvider2>
           <NavigationContainer   linking={link} ref={ ref => Utils.setTopLevelNavigator(ref)}>
             <RootSrceen></RootSrceen>
-            {/* <Carousel/> */}
         </NavigationContainer>
         </ThemeProvider2>
        </I18nextProvider>
-      // <Carousel/>
+  
     );
   // }
 }

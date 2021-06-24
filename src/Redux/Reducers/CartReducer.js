@@ -1,9 +1,7 @@
 import TypesAction from "../ActionsCart/TypeContStant";
-
 import produce from "immer"
 import Utils from "../../app/Utilis";
 import {IMAGES} from "../../../assets/images/IndexImg";
-
 
 
 const initState = {
@@ -64,19 +62,14 @@ const initState = {
             img:IMAGES.imgProduct1,
             rate:4
           },
-
     ],
     ListCart: [],
     ListProductLike:[],
-
-
 }
-
 const Key_ID = 'MaSp'
 export const CartReducer = (state = initState, action) => {
     const { type, payload } = action;
     const { ListCart ,ListProductLike,ListProductBasic,ListLoaisp,ListSanPham} = state;
-
     return produce(state, draft => {
         switch (type) {
             case TypesAction.ACTION_Fetch_SanPhamToLoaiSp:{
@@ -108,9 +101,7 @@ export const CartReducer = (state = initState, action) => {
                             })
                         } 
                         else {
-                          
                             draft.ListCart = [...ListCart, {...payload, sltam: 1 }]
-
                         }
                     } 
                     else {
@@ -118,21 +109,16 @@ export const CartReducer = (state = initState, action) => {
                     }
                 }
                 break;
-
             case TypesAction.ACTION_DeleteCart:
                 {
-
                     draft.ListCart = ListCart.filter(item => item[Key_ID] != payload)
-                  
                 }
                 break;
             case  TypesAction.ACTION_PlusNumber:
                 {
-
                     draft.ListCart = ListCart.map(item => {
                         if(item[Key_ID]==payload)
                         {
-
                             if(item.sltam>0)
                             {
                                 return{
@@ -144,24 +130,16 @@ export const CartReducer = (state = initState, action) => {
                             {
                                 return item;
                             }
-
-                           
-
                         }
                         else
                         {
                             return item;
                         }
                     })
-
- 
                 }
                 break;
-
-                
              case TypesAction.ACTION_MinusNumber:
                 {
-                            
                     const check=ListCart.find(item =>item[Key_ID]==payload);
                     if(check)
                     {
@@ -169,7 +147,6 @@ export const CartReducer = (state = initState, action) => {
                         {
                             Utils.nlog('TRu so luong 2');
                              draft.ListCart=ListCart.filter(item => item[Key_ID] != payload)
-                           
                         }
                         else
                         {
@@ -177,7 +154,6 @@ export const CartReducer = (state = initState, action) => {
                             draft.ListCart = ListCart.map(item => {
                                 if(item[Key_ID]==payload)
                                 {          
-                                   
                                         return{
                                             ...item,
                                             sltam:item.sltam-1
@@ -190,8 +166,6 @@ export const CartReducer = (state = initState, action) => {
                             })
                         }
                     }
-
-                  
                 }
                 break;
             case TypesAction.ACTION_ADD_Remove_LikeProduct:
@@ -200,14 +174,11 @@ export const CartReducer = (state = initState, action) => {
                         if(check)
                         {
                                 draft.ListProductLike=ListProductLike.filter(item => item[Key_ID] != payload[Key_ID])
-
                         }
                         else
                         {
                             draft.ListProductLike=[...ListProductLike,payload]
                         }
-
-
                 }
                 break;
             case TypesAction.ACTION_LikeProduct:
@@ -225,11 +196,6 @@ export const CartReducer = (state = initState, action) => {
                         }
                     })
                 }
-
                 }
     });
-
-
-
-
 }

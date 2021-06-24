@@ -3,8 +3,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { NavigationActions } from '@react-navigation/compat';
 import  axios from 'axios'
 
-const URLAPI='http://192.168.1.54:3000';
-
+const URLAPI='https://shoporeo.herokuapp.com';
 
  const  CallApi=(endpoint,method='GET',body) =>
  {
@@ -17,7 +16,7 @@ const URLAPI='http://192.168.1.54:3000';
         console.log(err);
      })
  }
-
+ 
 let _navigator;
 function setTopLevelNavigator(navigatorRef) {
     _navigator = navigatorRef;
@@ -69,8 +68,6 @@ function goBack() {
     } catch (error) { }
 }
 
-
-
 function log(...res) {
     console.log(...res);
 }
@@ -78,7 +75,6 @@ const filter = (arr = [], key = 'id', vals = "tam") => {
     let kq = arr.filter((item, index) => item[key] == vals)
     return kq;
 }
-
 
 async function ngetStore(keys, defaultValue = null) {
     let temp = await AsyncStorage.getItem(keys);
@@ -90,13 +86,10 @@ async function ngetStore(keys, defaultValue = null) {
         return temp;
     }
 }
-
 async function nsetStore(keys, value) {
     if (typeof value !== 'string') value = JSON.stringify(value);
     await AsyncStorage.setItem(keys, value);
 }
-
-
 const Utils = {
     nlog: log,
     filter: filter,
@@ -109,7 +102,6 @@ const Utils = {
     goBack,
     getPrams,
     CallApi,
-    
 }
 
 export default Utils;
