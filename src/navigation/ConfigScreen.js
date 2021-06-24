@@ -20,7 +20,7 @@ import CameraSelect from "../screen/Camera/CameraSelect"
 import ImageSelect from "../screen/Camera/ImageSelect"
 import VideoItem from "../screen/Camera/VideoItem"
 import AppSetting from "../screen/login/AppSetting"
-
+import DetalisBlogAll  from "../screen/Blog/DetalisBlog"
 
 
 
@@ -46,7 +46,6 @@ const Screen={
     ImageSelect:ImageSelect,
     VideoItem:VideoItem,
     AppSetting:AppSetting,
-
+    DetalisBlogAll:DetalisBlogAll,
 }
-
 export default Screen

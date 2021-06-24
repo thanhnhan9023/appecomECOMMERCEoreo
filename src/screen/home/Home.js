@@ -300,7 +300,9 @@ class Home extends Component {
                      <View>
                      <View style={{flexDirection:'row',justifyContent:'space-between',paddingHorizontal:FontSize.scale(10)}}>
                                         <Text style={styles.textMeidum}>{'Blogs'}</Text>
-                          
+                                        <TouchableOpacity onPress={() => Utils.navigate(Config.DetalisBlogAll,{data:datablog})}> 
+                                        <Text style={styles.txtSmall} >{'Show all'}</Text>
+                                        </TouchableOpacity>
                         </View>
                          {datablog.map(this._rendeitemblog)}
                      </View>

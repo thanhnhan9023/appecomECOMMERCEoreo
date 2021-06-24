@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, View ,Image, TouchableOpacity,ImageBackground} from 'react-native'
+import { ScrollView, Text, View ,Image, TouchableOpacity,ImageBackground,ActivityIndicator } from 'react-native'
 import FontSize from '../../config/FontSize'
 import Icon, { TypeIcon } from '../../config/Icon'
 import { colors } from '../../config/style'
@@ -42,10 +42,24 @@ const data=[
     },
 ]
  class Shop extends Component {
-     componentDidMount()
+    constructor(props) {
+        super(props);
+        this.state = {
+            isLoading:true,
+        };
+      }
+     componentDidMount = async() =>
      {
-      this.props.FetchLoaiSp()
-      Utils.nlog(this.props.data)
+         const {isLoading}=this.state;
+        try {
+            const post=  await this.props.FetchLoaiSp()
+        if(post)
+        {
+            this.setState({isLoading:!isLoading})
+        }
+        } catch (error) {
+            Utils.nlog(error);
+        }    
      }
     _renderITem=(item,index) =>{
         return(
@@ -85,6 +99,7 @@ const data=[
         )
 }
     render() {
+        const {isLoading}=this.state
         return (
           <Context.Consumer>
                 {({ theme, updateTheme }) => (
@@ -99,7 +114,8 @@ const data=[
 
                     </View>
                     <ScrollView>
-                                {this.props.data.map(this._renderITem)
+                                {!isLoading ?this.props.data.map(this._renderITem):
+                                <ActivityIndicator size={'large'} color={colors.grayLight} style={{justifyContent:'center',alignItems:'center'}}/> 
                                 }
                     </ScrollView>
                 </View>

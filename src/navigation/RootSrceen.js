@@ -100,6 +100,7 @@ class MainStackScreen extends Component{
         <MainStack.Screen name={Config.ImageSelect} component={ConfigScreen.ImageSelect} />
         <MainStack.Screen name={Config.VideoItem} component={ConfigScreen.VideoItem} />
         <MainStack.Screen name={Config.Settings} component={ConfigScreen.AppSetting} />
+        <MainStack.Screen name={Config.DetalisBlogAll} component={ConfigScreen.DetalisBlogAll} />
     </MainStack.Navigator>
     )
   }

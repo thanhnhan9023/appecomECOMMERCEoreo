@@ -23,6 +23,7 @@ const Config ={
       ImageSelect:'ImageSelect',
       VideoItem:'VideoItem',
       Settings:'Settings',
+      DetalisBlogAll:'DetalisBlogAll',
 }
 
 export default Config;
