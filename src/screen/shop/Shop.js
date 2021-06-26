@@ -52,11 +52,11 @@ const data=[
      {
          const {isLoading}=this.state;
         try {
-            const post=  await this.props.FetchLoaiSp()
-        if(post)
-        {
-            this.setState({isLoading:!isLoading})
-        }
+            const post= await this.props.FetchLoaiSp()
+            if(post)
+            {
+                this.setState({isLoading:!isLoading})
+            }
         } catch (error) {
             Utils.nlog(error);
         }    

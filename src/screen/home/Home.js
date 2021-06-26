@@ -7,8 +7,11 @@ import { Text,
     ScrollView,
     FlatList, 
     Image, 
-     SafeAreaVie, 
-     Dimensions} from 'react-native'
+    ActivityIndicator,
+    Dimensions,
+    Animated,
+}
+     from 'react-native'
 import Icon, { TypeIcon } from '../../config/Icon'
 import HeaderView from '../../container/HeaderView'
 import { SwiperFlatList } from 'react-native-swiper-flatlist';
@@ -20,8 +23,9 @@ import { Context } from '../../config/ThemeProvider2';
 import Carousel from '../../component/Home/Carousel';
 import Utils from '../../app/Utilis';
 import Config from '../../navigation/Config';
-import { ForceTouchGestureHandler } from 'react-native-gesture-handler';
 import Button2 from '../../component/Button2';
+import { connect } from 'react-redux'
+import CartAction from '../../Redux/ActionsCart/CartAction'
 
 const {width,height}=Dimensions.get('window')
 
@@ -138,7 +142,36 @@ class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            isLoadingCategory:true,
         };
+      }
+      componentDidMount= async() =>{
+        const {isLoadingCategory}=this.state
+        try 
+        {
+           const post= await this.props.FetchLoaiSp();
+           if(post)
+           {
+                this.setState({isLoadingCategory:!isLoadingCategory});
+           }
+        } catch (error) {
+            Utils.nlog(error);
+        }
+      }
+      _rendeitemCategory=({item,index}) =>{
+          const {dataCategory}=this.props
+            return(
+                <View  style={{flexDirection:'row'}}>
+                    <View>
+                        <Image style={styles.imageCategories}
+                        source={ {uri:item.imgproduct}}
+                        >
+                        </Image>
+                        <Text style={{marginTop:FontSize.scale(10),textAlign:'center',fontSize:FontSize.reText(20)}}>{item.nameproduct}</Text>
+                    </View>
+                        { index!=dataCategory.length-1 ?(<View style={{width:FontSize.scale(15),height:'100%'}}></View>):null }
+            </View>
+            )
       }
       _rendeitemblog=(item,index) =>{
         return(
@@ -168,6 +201,8 @@ class Home extends Component {
         )
     }
     render() {
+        const {dataCategory}=this.props
+        const {isLoadingCategory}=this.state
         return ( 
              <Context.Consumer>
           {({ theme, updateTheme }) => (
@@ -195,28 +230,18 @@ class Home extends Component {
                                     <Text style={styles.txtSmall}>{'Show all'}</Text>
                             </View>
                             <View style={{height:FontSize.scale(30)}}/>
-                            <FlatList
+                            {!isLoadingCategory ? <FlatList
                                     style={{marginHorizontal:15}}
                                     horizontal
                                     showsHorizontalScrollIndicator={false}
-                                    data={datanew}
-                                    renderItem={({item,index}) =>{
-                                        return(
-                                            <View  style={{flexDirection:'row'}}>
-                                                <View>
-                                                    <Image style={styles.imageCategories}
-                                                    source={item.img}
-                                                    >
-                                                    </Image>
-                                                    <Text style={{marginTop:FontSize.scale(10),textAlign:'center',fontSize:FontSize.reText(20)}}>{item.name}</Text>
-                                                </View>
-                                                    { index!=datanew.length-1 ?(<View style={{width:FontSize.scale(15),height:'100%'}}></View>):null }
-                                            </View>
-                                        )
-                                        }
-                                    }
+                                    data={dataCategory}
+                                    renderItem={this._rendeitemCategory}
                                     keyExtractor={(item,index) => index}
-                              />
+                              />:
+                              (
+                                  <ActivityIndicator size={'large'}  color={colors.grayLight}/>
+                              )
+                              }
                     </View>
                     <View style={{height:FontSize.scale(20),borderBottomWidth:0.8,borderBottomColor:colors.grayLight}}/>
                     <View style={{paddingVertical:FontSize.scale(30)}}>
@@ -313,7 +338,18 @@ class Home extends Component {
         )
         }
     }
-export default Home
+    
+    const mapStateToProps =(state) =>{
+        return{
+          dataCategory:state.CartReducer.ListLoaisp
+        }
+      }
+      const mapDispatchToProps =(dispatch) =>{
+        return {
+          FetchLoaiSp:() => dispatch(CartAction.ActionFetchLoaiSpRequest()),
+        }
+      }
+export default connect(mapStateToProps,mapDispatchToProps)(Home)
 
 const styles = StyleSheet.create({
     textMeidum:{
