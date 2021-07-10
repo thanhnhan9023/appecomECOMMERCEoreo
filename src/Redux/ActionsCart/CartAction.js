@@ -5,14 +5,15 @@ import TypesAction from "./TypeContStant"
 const ActionFetchSanPhamToLoaiSpRequest=(id) =>{
     console.log('gia tri  id:'+id)
     return(dispatch) =>{
-        return Utils.CallApi(`get-sanpham_loaisp?MaLoai=${id}`,'GET',null).then(
-            res => dispatch(ActionFetchSanPhamToLoaiSp(res.data),
-           
+        return Utils.CallApi(`api/prodcut/getProductIdcategory/${id}`,'GET',null).then(
+            res => 
+            dispatch(ActionFetchSanPhamToLoaiSp(res.data),
         ));
     }
 }
 // call api  san pham theo loai sp
 const ActionFetchSanPhamToLoaiSp=(data) =>{
+    Utils.nlog(data)
     return{
         type:TypesAction.ACTION_Fetch_SanPhamToLoaiSp,
         payload:data
@@ -26,13 +27,6 @@ const ActionFetchSanPhamRequest=() =>{
             );
     };
 }
-// call api San Pham
-const ActionFetchSanPham=(data) =>{
-return{
-    type:TypesAction.ACTION_Fetch_SanPham,
-    payload:data,
-    };
-}
 //  call api request loai sp
 const ActionFetchLoaiSpRequest=() =>{
     return(dispatch) =>{
@@ -41,6 +35,14 @@ const ActionFetchLoaiSpRequest=() =>{
             );
     };
 }
+// call api San Pham
+const ActionFetchSanPham=(data) =>{
+return{
+    type:TypesAction.ACTION_Fetch_SanPham,
+    payload:data,
+    };
+}
+
 // call api loai sp 
 const ActionFetchLoaiSp=(data) =>{
     return{

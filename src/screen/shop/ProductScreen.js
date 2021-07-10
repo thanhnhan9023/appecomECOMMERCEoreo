@@ -50,6 +50,7 @@ const dataCategory=[
     const {maloai} = this.props.route.params;
     console.log('maloai truyen qua'+maloai)
     this.props.FetchSanPham(maloai);
+    Utils.nlog(this.props.data)
   }
   changeIcon=(id,data) =>
   {
@@ -74,7 +75,7 @@ const dataCategory=[
       
      <View style={{backgroundColor:colors.white,flexDirection:'row'}}>
           <View style={{paddingHorizontal:FontSize.scale(10),paddingVertical:FontSize.verticalScale(10)}}>
-          <Image source={{uri:item.Image}} style={{width:150,height:200,resizeMode:'cover'}} >
+          <Image source={{uri:item.imgproduct[0].img}} style={{width:150,height:200,resizeMode:'cover'}} >
             </Image>
           </View>
           <View style={{flex:1,justifyContent:'space-between',paddingVertical:FontSize.verticalScale(4)}}>
@@ -91,9 +92,9 @@ const dataCategory=[
           </View>
      </View>
        <View style={{flex:1,paddingVertical:FontSize.scale(4)}}>
-       <Text numberOfLines={2} style={{color:colors.grayLight,fontSize:FontSize.reText(18)}} >{item.TenSp}</Text>
+       <Text numberOfLines={2} style={{color:colors.grayLight,fontSize:FontSize.reText(18)}} >{item.nameproduct}</Text>
        <View style={{height:FontSize.scale(4)}}></View>
-        <Text style={{fontWeight:'bold',fontSize:FontSize.reText(20)}}>{item.GiaBan.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")+" đ"}</Text>
+        {/* <Text style={{fontWeight:'bold',fontSize:FontSize.reText(20)}}>{item.GiaBan.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")+" đ"}</Text> */}
        </View>
     </TouchableOpacity>
     )
@@ -113,7 +114,7 @@ const dataCategory=[
             
             <View style={{flex:8,paddingHorizontal:FontSize.scale(20),flexDirection:'row'}}> 
             <View style={{flex:8}}>
-              <Image source={{uri:item.Image}} style={{width:'100%',height:'100%',resizeMode:'cover'}}></Image>
+              <Image source={{uri:item.imgproduct[0]}} style={{width:'100%',height:'100%',resizeMode:'cover'}}></Image>
             </View>
              <View style={{flex:2,justifyContent:'space-between',alignItems:'flex-end',paddingVertical:FontSize.verticalScale(5),paddingHorizontal:FontSize.scale(8)}}>
                       
@@ -126,11 +127,11 @@ const dataCategory=[
              </View>
             </View>
             <View style={{flex:2,backgroundColor:colors.white}}>
-            <Text style={{color:colors.grayLight}}>{item.TenSp}</Text>
+            <Text style={{color:colors.grayLight}}>{item.nameproduct}</Text>
             <View
             style={{height:FontSize.scale(2)}}
             />
-            <Text style={{fontWeight:'bold',fontSize:FontSize.reText(22)}}>{ item.GiaBan.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")+" đ"}</Text>
+            {/* <Text style={{fontWeight:'bold',fontSize:FontSize.reText(22)}}>{ item.GiaBan.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")+" đ"}</Text> */}
             <View
             style={{height:FontSize.scale(8)}}
             />
@@ -227,8 +228,6 @@ const mapStateToProps =(state) =>{
 
 
   return{
-  
-
     data:state.CartReducer.ListSanPham
   
   }

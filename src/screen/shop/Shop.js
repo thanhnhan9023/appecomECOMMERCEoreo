@@ -71,7 +71,7 @@ const data=[
                 borderRadius:8,
             }}
             onPress={() =>{
-                Utils.navigate(Config.ProductScreen)
+                Utils.navigate(Config.ProductScreen,{maloai:item._id})
             }}
             >
                 <View style={{paddingVertical:FontSize.scale(4),paddingHorizontal:FontSize.scale(7),flexDirection:'row',alignItems:'center'}}>
