@@ -11,6 +11,21 @@ const ActionFetchSanPhamToLoaiSpRequest=(id) =>{
         ));
     }
 }
+const ActionPostAccountRequest =(account) =>{
+    return(dispatch) =>{
+        return Utils.CallApi(`api/Category/createCategory`,'POST',account).then(
+            res => 
+            dispatch(ActionPost(res.data),
+        ));
+    }
+}
+const ActionPost=(data) =>{
+    Utils.nlog(data)
+    return{
+        type:TypesAction.ACTION_PostAccount,
+        data
+    }
+}
 // call api  san pham theo loai sp
 const ActionFetchSanPhamToLoaiSp=(data) =>{
     Utils.nlog(data)
@@ -112,6 +127,7 @@ const ActionAdd_LikeProduct=(data) =>{
  ActionFetchLoaiSpRequest,
  ActionFetchSanPhamRequest,
  ActionFetchSanPhamToLoaiSpRequest,
+ ActionPostAccountRequest,
 }
 
 export default CartAction

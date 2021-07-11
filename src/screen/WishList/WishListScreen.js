@@ -22,8 +22,8 @@ import ThemeProvider2,{Context} from '../../config/ThemeProvider2';
     };
   }
 _RemoveLike=(id,item)=>{
-  this.props.LikeProduct(id),
-  this.props.Add_Remove(item)
+  this.props.LikeProduct(id)
+  // this.props.Add_Remove(item)
 }
 _GetCountLike()
 {
@@ -104,10 +104,10 @@ _RenderItem= ({item,index}) =>
     borderTopColor:colors.grayLight,
     backgroundColor:colors.white
     }}>
-              <Image source={item.img} style={{width:FontSize.scale(60),height:FontSize.scale(80)}} ></Image>
+              <Image source={{uri:item.imgproduct[0].img}} style={{width:FontSize.scale(60),height:FontSize.scale(80)}} ></Image>
               <View style={{flex:1,flexDirection:'row'}}>
                 <View style={{paddingHorizontal:FontSize.scale(10)}} >
-                    <Text>{'Cropped Pocket Tee'}</Text>
+                    <Text>{item.nameproduct}</Text>
                       <View style={{height:FontSize.scale(10)}}/>
                     <Button2 
                     style={{with:FontSize.scale(180),backgroundColor:colors.black}} 
@@ -126,11 +126,13 @@ _RenderItem= ({item,index}) =>
     )
   }
   render() {
+    Utils.nlog(this.props.data)
     return (
       <Context.Consumer>
           {({ theme, updateTheme }) => (
           <SwipeListView 
           style={{backgroundColor:theme.colors.background}}
+          keyExtractor={(item,index) => index}
           data={this.props.data}
           renderItem={this._RenderItem}
           ListHeaderComponent={this._RenderItemHeader}
@@ -140,7 +142,6 @@ _RenderItem= ({item,index}) =>
           />
           )}
         </Context.Consumer>
-          
     )
   }
 }

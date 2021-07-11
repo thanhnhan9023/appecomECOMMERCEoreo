@@ -9,12 +9,10 @@ import { Text,
     Image, 
     ActivityIndicator,
     Dimensions,
-    Animated,
 }
      from 'react-native'
 import Icon, { TypeIcon } from '../../config/Icon'
 import HeaderView from '../../container/HeaderView'
-import { SwiperFlatList } from 'react-native-swiper-flatlist';
 import {IMAGES} from '../../../assets/images/IndexImg';
 import FontSize from '../../config/FontSize';
 import { colors } from '../../config/style';
@@ -26,6 +24,7 @@ import Config from '../../navigation/Config';
 import Button2 from '../../component/Button2';
 import { connect } from 'react-redux'
 import CartAction from '../../Redux/ActionsCart/CartAction'
+import CarsoulItem from '../../component/Home/CarouselItem';
 
 const {width,height}=Dimensions.get('window')
 
@@ -48,34 +47,7 @@ const datacolors = [{
         img: IMAGES.imgKids
     },
 ]
-const datanew = [{
-        id:'1',
-        name: 'Women',
-        img: IMAGES.imgWomen,
-    },
-    {
-        id:'2',
-        name: 'Men',
-        img: IMAGES.imgMen,
-    },
-    {
-        id:'3',
-        name: 'Kids',
-        img: IMAGES.imgKids,
 
-    },
-    {
-        id:'4',
-        name: 'Kids1',
-        img: IMAGES.imgKids,
-    },
-    {
-        id:'5',
-        name: 'Kids2',
-        img: IMAGES.imgKids,
-
-    },
-]
 const databrand = [{
         name: 'zara',
         img: IMAGES.imgZara,
@@ -161,7 +133,7 @@ class Home extends Component {
       _rendeitemCategory=({item,index}) =>{
           const {dataCategory}=this.props
             return(
-                <View  style={{flexDirection:'row'}}>
+                <TouchableOpacity onPress={() =>{Utils.navigate(Config.ProductScreen,{maloai:item._id})}}  style={{flexDirection:'row'}}>
                     <View>
                         <Image style={styles.imageCategories}
                         source={ {uri:item.imgproduct}}
@@ -170,7 +142,7 @@ class Home extends Component {
                         <Text style={{marginTop:FontSize.scale(10),textAlign:'center',fontSize:FontSize.reText(20)}}>{item.nameproduct}</Text>
                     </View>
                         { index!=dataCategory.length-1 ?(<View style={{width:FontSize.scale(15),height:'100%'}}></View>):null }
-            </View>
+            </TouchableOpacity>
             )
       }
       _rendeitemblog=(item,index) =>{
@@ -205,7 +177,7 @@ class Home extends Component {
         const {isLoadingCategory}=this.state
         return ( 
              <Context.Consumer>
-          {({ theme, updateTheme }) => (
+             {({ theme, updateTheme }) => (
                 <ScrollView showsVerticalScrollIndicator={false} style={{flex:1,backgroundColor:colors.white}}>
                     <HeaderView
                     {...this.props}
@@ -221,6 +193,8 @@ class Home extends Component {
                     <Carousel 
                         {...this.props}
                         data={datacolors}
+                        renderitem={
+                            <CarsoulItem  />}
                         autotTime={3000}
                     />
                     <View style={{height:FontSize.scale(12)}}/>
@@ -230,7 +204,8 @@ class Home extends Component {
                                     <Text style={styles.txtSmall}>{'Show all'}</Text>
                             </View>
                             <View style={{height:FontSize.scale(30)}}/>
-                            {!isLoadingCategory ? <FlatList
+                            {!isLoadingCategory ? 
+                                    <FlatList
                                     style={{marginHorizontal:15}}
                                     horizontal
                                     showsHorizontalScrollIndicator={false}

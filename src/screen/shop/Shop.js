@@ -61,7 +61,8 @@ const data=[
             Utils.nlog(error);
         }    
      }
-    _renderITem=(item,index) =>{
+    _renderITem=(item,index) =>
+    {
         return(
             <TouchableOpacity key={`${index}`} style={{
                 paddingVertical:FontSize.scale(7),
@@ -97,7 +98,17 @@ const data=[
                 </View>
             </TouchableOpacity>
         )
-}
+    }
+    addproduct= async () =>
+    {
+        let product={
+            _id:"6",
+            nameproduct:"Men 6",
+            imgproduct:"https://i.postimg.cc/1zY9bfV6/pexels-photo-2853507.jpg",
+            descriptio:"anh dep"
+        }
+        this.props.Add(product)
+    }
     render() {
         const {isLoading}=this.state
         return (
@@ -113,11 +124,14 @@ const data=[
                     <View style={{height:FontSize.scale(10)}}>
 
                     </View>
-                    <ScrollView>
+                    <ScrollView showsVerticalScrollIndicator={false}>
                                 {!isLoading ?this.props.data.map(this._renderITem):
                                 <ActivityIndicator size={'large'} color={colors.grayLight} style={{justifyContent:'center',alignItems:'center'}}/> 
                                 }
                     </ScrollView>
+                    <TouchableOpacity onPress={this.addproduct}>
+                        <Text>{'ADD'}</Text>
+                    </TouchableOpacity>
                 </View>
                 )}
             </Context.Consumer>
@@ -132,6 +146,7 @@ const mapStateToProps =(state) =>{
   const mapDispatchToProps =(dispatch) =>{
     return {
       FetchLoaiSp:() => dispatch(CartAction.ActionFetchLoaiSpRequest()),
+      Add:(product) => dispatch(CartAction.ActionPostAccountRequest(product))
     }
   }
 export default connect(mapStateToProps,mapDispatchToProps)(Shop)

@@ -59,7 +59,17 @@ function push(routeName, params = {}) {
     }
 }
 function replace(routeName, params = {}) {
-    _navigator.dispatch(StackActions.replace(routeName, params));
+    try {
+        _navigator.dispatch(
+            StackActions.replace(
+                routeName,
+                params,
+            ),
+        );
+    } catch (error) {
+        // alert('lỗi gócreen');
+    }
+    // _navigator.dispatch(StackActions.replace(routeName, params));
 }
 
 function goBack() {

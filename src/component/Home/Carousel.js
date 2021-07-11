@@ -60,7 +60,7 @@ export default class Carousel extends Component {
     render() {
         const scrollX = new Animated.Value(0)
         let position=Animated.divide(scrollX, width)
-        const {data,autotTime=3000}=this.props
+        const {data,autotTime=3000,renderitem={}}=this.props
         if( data && data.length)
         {
             return (
@@ -88,8 +88,8 @@ export default class Carousel extends Component {
                             {useNativeDriver: false}
                         )}  
                     />
-                    {/* <View style={styles.dotView}>
-                        {data.map((_,i) =>{
+                    <View style={styles.dotView}>
+                     {data.map((_,i) =>{
                                 let opacity=position.interpolate(
                                     {
                                         inputRange:[i-1,i,i+1],
@@ -101,16 +101,16 @@ export default class Carousel extends Component {
                                             key={i}
                                             style={{
                                                 opacity,
-                                                height:FontSize.scale(8),
-                                                width:FontSize.scale(8),
-                                                borderRadius:FontSize.scale(8),
+                                                height:FontSize.scale(7),
+                                                width:FontSize.scale(7),
+                                                borderRadius:FontSize.scale(7),
                                                 backgroundColor:colors.grayLight,
-                                                margin:FontSize.scale(8),
+                                                margin:FontSize.scale(6),
                                             }}
                                         />
                                     )
                         })}
-                    </View> */}
+                        </View>
                 </View>
             )
         }
@@ -124,7 +124,7 @@ export default class Carousel extends Component {
 const styles = StyleSheet.create({
     dotView:{
         flexDirection:'row',
-        
+        paddingHorizontal:FontSize.scale(10),
     }
 })
 

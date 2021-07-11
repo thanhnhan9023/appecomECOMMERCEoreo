@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TouchableOpacity,Image,ScrollView,StyleSheet} from 'react-native';
+import { TouchableOpacity,Image,ScrollView,StyleSheet,ImageBackground} from 'react-native';
 import { FlatList } from 'react-native';
 import { View, Text } from 'react-native';
 import {IMAGES} from '../../../assets/images/IndexImg';
@@ -42,60 +42,52 @@ const dataCategory=[
     this.state = {
       isShowGrid:true,
       ChangeIcon:true,
+      numcoloum:2,
     };
     this.check = React.createRef()
   }
   componentDidMount()
   {
     const {maloai} = this.props.route.params;
-    console.log('maloai truyen qua'+maloai)
     this.props.FetchSanPham(maloai);
-    Utils.nlog(this.props.data)
   }
   changeIcon=(id,data) =>
   {
-    this.props.LikeProduct(id),
-    this.props.Add_Remove(data)
+    this.props.LikeProduct(data)
+    // this.props.Add_Remove(data)
   }
   _AddCart(item){
     this.props.AddCart(item)
   }
   _renderItemGrid=({item,index})=>{
-
     return(
-    <TouchableOpacity key={index}
-    onPress={() =>{Utils.navigate(Config.CartScreen)}}
-    key={item.id} style={{
-      marginRight:FontSize.scale(7),
-      height:FontSize.scale(250),
-      width:FontSize.scale(170),
-      
+    <TouchableOpacity 
+    onPress={() =>{Utils.navigate(Config.DetalisProduct,{listimg:item.imgproduct,data:item})}}
+     style={{
+      height:FontSize.scale(280),
+      width:FontSize.scale(160),
+      marginRight:FontSize.scale(10),
      }}
       >
-      
-     <View style={{backgroundColor:colors.white,flexDirection:'row'}}>
-          <View style={{paddingHorizontal:FontSize.scale(10),paddingVertical:FontSize.verticalScale(10)}}>
-          <Image source={{uri:item.imgproduct[0].img}} style={{width:150,height:200,resizeMode:'cover'}} >
-            </Image>
-          </View>
-          <View style={{flex:1,justifyContent:'space-between',paddingVertical:FontSize.verticalScale(4)}}>
-            <TouchableOpacity
-            onPress={() =>this.changeIcon(item.id,item)}
-            >
-          {item.LikeSanPham==0 ? <Icon type={TypeIcon.AntDesign} name={'hearto'} size={22} >
-          </Icon>: <Icon type={TypeIcon.AntDesign} name={'heart'} size={22} ></Icon>}    
-            </TouchableOpacity>
-
-            <TouchableOpacity  onPress={() =>this._AddCart(item)}>
-            <Icon type={TypeIcon.AntDesign} name={'plussquare'} size={30}></Icon>
-            </TouchableOpacity>
-          </View>
-     </View>
-       <View style={{flex:1,paddingVertical:FontSize.scale(4)}}>
-       <Text numberOfLines={2} style={{color:colors.grayLight,fontSize:FontSize.reText(18)}} >{item.nameproduct}</Text>
-       <View style={{height:FontSize.scale(4)}}></View>
-        {/* <Text style={{fontWeight:'bold',fontSize:FontSize.reText(20)}}>{item.GiaBan.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")+" đ"}</Text> */}
-       </View>
+          <ImageBackground source={{uri:item.imgproduct[0].img}} style={{width:'100%',height:'90%',resizeMode:'cover'}} >
+                <View style={{
+                  paddingVertical:FontSize.scale(10),
+                  paddingHorizontal:FontSize.scale(10),
+                  justifyContent:'space-between',
+                  alignItems:'flex-end',
+                  width:'100%',
+                  height:'85%',
+                  }}>
+                  <Icon type={TypeIcon.AntDesign} name={'hearto'} size={22} color={colors.colorRed} />
+                  <TouchableOpacity onPress={() =>this._AddCart(item)}>
+                    <Icon type={TypeIcon.AntDesign} name={'plussquare'} size={30}></Icon>
+                  </TouchableOpacity>
+                </View>
+                <View style={{height:FontSize.scale(20)}}></View>
+                <Text numberOfLines={2} style={{color:colors.grayLight,fontSize:FontSize.reText(18)}} >{item.nameproduct}</Text>
+                <Text style={{fontSize:FontSize.reText(22)}} >{"$"+item.price+".00"}</Text>
+            </ImageBackground>
+     
     </TouchableOpacity>
     )
   }
@@ -110,44 +102,28 @@ const dataCategory=[
   {
    return(
      <TouchableOpacity 
-     style={{backgroundColor:colors.white,height:FontSize.scale(400),width:FontSize.Width(100),marginBottom:FontSize.scale(40)}} >
-            
-            <View style={{flex:8,paddingHorizontal:FontSize.scale(20),flexDirection:'row'}}> 
-            <View style={{flex:8}}>
-              <Image source={{uri:item.imgproduct[0]}} style={{width:'100%',height:'100%',resizeMode:'cover'}}></Image>
-            </View>
-             <View style={{flex:2,justifyContent:'space-between',alignItems:'flex-end',paddingVertical:FontSize.verticalScale(5),paddingHorizontal:FontSize.scale(8)}}>
-                      
-             <TouchableOpacity>
-               <Icon type={TypeIcon.AntDesign} name={'hearto'} size={22}></Icon>
-             </TouchableOpacity>
-                  <TouchableOpacity onPress={() =>this.props.AddCart(item)}>
-                  <Icon type={TypeIcon.AntDesign} name={'plussquare'} size={30}></Icon>
+     style={{
+       backgroundColor:colors.white,height:FontSize.scale(400),
+     marginBottom:FontSize.scale(60)}} >
+              <ImageBackground resizeMode={'cover'} source={{uri:item.imgproduct[0].img}} style={{width:'100%',height:'100%'}}>
+                <View style={{flex:1,justifyContent:'space-between',alignItems:'flex-end',
+                paddingHorizontal:FontSize.scale(30),paddingVertical:FontSize.scale(10),
+                }}>
+                  <Icon type={TypeIcon.AntDesign} name={'hearto'} size={22} color={colors.colorRed} />
+                  <TouchableOpacity onPress={() =>this._AddCart(item)}>
+                    <Icon type={TypeIcon.AntDesign} name={'plussquare'} size={30}></Icon>
                   </TouchableOpacity>
-             </View>
-            </View>
-            <View style={{flex:2,backgroundColor:colors.white}}>
-            <Text style={{color:colors.grayLight}}>{item.nameproduct}</Text>
-            <View
-            style={{height:FontSize.scale(2)}}
-            />
-            {/* <Text style={{fontWeight:'bold',fontSize:FontSize.reText(22)}}>{ item.GiaBan.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")+" đ"}</Text> */}
-            <View
-            style={{height:FontSize.scale(8)}}
-            />
-            <View style={{flexDirection:'row'}}> 
-              <Icon  type={TypeIcon.Entypo}  name={'star'} size={20} color={colors.colorStarYellow} ></Icon>
-              <Icon  type={TypeIcon.Entypo}  name={'star'} size={20} color={colors.colorStarYellow}></Icon>
-              <Icon  type={TypeIcon.Entypo}  name={'star'} size={20} color={colors.colorStarYellow}></Icon>
-              <Icon  type={TypeIcon.Entypo}  name={'star'} size={20} color={colors.colorStarYellow}></Icon>   
-            </View>
-            </View>
+                </View>
+              </ImageBackground>
+              <Text numberOfLines={2} style={{color:colors.grayLight,fontSize:FontSize.reText(18)}} >{item.nameproduct}</Text>
+              <View style={{height:FontSize.scale(8)}}></View>
+              <Text style={{fontSize:FontSize.reText(22)}} >{"$"+item.price+".00"}</Text>
      </TouchableOpacity>
    )
     
   }
   render() {
-    const {isShowGrid}=this.state
+    const {isShowGrid,numcoloum}=this.state
       const {data}=this.props
       Utils.nlog(this.props)
     return (
@@ -162,7 +138,6 @@ const dataCategory=[
             onPressLeft={() =>Utils.goBack()}
             />
             <View style={{paddingHorizontal:FontSize.scale(12),paddingVertical:FontSize.verticalScale(20)}}>
-
               <View style={{flexDirection:'row',height:FontSize.scale(20)}}>
                   <TouchableOpacity style={{flexDirection:'row'}}>
                   <Icon
@@ -174,7 +149,6 @@ const dataCategory=[
                   <Text style={{fontSize:FontSize.reText(20)}}>{'Refine'}</Text>
                   </TouchableOpacity>
                     <View style={{flex:8}}>
-
                     </View>
                     <View style={{flexDirection:'row'}}>
                       <TouchableOpacity
@@ -210,13 +184,15 @@ const dataCategory=[
             </View>
             <View style={{flex:1}}>
                     <FlatList
+                    key={isShowGrid}
+                    showsVerticalScrollIndicator={false}
                     style={{
                     paddingVertical:FontSize.scale(7),
                     paddingHorizontal:FontSize.scale(10)}}
                     data={this.props.data}
                     renderItem={ isShowGrid==true ? this._renderItemGrid:this._renderItemList}
-                    numColumns={2}
-                    keyExtractor={item => item.MaSp}            
+                    numColumns={isShowGrid==true? 2:1}
+                    keyExtractor={(item,index)=> index}            
                     />
             </View>
       </View>
@@ -225,16 +201,12 @@ const dataCategory=[
 }
 
 const mapStateToProps =(state) =>{
-
-
   return{
     data:state.CartReducer.ListSanPham
   
   }
 }
-
 const mapDispatchToProps =(dispatch) =>{
-    
   return {
     AddCart:(data) => dispatch(CartAction.ActionAddCart(data)),
     Add_Remove:(data) => dispatch(CartAction.ActionAdd_RemoveLike(data)),
@@ -245,15 +217,7 @@ const mapDispatchToProps =(dispatch) =>{
   
 }
 
-
-
-
-
 export default connect(mapStateToProps,mapDispatchToProps)(ProductScreen)
-
-
-
-
 
 const styles = StyleSheet.create({
   absoluteFillObject:{

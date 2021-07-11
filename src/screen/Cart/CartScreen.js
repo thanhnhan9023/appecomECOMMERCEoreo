@@ -15,16 +15,10 @@ import Empty from '../../component/EmptyScreen/Empty';
 import { TextInput } from 'react-native';
 import Button2 from '../../component/Button2';
 import { Context } from '../../config/ThemeProvider2';
-
-
- 
-
 class CartScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
- 
-        DataCartNew:'1',
     };
   }
   GetToal=() =>
@@ -32,13 +26,12 @@ class CartScreen extends Component {
     let Total=0;
      for (let index = 0; index < this.props.data.length; index++) {
        const sl=this.props.data[index].sltam;
-       const price=this.props.data[index].GiaBan;
+       const price=this.props.data[index].price;
        Total+=sl*price            
      }
      return Total;
   }
  GetCountCart=() =>{
-    
     return this.props.data.length+"";
  }
  GetAllCart=() =>{
@@ -91,16 +84,11 @@ HeaderFlatList=() =>
             <Text style={{color:colors.grayLight}}>{this.GetCountCart()+' item'}</Text>
         </View>
         {this.GetCountCart() >0?
-        
           <View style={{flexDirection:'row',justifyContent:'space-between',paddingHorizontal:FontSize.scale(10)}}>
-
             <Text style={{fontSize:FontSize.reText(20)}}>{'Total'}</Text>
-            <Text style={{fontSize:FontSize.reText(25),fontWeight:'bold'}}>{this.GetToal()+' VNĐ'}</Text>
+            <Text style={{fontSize:FontSize.reText(25),fontWeight:'bold'}}>{"$"+this.GetToal()+'.00'}</Text>
           </View>:null
       }
-
-      
-         
     </View>
       )
   }
@@ -118,20 +106,20 @@ HeaderFlatList=() =>
         borderBottomWidth:0.4,
         }}>
                     <View style={{paddingHorizontal:FontSize.scale(8),width:FontSize.scale(100),height:FontSize.scale(90)}}>
-                      <Image source={{uri:item.Image}} style={{width:'100%',height:'100%',resizeMode:'cover'}} ></Image>
+                      <Image source={{uri:item.imgproduct[0].img}} style={{width:'100%',height:'100%',resizeMode:'cover'}} ></Image>
                     </View>
                     <View style={{width:FontSize.scale(20)}} />
                     <View style={{flex:1,flexDirection:'row'}}>
                         <View style={{flex:1}}>
                               <View style={{flex:1}}>
-                                <Text style={{fontWeight:'bold'}}>{item.TenSp}</Text>              
+                                <Text style={{fontWeight:'bold'}}>{item.nameproduct}</Text>              
                               </View>
                               <View style={{}}>
-                                 <SniperInput valuenew={item.sltam} id={item.MaSp}/>
+                                 <SniperInput valuenew={item.sltam} id={item._id}/>
                              </View>
                         </View>                      
                         <View style={{}}>
-                            <Text style={{fontWeight:'bold'}}>{"$"+item.GiaBan}</Text>
+                            <Text style={{fontWeight:'bold',fontSize:FontSize.reText(18)}}>{"$"+item.price+".00"}</Text>
                         </View>
                       </View>
             </View>
@@ -164,24 +152,21 @@ _RenderHideItem=({item}) =>{
       alignItems: 'flex-end'
   }}>
       <View style={{ flexDirection: 'row' ,flex:1}}>
-                   
                    <TouchableOpacity style={{backgroundColor:colors.grayLight,
                    alignItems:'center',
                    justifyContent:'center',width:FontSize.scale(70)}}
                    onPress={() =>{this.props.LikeProduct(item.id)}}
                    >
-
                       {item.like==false ? <Icon type={TypeIcon.AntDesign} name={'hearto'} size={24} >
                       </Icon>: 
                       <Icon type={TypeIcon.AntDesign} name={'heart'} size={22} ></Icon>}     
-                        {/* <Icon  type={TypeIcon.AntDesign} name={'heart'} size={24}></Icon> */}
                    </TouchableOpacity>
                    <TouchableOpacity  
                    style={{backgroundColor:colors.redStar,
                     alignItems:'center',
                     justifyContent:'center',
                     width:FontSize.scale(70)}}
-                    onPress={() => this.props.RemoveCart(item.MaSp)}
+                    onPress={() => this.props.RemoveCart(item._id)}
                     >
                         <Icon type={TypeIcon.FontAwesome} name={'trash-o'} size={24} color={colors.white}></Icon>
                    </TouchableOpacity>
@@ -191,7 +176,7 @@ _RenderHideItem=({item}) =>{
 }
   render() {
       const {data}=this.props
-      Utils.nlog('Props Cart___________',this.props)
+      Utils.nlog(data)
     return (
       <Context.Consumer>
           {({ theme, updateTheme }) => (
@@ -202,14 +187,13 @@ _RenderHideItem=({item}) =>{
               />
               <SwipeListView
                   disableRightSwipe
+                  keyExtractor={(item,index) => index}
                   data={data}
                   ListEmptyComponent={this._RenderEmpty}
                   renderHiddenItem={this._RenderHideItem}
                   renderItem={this.renderItem}
                   ListFooterComponent={this._RenderItemFoolter}
                   ListHeaderComponent={this.HeaderFlatList}
-                  // ListFooterComponent={this._RenderItemFooter}
-                  keyExtractor={item => item.MaSp}
                   rightOpenValue={-FontSize.scale(160)}
               />   
               <View style={{paddingHorizontal:FontSize.scale(12),paddingVertical:FontSize.scale(10)}}>

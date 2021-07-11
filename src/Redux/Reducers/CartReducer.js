@@ -2,74 +2,21 @@ import TypesAction from "../ActionsCart/TypeContStant";
 import produce from "immer"
 import Utils from "../../app/Utilis";
 import {IMAGES} from "../../../assets/images/IndexImg";
+import { listenerCount } from "npm";
 
 
 const initState = {
     ListLoaisp:[],
     ListSanPham:[],
-    ListProductBasic:[
-        {
-            id:'1',
-            NameProduct:'Cropeed Pocket Tee',
-            PriceProduct:20,
-            like:false,
-            sltam:0,
-            img:IMAGES.imgProduct1,
-            rate:4
-          },
-          {
-            id:'2',
-            NameProduct:'Cropeed Pocket Tee 1',
-            PriceProduct:20,
-            like:false,
-            sltam:0,
-            img:IMAGES.imgProduct1,
-            rate:4
-          },
-          {
-            id:'3',
-            NameProduct:'Cropeed Pocket Tee 2',
-            PriceProduct:20,
-            sltam:0,
-            like:false,
-            img:IMAGES.imgProduct1,
-            rate:4
-          },
-          {
-            id:'4',
-            NameProduct:'Cropeed Pocket Tee 3',
-            PriceProduct:20,
-            like:false,
-            sltam:0,
-            img:IMAGES.imgProduct1,
-            rate:4
-          },
-          {
-            id:'5',
-            NameProduct:'Cropeed Pocket Tee 4',
-            PriceProduct:20,
-            like:false,
-            sltam:0,
-            img:IMAGES.imgProduct1,
-            rate:4
-          },
-          {
-            id:'6',
-            NameProduct:'Cropeed Pocket Tee',
-            PriceProduct:20,
-            like:false,
-            sltam:0,
-            img:IMAGES.imgProduct1,
-            rate:4
-          },
-    ],
+    account:{},
     ListCart: [],
     ListProductLike:[],
 }
-const Key_ID = 'MaSp'
+const Key_ID = '_id'
 export const CartReducer = (state = initState, action) => {
     const { type, payload } = action;
-    const { ListCart ,ListProductLike,ListProductBasic,ListLoaisp,ListSanPham} = state;
+    const { ListCart ,ListProductLike,ListLoaisp,ListSanPham} = state;
+    
     return produce(state, draft => {
         switch (type) {
             case TypesAction.ACTION_Fetch_SanPhamToLoaiSp:{
@@ -78,6 +25,9 @@ export const CartReducer = (state = initState, action) => {
             break;
             case TypesAction.ACTIOM_Fetch_LoaiSp:{
                 draft.ListLoaisp=payload;
+            }
+            case TypesAction.ACTION_PostAccount:{
+                draft.account=payload;
             }
             break;
             case TypesAction.ACTION_AddCart:
@@ -170,31 +120,52 @@ export const CartReducer = (state = initState, action) => {
                 break;
             case TypesAction.ACTION_ADD_Remove_LikeProduct:
                 {
-                        const check=ListProductLike.find(item => item[Key_ID]==payload[Key_ID])
-                        if(check)
-                        {
+                        // const check=ListProductLike.find(item => item[Key_ID]==payload[Key_ID])
+                        // if(check)
+                        // {
                                 draft.ListProductLike=ListProductLike.filter(item => item[Key_ID] != payload[Key_ID])
-                        }
-                        else
-                        {
-                            draft.ListProductLike=[...ListProductLike,payload]
-                        }
+                        // }
+                        // else
+                        // {
+                        //     draft.ListProductLike=[...ListProductLike,payload]
+                        // }
                 }
                 break;
             case TypesAction.ACTION_LikeProduct:
                 {
-                    draft.ListProductBasic=ListProductBasic.map(item =>{
-                        if(item.id==payload)
+                    if(ListProductLike.length>0)
+                    {
+                        const check=ListProductLike.findIndex(item => item[Key_ID] == payload[Key_ID])
+                       Utils.nlog(check)
+                        if(check>=0)
                         {
-                            return{
-                                ...item,
-                                like:!item.like
-                            }
+                        let a=[...ListProductLike];
+                        a[check]={...a[check],like:false}
+                        draft.ListProductLike=a;
+                        
                         }
                         else{
-                            return item
+                        draft.ListProductLike=[...ListProductLike,{...payload,like:true}]
                         }
-                    })
+                        
+                    }
+                    else
+                    {
+                  
+                        draft.ListProductLike=[{...payload,like:true}]
+                    }
+                    // draft.ListProductLike=ListProductLike.map(item =>{
+                    //     if(item._id==payload)
+                    //     {
+                    //         return{
+                    //             ...item,
+                    //             like:!item.like
+                    //         }
+                    //     }
+                    //     else{
+                    //         return draft.ListProductLike=[...item,{...item,like:true}]
+                    //     }
+                    // })
                 }
                 }
     });

@@ -9,6 +9,7 @@ const ACTION_ADD_Remove_LikeProduct='ACTION_ADD_Remove_LikeProduct'
 const ACTIOM_Fetch_LoaiSp='ACTIOM_Fetch_LoaiSp'
 const ACTION_Fetch_SanPham='ACTION_Fetch_SanPham'
 const ACTION_Fetch_SanPhamToLoaiSp='ACTION_Fetch_SanPhamToLoaiSp'
+const ACTION_PostAccount='ACTION_PostAccount'
 
 const  TypesAciton={
       ACTION_AddCart,
@@ -22,6 +23,7 @@ const  TypesAciton={
       ACTIOM_Fetch_LoaiSp,
       ACTION_Fetch_SanPham,
       ACTION_Fetch_SanPhamToLoaiSp,
+      ACTION_PostAccount,
 }
 export  default TypesAciton
 

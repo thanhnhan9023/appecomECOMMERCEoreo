@@ -35,30 +35,6 @@ export default class CarsoulItem extends Component {
                     }}>
                         <Icon  type={TypeIcon.AntDesign} name='arrowright' color={colors.white} size={25}/>
                     </View>
-                    <View style={styles.dotView}>
-                        {data.map((_,i) =>{
-                                let opacity=position.interpolate(
-                                    {
-                                        inputRange:[i-1,i,i+1],
-                                        outputRange:[0.3,1,0.3],
-                                        extrapolate:'clamp',
-                                    })  
-                                    return(
-                                        <Animated.View
-                                            key={i}
-                                            style={{
-                                                opacity,
-                                                height:FontSize.scale(7),
-                                                width:FontSize.scale(7),
-                                                borderRadius:FontSize.scale(7),
-                                                backgroundColor:colors.grayLight,
-                                                margin:FontSize.scale(6),
-                                            }}
-                                        />
-                                    )
-                        })}
-                    </View>
-
             </View>
         )
     }

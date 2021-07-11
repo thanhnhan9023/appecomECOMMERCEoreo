@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import Config from './Config';
 import ConfigScreen from './ConfigScreen';
-
 import { createStackNavigator,TransitionPresets, } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import DrawMenuComponent from '../navigation/ComponentDrawmenu/DrawMenuComponent'
@@ -10,6 +9,7 @@ import MyTabBar from './ComponentBottomenu/MyTabBar';
 import Utils from '../app/Utilis';
 import { colors } from '../config/style';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import SplashScreen from '../screen/home/SplashScreen';
 
 
 
@@ -39,7 +39,25 @@ const data=[
 ]
 
  class BottomMenu extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+        isLoading:true,
+    };
+  }
   render() {
+    const {isLoading}=this.state;
+    if(isLoading)
+    {
+      setTimeout(() => {
+        this.setState({isLoading:false})
+      }, 3000);
+      return(
+        <SplashScreen/>
+      )
+    }
+    else
+    {
     return (
         <Tab.Navigator
         initialRouteName={Config.DrawMenuSceen}
@@ -55,10 +73,9 @@ const data=[
            <Tab.Screen name={Config.Camera} component={ConfigScreen.Camera} />
       </Tab.Navigator>
     );
+    }
   }
 }
-
-
 class DrawMenuSceen extends Component {
   render() {
     return (
@@ -81,9 +98,10 @@ class MainStackScreen extends Component{
         <MainStack.Navigator
         mode="modal"
         headerMode={false}
-        // initialRouteName={Config.bottomenu}    
+        // initialRouteName={Config.Splashscreen}    
         >
         <MainStack.Screen name={Config.bottomenu} component={BottomMenu} /> 
+        <MainStack.Screen name={Config.Splashscreen} component={ConfigScreen.Splashscreen} /> 
         <MainStack.Screen name={Config.HomeScreen} component={ConfigScreen.Home} />
         <MainStack.Screen name={Config.Shop} component={ConfigScreen.Shop} />
         <MainStack.Screen  name={Config.WishListScreen} component={ConfigScreen.WishListScreen} />
