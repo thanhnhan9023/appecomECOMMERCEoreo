@@ -22,8 +22,8 @@ import ThemeProvider2,{Context} from '../../config/ThemeProvider2';
     };
   }
 _RemoveLike=(id,item)=>{
-  this.props.LikeProduct(id)
-  // this.props.Add_Remove(item)
+  // this.props.LikeProduct(id)
+  this.props.Add_Remove(item)
 }
 _GetCountLike()
 {
@@ -36,7 +36,7 @@ _RenderItemEmpty()
           <Empty
           CenterComponent={
               <View>
-                  <Icon type={TypeIcon.AntDesign} name={'down-square-o'} size={30}></Icon>
+                  <Icon type={TypeIcon.AntDesign} name={'hearto'} size={40} color={colors.colorPink}></Icon>
               </View>
           }
           TxtTitle={'Your Whishlist is empty'}
@@ -59,6 +59,7 @@ _RenderItemHeader=() =>
       <View style={{alignItems:'center'}}>
           <Text style={{color:colors.grayLight,fontSize:FontSize.reText(18)}}>{this._GetCountLike()+' item'}</Text>
       </View>
+      <View style={{height:FontSize.scale(10)}}/>
     </View>
     )
   }
@@ -75,7 +76,7 @@ _RenderItemHiden=({item}) =>{
                       alignItems:'center',
                       justifyContent:'center',
                       width:FontSize.scale(80)}}
-                      onPress={() =>{this._RemoveLike(item.id,item)}}
+                      onPress={() =>{this._RemoveLike(item._id,item)}}
                       >
                           <Icon type={TypeIcon.FontAwesome} name={'trash-o'} size={24} color={colors.white}></Icon>
                      </TouchableOpacity>
@@ -91,34 +92,35 @@ _RenderItem= ({item,index}) =>
   {
     return(
     <View style={ index==1?{ flexDirection:'row',
-    paddingVertical:FontSize.scale(10),
+    paddingVertical:FontSize.scale(15),
+    paddingHorizontal:FontSize.scale(10),
+    borderBottomWidth:0.6,
+    borderTopColor:colors.grayLight,
+    backgroundColor:colors.white
+  }:
+    { flexDirection:'row',
+    paddingVertical:FontSize.scale(15),
     paddingHorizontal:FontSize.scale(10),
     borderTopWidth:0.6,
     borderBottomWidth:0.6,
     borderTopColor:colors.grayLight,
     backgroundColor:colors.white
-  }:
-    { flexDirection:'row',paddingVertical:FontSize.scale(10),
-    paddingHorizontal:FontSize.scale(10),
-    borderBottomWidth:0.6,
-    borderTopColor:colors.grayLight,
-    backgroundColor:colors.white
     }}>
-              <Image source={{uri:item.imgproduct[0].img}} style={{width:FontSize.scale(60),height:FontSize.scale(80)}} ></Image>
+              <Image source={{uri:item.imgproduct[0].img}} style={{width:FontSize.scale(100),height:FontSize.scale(120),resizeMode:'stretch'}} ></Image>
               <View style={{flex:1,flexDirection:'row'}}>
                 <View style={{paddingHorizontal:FontSize.scale(10)}} >
-                    <Text>{item.nameproduct}</Text>
+                    <Text style={{color:colors.grayLight,fontSize:FontSize.reText(17)}}>{item.nameproduct}</Text>
                       <View style={{height:FontSize.scale(10)}}/>
                     <Button2 
-                    style={{with:FontSize.scale(180),backgroundColor:colors.black}} 
+                    style={{with:FontSize.scale(150),height:FontSize.scale(30),backgroundColor:colors.black}} 
                     styleTxt={{color:colors.white}} 
                     title={'Add to Cart'}
                     onPress={() =>{this._AddCart(item)}}
                     />
                 </View>
               <View View style={{flex:1,justifyContent:'flex-start',alignItems:'flex-end'}}>
-                <Text  style={{fontWeight:'bold'}}>
-                  {'$'+item.PriceProduct+'.00'}
+                <Text  style={{fontWeight:'bold',fontSize:FontSize.reText(18)}}>
+                  {'$'+item.price+'.00'}
                 </Text>
               </View>
           </View>
@@ -131,6 +133,7 @@ _RenderItem= ({item,index}) =>
       <Context.Consumer>
           {({ theme, updateTheme }) => (
           <SwipeListView 
+          showsVerticalScrollIndicator={false}
           style={{backgroundColor:theme.colors.background}}
           keyExtractor={(item,index) => index}
           data={this.props.data}

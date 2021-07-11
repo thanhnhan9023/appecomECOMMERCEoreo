@@ -141,7 +141,7 @@ export const CartReducer = (state = initState, action) => {
                         {
                         let a=[...ListProductLike];
                         a[check]={...a[check],like:false}
-                        draft.ListProductLike=a;
+                        draft.ListProductLike=ListProductLike.filter(item => item[Key_ID] != payload[Key_ID]);
                         
                         }
                         else{

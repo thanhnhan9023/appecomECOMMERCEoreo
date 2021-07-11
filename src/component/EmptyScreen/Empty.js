@@ -43,7 +43,15 @@ export default class Empty extends Component {
                   <Button2
                   title={TitleButton}
                   onPress={() =>{Utils.navigate(TxtSceen)}}
-                  style={{backgroundColor:colors.white,width:FontSize.scale(170),height:FontSize.scale(40)}}
+                  styleTxt={{
+                    fontWeight:'' 
+                  }}
+                  style={{
+                    backgroundColor:colors.white,
+                    width:FontSize.scale(170),
+                    height:FontSize.scale(40),
+                    borderWidth:0.8
+                  }}
                   />
         </View>
           )}

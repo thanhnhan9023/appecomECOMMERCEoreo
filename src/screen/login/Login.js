@@ -146,7 +146,7 @@ const datasetings=[
                         <View style={{paddingHorizontal:FontSize.scale(10)}}/>
                         <Text style={
                             {flex:7,
-                            fontSize:FontSize.reText(22),
+                            fontSize:FontSize.reText(20),
                             color:theme.colors.text,
                             justifyContent:'center'}}>
                             {name}
@@ -215,7 +215,6 @@ const datasetings=[
                            </View>
                         )
                     }
-                  
                 />
                 <View style={{paddingVertical:FontSize.scale(10),paddingHorizontal:FontSize.scale(40),justifyContent:'center',alignItems:'center'}}>
                         <Text numberOfLines={2}  style={{textAlign:'center',color:colors.grayLight,fontSize:FontSize.reText(20),fontWeight:'800'}}>
@@ -224,7 +223,12 @@ const datasetings=[
                 <View style={{flexDirection:'row',paddingVertical:FontSize.scale(10),paddingHorizontal:FontSize.scale(10)}} >
                     <Button2    onPress={() =>{
                         Utils.navigate(Config.Registration)
-                    }} style={{flex:1,paddingVertical:FontSize.scale(10)}} title={'Create an Account'}  ></Button2>
+                    }} 
+                    style={{flex:1,paddingVertical:FontSize.scale(10),borderWidth:1
+                    }} 
+                    title={'Create an Account'} 
+                    >
+                    </Button2>
                     <View style={{paddingHorizontal:FontSize.scale(5)}}/>
                     <Button2  style={{flex:1,
                     paddingVertical:FontSize.scale(10),
@@ -237,7 +241,7 @@ const datasetings=[
                 <Text style={{paddingHorizontal:FontSize.scale(10),
                     paddingVertical:FontSize.scale(10),
                     color:colors.grayLight,
-                    fontSize:FontSize.reText(22)}}>{'Settings'}
+                    fontSize:FontSize.reText(20)}}>{'Settings'}
                 </Text>
                 <View style={{paddingVertical:FontSize.scale(10),
                     paddingHorizontal:FontSize.scale(10)}}>

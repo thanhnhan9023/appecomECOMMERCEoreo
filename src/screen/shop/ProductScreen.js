@@ -46,12 +46,20 @@ const dataCategory=[
     };
     this.check = React.createRef()
   }
+  _checkWhishlist=(id) =>{
+    const check=this.props.datalike.findIndex(item => item._id==id)
+    Utils.nlog(check)
+    if(check>=0)
+      return true;
+    else
+      return false;
+  }
   componentDidMount()
   {
     const {maloai} = this.props.route.params;
     this.props.FetchSanPham(maloai);
   }
-  changeIcon=(id,data) =>
+  _changeIcon=(data) =>
   {
     this.props.LikeProduct(data)
     // this.props.Add_Remove(data)
@@ -78,7 +86,12 @@ const dataCategory=[
                   width:'100%',
                   height:'85%',
                   }}>
-                  <Icon type={TypeIcon.AntDesign} name={'hearto'} size={22} color={colors.colorRed} />
+                    <TouchableOpacity onPress={() =>this._changeIcon(item)}>
+                    {this._checkWhishlist(item._id) ==true ? 
+                    <Icon type={TypeIcon.AntDesign} name={'hearto'} size={22} color={colors.colorRed} />
+                  :<Icon type={TypeIcon.AntDesign} name={'hearto'} size={22} color={colors.black} />
+                    }
+                    </TouchableOpacity>
                   <TouchableOpacity onPress={() =>this._AddCart(item)}>
                     <Icon type={TypeIcon.AntDesign} name={'plussquare'} size={30}></Icon>
                   </TouchableOpacity>
@@ -125,7 +138,7 @@ const dataCategory=[
   render() {
     const {isShowGrid,numcoloum}=this.state
       const {data}=this.props
-      Utils.nlog(this.props)
+      Utils.nlog(data)
     return (
       <View style={{flex:1,backgroundColor:colors.white}}>
             <HeaderView
@@ -202,7 +215,8 @@ const dataCategory=[
 
 const mapStateToProps =(state) =>{
   return{
-    data:state.CartReducer.ListSanPham
+    data:state.CartReducer.ListSanPham,
+    datalike:state.CartReducer.ListProductLike,
   
   }
 }
@@ -212,9 +226,7 @@ const mapDispatchToProps =(dispatch) =>{
     Add_Remove:(data) => dispatch(CartAction.ActionAdd_RemoveLike(data)),
     LikeProduct:(id) =>dispatch(CartAction.ActionAdd_LikeProduct(id)),
     FetchSanPham:(id) => dispatch(CartAction.ActionFetchSanPhamToLoaiSpRequest(id)),
-
   }
-  
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(ProductScreen)

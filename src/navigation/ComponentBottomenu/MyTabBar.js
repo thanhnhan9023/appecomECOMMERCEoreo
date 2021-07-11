@@ -7,7 +7,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import FontSize from '../../config/FontSize';
 import Utils from '../../app/Utilis';
 import { ForceTouchGestureHandler } from 'react-native-gesture-handler';
-
+import { connect } from 'react-redux';
+import CartAction from '../../Redux/ActionsCart/CartAction';
 
 const databottom=[
     {
@@ -60,14 +61,8 @@ const databottom=[
   }
   _moveScreen(txtSccreen,index)
   {
-    if(index==0)
-    {
-      // Utils.nlog('vao check home')
-    Utils.navigate(txtSccreen)
-    }
-    else{
       Utils.navigate(txtSccreen)
-    }
+
   }
   render() {
     const {state}=this.props
@@ -98,7 +93,20 @@ const databottom=[
                 accessibilityStates={isFocused ? ['selected'] : []}
                 onPress={()=> this._moveScreen(item.configScreen,index)}
                 >
-                   <Icon  type={item.typeicon} name={item.nameicon} size={20} color={isFocused ==true ? colors.black:colors.grayLight} ></Icon>
+                  <View style={{flexDirection:'row'}}>
+                   <Icon  type={item.typeicon} name={item.nameicon} size={24} color={isFocused  ==true ? colors.black:colors.grayLight} ></Icon>
+                    {index==2 && this.props.datalike.length>0 || index==3 && this.props.datacart.length>0 ? 
+                      <View style={{width:FontSize.scale(8),height:FontSize.scale(8),
+                      backgroundColor:colors.redStar,borderRadius:FontSize.scale(8),
+                    position:'absolute',
+                    bottom:2,
+                    right:0,
+                    }
+                      }>
+                      </View>
+                        :null
+                    }
+                   </View>
                    <Text style={{color:isFocused ==true ? colors.black:colors.grayLight,fontSize:FontSize.reText(14)}} >{item.NameScreen}</Text>     
                 </TouchableOpacity>
                 <View style={{width:FontSize.scale(30)}}>
@@ -111,5 +119,16 @@ const databottom=[
   }
 }
 
+const mapStateToProps =(state) =>{
+  return{
+    datalike:state.CartReducer.ListProductLike,
+    datacart:state.CartReducer.ListCart
 
-export default MyTabBar
+  }
+}
+const mapDispatchToProps =(dispatch) =>{
+  return {
+  
+  }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(MyTabBar)

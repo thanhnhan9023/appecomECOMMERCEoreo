@@ -11,8 +11,8 @@ import { Button } from 'react-native';
 import Button2 from '../../component/Button2';
 import { ScrollView } from 'react-native';
 import Utils from '../../app/Utilis';
-
-const colors1 = ['tomato', 'thistle', 'skyblue'];
+import { connect } from 'react-redux';
+import CartAction from '../../Redux/ActionsCart/CartAction';
 
  class DetalisProduct extends Component {
   constructor(props) {
@@ -21,9 +21,16 @@ const colors1 = ['tomato', 'thistle', 'skyblue'];
       index:0,
     };
   }
-
   _GoBack(){
     Utils.goBack();
+  }
+  _checkWhishlist=(id) =>{
+    const check=this.props.datalike.findIndex(item => item._id==id)
+    Utils.nlog(check)
+    if(check>=0)
+      return true;
+    else
+      return false;
   }
   render() {
     const {index}=this.state
@@ -64,7 +71,12 @@ const colors1 = ['tomato', 'thistle', 'skyblue'];
                                     <View
                                     style={{width:FontSize.scale(15)}}
                                     />
-                                    <Icon type={TypeIcon.AntDesign} name={'heart'} size={22}></Icon>
+                                    <TouchableOpacity onPress={() => this.props.LikeProduct(data)}>
+                                      {this._checkWhishlist(data._id) ==true ? 
+                                          <Icon type={TypeIcon.AntDesign} name={'hearto'} size={22} color={colors.colorRed} />
+                                        :<Icon type={TypeIcon.AntDesign} name={'hearto'} size={22} color={colors.black} />
+                                      }
+                                    </TouchableOpacity>
                               
                               </View>
                               </ImageBackground>
@@ -83,7 +95,6 @@ const colors1 = ['tomato', 'thistle', 'skyblue'];
                             position:'absolute',
                             left:0,
                             top:FontSize.Height(40),
-                                    
                         }
                     }
                     />
@@ -158,7 +169,17 @@ const colors1 = ['tomato', 'thistle', 'skyblue'];
     );
   }
 }
+const mapStateToProps =(state) =>{
+  return{
+    datalike:state.CartReducer.ListProductLike,
+  }
+}
+const mapDispatchToProps =(dispatch) =>{
+  return {
+    AddCart:(data) => dispatch(CartAction.ActionAddCart(data)),
+    LikeProduct:(id) =>dispatch(CartAction.ActionAdd_LikeProduct(id)),
+  }
+}
 
 
-
-export default DetalisProduct
+export default  connect(mapStateToProps,mapDispatchToProps)(DetalisProduct)

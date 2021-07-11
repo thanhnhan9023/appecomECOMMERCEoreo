@@ -19,10 +19,7 @@ export default class DetalisBlog extends Component {
       url:''
     }
     try {
-   
         const shareoption=await Share.open(result)
-
-
     } catch (error) {
       alert(error.message);
     }
@@ -32,21 +29,19 @@ export default class DetalisBlog extends Component {
     Utils.goBack();
   }
   render() {
-   Utils.nlog('gia tri nhan dc',Utils.getPrams('id'))
+    const {item}=this.props.route.params
+    Utils.nlog(item)
     return (
       <View style={{flex:1,backgroundColor:colors.white}}>
-
             <HeaderView
             TitleCenter={'Articles'}
             IconLeftShow={true}
             IconLefType={TypeIcon.AntDesign}
             IconNameLeft={'left'}
             onPressLeft={this.goBack}
-
             />
-          
             <View style={{paddingHorizontal:FontSize.scale(15),paddingVertical:FontSize.scale(8)}}>
-                <Image  style={{resizeMode:'stretch',width:'100%',height:FontSize.scale(250),borderRadius: FontSize.scale(5)}} source={IMAGES.imgBackGroud}></Image>               
+                <Image  style={{resizeMode:'stretch',width:'100%',height:FontSize.scale(250),borderRadius: FontSize.scale(5)}} source={item.img}></Image>               
             </View>
             <View style={{flex:1,paddingHorizontal:FontSize.scale(15)}}>
                 <Text style={{color:colors.grayLight}}>{
@@ -59,7 +54,6 @@ export default class DetalisBlog extends Component {
                 <Text style={{fontSize:FontSize.reText(20),color:colors.grayLight,lineHeight: 30,}} >{'React makes it painless to create interactive UIs. Design simple views for each state in your application, and React will efficiently update and render just the right components when your data changes.'}</Text>
             </View>
                 <TouchableOpacity 
-                
                 onPress={this.onshare}
                 style={{paddingVertical:FontSize.scale(10),paddingHorizontal:FontSize.scale(10),flexDirection:'row',justifyContent:'flex-end'}}>
                       <Icon type={TypeIcon.Feather} name={'share'} size={22} ></Icon>

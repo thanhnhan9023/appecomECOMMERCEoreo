@@ -47,12 +47,12 @@ _RenderEmpty()
     <Empty
     CenterComponent={
         <View>
-            <Icon type={TypeIcon.AntDesign} name={'down-square-o'} size={30}></Icon>
+            <Icon type={TypeIcon.AntDesign} name={'down-square-o'}  color={colors.redStar} size={30}></Icon>
         </View>
     }
     TxtTitle={'Your Whishlist is empty'}
     TxtSub={'Simply sign into pick up where you left off'}
-    TitleButton={'Go Shopping'}
+    TitleButton={'Shop now'}
     TxtSceen={Config.Shop}
       />
       </View>
@@ -81,7 +81,6 @@ HeaderFlatList=() =>
       return(
     <View>
         <View  style={{alignItems:'center'}}>
-            <Text style={{color:colors.grayLight}}>{this.GetCountCart()+' item'}</Text>
         </View>
         {this.GetCountCart() >0?
           <View style={{flexDirection:'row',justifyContent:'space-between',paddingHorizontal:FontSize.scale(10)}}>
@@ -123,26 +122,30 @@ HeaderFlatList=() =>
                         </View>
                       </View>
             </View>
-            
         </View>
         )
     }
-_RenderItemFoolter(){
-  return(
-    <View style={{flexDirection:'row',
-    paddingVertical:FontSize.scale(12),
-    paddingHorizontal:FontSize.scale(10),
-    flex:1}}>
-              <Icon></Icon>
-              <TextInput
-                style={{flex:1,borderWidth:0.6,borderColor:colors.grayLight}}
-                  placeholder={'Coupon code'}
-              />
-              <View style={{width:FontSize.scale(70),borderWidth:0.6,borderColor:colors.grayLight,alignItems:'center',justifyContent:'center'}}>
-                  <Text>{'Apply'}</Text>
-              </View>
-</View>
-  )
+_RenderItemFoolter=() =>{
+  if(this.props.data.length>0)
+  {
+    return(
+      <View style={{flexDirection:'row',
+      paddingVertical:FontSize.scale(12),
+      paddingHorizontal:FontSize.scale(10),
+      flex:1}}>
+                <Icon></Icon>
+                <TextInput
+                  style={{flex:1,borderWidth:0.6,borderColor:colors.grayLight}}
+                    placeholder={'Coupon code'}
+                />
+                <View style={{width:FontSize.scale(70),borderWidth:0.6,borderColor:colors.grayLight,alignItems:'center',justifyContent:'center'}}>
+                    <Text>{'Apply'}</Text>
+                </View>
+  </View>
+    )
+  }
+  else
+  return null;
 }
 _RenderHideItem=({item}) =>{
   return(
@@ -185,7 +188,11 @@ _RenderHideItem=({item}) =>{
               TitleCenter={'Cart'}
               SizeTextCenter={22}
               />
+              <View style={{justifyContent:'center',alignItems:'center'}}>
+                <Text style={{color:colors.grayLight}}>{this.GetCountCart()+' item'}</Text>
+              </View>
               <SwipeListView
+                  showsVerticalScrollIndicator={false}
                   disableRightSwipe
                   keyExtractor={(item,index) => index}
                   data={data}
@@ -195,14 +202,16 @@ _RenderHideItem=({item}) =>{
                   ListFooterComponent={this._RenderItemFoolter}
                   ListHeaderComponent={this.HeaderFlatList}
                   rightOpenValue={-FontSize.scale(160)}
-              />   
-              <View style={{paddingHorizontal:FontSize.scale(12),paddingVertical:FontSize.scale(10)}}>
+              />
+              {this.props.data.length>0 ?
+                <View style={{paddingHorizontal:FontSize.scale(12),paddingVertical:FontSize.scale(10)}}>
                 <Button2
-                title={'Proceed to Checkout'}
-                style={{height:FontSize.scale(30),backgroundColor:colors.black}}
-                styleTxt={{color:colors.white}}
-                />
-              </View>
+                 title={'Proceed to Checkout'}
+                 style={{height:FontSize.scale(40),backgroundColor:colors.black}}
+                 styleTxt={{color:colors.white}}
+                 />
+               </View>: null
+              }
         </View>
           )}
       </Context.Consumer>

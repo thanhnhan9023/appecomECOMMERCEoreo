@@ -74,29 +74,6 @@ export default class DetalisBlog extends Component {
                         <Text style={{fontSize:FontSize.scale(24)}}>{'Lastest'}</Text>
                     </View>
                     <Carousel data={datablognew}/>
-                    {/* <Carousel
-                    ref={(c) => { this._carousel = c; }}
-                    data={data}
-                    horizontal
-                    keyExtractor={(item,index) => index}
-                    sliderWidth={FontSize.Width(100)}
-                    itemWidth={FontSize.scale(280)}
-                    layout={'default'}
-                    renderItem={({item,index}) =>{
-                        return(
-                            <View style={{width:FontSize.scale(270),borderRadius:FontSize.scale(10),backgroundColor:colors.whiteTwo}}>
-                                <Image borderTopLeftRadius={FontSize.scale(10)}  borderTopRightRadius={FontSize.scale(10)} source={item.img} style={{width:FontSize.scale(270),height:FontSize.scale(240)}}/>
-                                <View style={{paddingHorizontal:FontSize.scale(10)}}>
-                                    <View style={{height:FontSize.scale(8)}}></View>
-                                    <Text>{item.Titele}</Text>
-                                    <View style={{height:FontSize.scale(8)}}></View>
-                                    <Text>{item.time}</Text>
-                                </View>
-                                <View style={{height:FontSize.scale(20)}}></View>
-                            </View>
-                        )
-                    }}
-                    /> */}
                     <View style={{height:FontSize.scale(30),borderBottomWidth:1,borderBottomColor:colors.grayLight}}></View>
                     
                         {datablognew.map((item,index) =>{

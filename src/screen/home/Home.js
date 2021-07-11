@@ -154,7 +154,7 @@ class Home extends Component {
           borderBottomWidth:0.8,
           borderBottomColor:colors.colorGrayBgr
           }}
-          onPress={() => Utils.navigate(Config.DetalisBlog,{img:item.img})}
+          onPress={() => Utils.navigate(Config.DetalisBlog,{item:item})}
           >
               <Image source={item.img} 
               style={{width:FontSize.scale(140),height:FontSize.scale(120)}}  
@@ -258,7 +258,6 @@ class Home extends Component {
                     txtRight={'Show all'}
                     datanew={dataProduct}
                     />
-                    {/* <View style={{height:FontSize.scale(20)}}/> */}
                     <ImageBackground source={IMAGES.imgBackGroud} style={{height:FontSize.scale(170)}}/>   
                     <View style={{height:FontSize.scale(40)}}/>
                     <ProductHorizontal
@@ -314,12 +313,12 @@ class Home extends Component {
         }
     }
     
-    const mapStateToProps =(state) =>{
+const mapStateToProps =(state) =>{
         return{
           dataCategory:state.CartReducer.ListLoaisp
         }
       }
-      const mapDispatchToProps =(dispatch) =>{
+const mapDispatchToProps =(dispatch) =>{
         return {
           FetchLoaiSp:() => dispatch(CartAction.ActionFetchLoaiSpRequest()),
         }
@@ -353,6 +352,5 @@ const styles = StyleSheet.create({
         resizeMode:'center',
         borderRadius:FontSize.scale(120),
     },
-    
 })
     
