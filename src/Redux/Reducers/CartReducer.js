@@ -3,7 +3,7 @@ import produce from "immer"
 import Utils from "../../app/Utilis";
 import {IMAGES} from "../../../assets/images/IndexImg";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import TypesAciton from "../Actions/TypeContStant";
+
 
 // const datannew= async () =>{
 //     try {
@@ -19,8 +19,7 @@ import TypesAciton from "../Actions/TypeContStant";
 const initState = {
     ListLoaisp:[],
     ListSanPham:[],
-    account:{},
-    ListCart: []  ,
+    ListCart:[],
     ListProductLike:[],
 }
 const Key_ID = '_id'
@@ -31,28 +30,25 @@ export const CartReducer = (state = initState, action) => {
     return produce(state, draft => {
         switch (type) {
             case TypesAction.ACTION_Like:
-                {
-                        if(payload!=null)
-                        {
-                            draft.ListProductLike=JSON.parse(payload)
-                        }
-                }
-            case TypesAction.ACTION_Cart:
-            {    
-                    if(payload!=null)
+            {
+                  if(payload!=null)
                     {
-                        draft.ListCart=JSON.parse(payload)
+                        draft.ListProductLike=JSON.parse(payload)
                     }
             }
+            break;
+            case TypesAction.ACTION_Cart:
+            {    
+                    
+                        draft.ListCart=JSON.parse(payload)
+             }
+             break;        
             case TypesAction.ACTION_Fetch_SanPhamToLoaiSp:{
                 draft.ListSanPham=payload;
             }
             break;
             case TypesAction.ACTION_Fetch_LoaiSp:{
                 draft.ListLoaisp=payload;
-            }
-            case TypesAction.ACTION_PostAccount:{
-                draft.account=payload;
             }
             break;
             case TypesAction.ACTION_AddCart:
@@ -73,7 +69,7 @@ export const CartReducer = (state = initState, action) => {
                     }
                     else
                     {
-                        draft.ListCart = [{...payload, sltam: 1 }]
+                        draft.ListCart =[{...payload,sltam:1}]
                     }
                     Utils.nsetStore('cart',JSON.stringify(draft.ListCart))
                     // if (ListCart && ListCart.length > 0) {
@@ -196,6 +192,7 @@ export const CartReducer = (state = initState, action) => {
                     }
                     Utils.nsetStore('like',JSON.stringify(draft.ListProductLike))
                 }
+                break;
                 }
     });
 }

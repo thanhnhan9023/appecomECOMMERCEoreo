@@ -88,7 +88,7 @@ _RenderItemHiden=({item}) =>{
 }
 _AddCart(item)
 {
-  this.props.AddCart(item)
+  this.props.AddCart(item)  
 }
 _RenderItem= ({item,index}) =>
   {

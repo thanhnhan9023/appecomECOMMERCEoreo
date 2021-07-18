@@ -7,14 +7,15 @@ import App from './App';
 import {name as appName} from './app.json';
 
 import { Provider } from 'react-redux'
-import Store  from './src/Redux/Store'
-
-
+import {store,persitor}  from './src/Redux/Store'
+import { PersistGate } from 'redux-persist/integration/react'
 
 const Redux =() =>
 
-    <Provider  store={Store}>
+    <Provider  store={store}>
+          <PersistGate loading={null} persistor={persitor}>
             <App></App>
+            </PersistGate>
     </Provider>
 
 

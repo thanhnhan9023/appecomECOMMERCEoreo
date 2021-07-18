@@ -190,14 +190,8 @@ _cart= async() =>{
   }
   Utils.nlog(this.state.datacart)
 }
-componentDidMount= async() =>
-{
-
-}
   render() {
       const {data}=this.props
-      const {datacart}=this.state
-      Utils.nlog(data)
     return (
       <Context.Consumer>
           {({ theme, updateTheme }) => (
@@ -210,7 +204,6 @@ componentDidMount= async() =>
                 <Text style={{color:colors.grayLight}}>{this.GetCountCart()+' item'}</Text>
               </View>
               <SwipeListView
-              // key={datacart}
                   showsVerticalScrollIndicator={false}
                   disableRightSwipe
                   keyExtractor={(item,index) => index}

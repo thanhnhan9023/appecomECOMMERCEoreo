@@ -86,7 +86,7 @@ const dataCategory=[
       this.setState({isLoangdingCart:true})
       this.props.AddCart(item)
       setTimeout(() =>
-     this._loadingAddcart(),600)
+     this._loadingAddcart(),200)
   }
   }
   _renderItemGrid=({item,index})=>{
