@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import Config from '../../navigation/Config';
 import RootSrceen from '../../navigation/RootSrceen';
-import Home from '../home/Home';
+import Home from '../Home/Home';
 
 
-import SplashScreen from '../home/SplashScreen';
+import SplashScreen from '../Home/SplashScreen';
 // import RootSrceen from '../../navigation/RootSrceen';
 // import Home from '../home/Home';
 

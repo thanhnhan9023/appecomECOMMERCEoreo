@@ -24,6 +24,7 @@ const Config ={
       VideoItem:'VideoItem',
       Settings:'Settings',
       DetalisBlogAll:'DetalisBlogAll',
+      LoginSuccess:'LoginSuccess',
 }
 
 export default Config;

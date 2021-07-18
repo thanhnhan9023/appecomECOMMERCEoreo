@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert,AsyncStorage } from 'react-native';
 import Utils from '../../app/Utilis';
 import Button2 from '../../component/Button2';
 import FontSize from '../../config/FontSize';
@@ -7,9 +7,11 @@ import Icon, { TypeIcon } from '../../config/Icon';
 import { colors } from '../../config/style';
 import Config from '../../navigation/Config';
 import Login from './Login';
-
-
-
+import auth from '@react-native-firebase/auth';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { LoginManager,AccessToken ,Profile} from "react-native-fbsdk-next";
+import LoginSuccess from './LoginSuccess';
+import { utils } from '@react-native-firebase/app';
 const dataIcon=[
   {
     TypeIcon:TypeIcon.AntDesign,
@@ -38,6 +40,7 @@ export default class Sign extends Component {
       email:'',
       showpass:true,
       checkemail:false,
+      datalogin:null,
     };
   }
 _showpass=() =>{
@@ -74,7 +77,9 @@ _Viewicon=(item,index) =>
     backgroundColor:item.backgroundColorIcon,
     borderRadius:FontSize.scale(40),
     justifyContent:'center',
-    alignItems:'center'}} >
+    alignItems:'center'}} 
+    onPress={() =>this._login(index)}
+    >
         <Icon type={item.TypeIcon}  size={18} name={item.NameIcon} color={item.ColorIcon}></Icon>
     </TouchableOpacity>
     <View style={{width:FontSize.scale(20)}}>
@@ -82,8 +87,71 @@ _Viewicon=(item,index) =>
     </View>
   )
 }
+_login= async(index) =>
+{
+  const {datalogin}=this.state
+  switch (index) {
+    case 0:
+      const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
+      if (result.isCancelled) {
+        throw 'User cancelled the login process';
+      }
+      // Once signed in, get the users AccesToken
+      const data = await AccessToken.getCurrentAccessToken();
+      if (!data) 
+      {
+        alert('tài khoản hoặc mật khẩu sai')
+      }
+      else
+      {
+        Utils.nlog(data)
+        const currentProfile = await Profile.getCurrentProfile().then(
+          res => this.setState({datalogin:res})
+        )
+        const facebookCredential = auth.FacebookAuthProvider.credential(data.accessToken);
+
+        // Sign-in the user with the credential
+        return auth().signInWithCredential(facebookCredential);
+      }
+      break;
+      case 1:
+        GoogleSignin.configure({
+          webClientId: '1019229060057-egtcg0dv3g63kvn490299o2l2tkltev5.apps.googleusercontent.com',
+        });
+        const { idToken } = await GoogleSignin.signIn();
+
+        // Create a Google credential with the token
+        const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+        const userInfo = await GoogleSignin.signIn().then(res => this.setState({datalogin:res.user}) );
+        // Sign-in the user with the credential
+        return auth().signInWithCredential(googleCredential);
+      break;
+    default:
+      break;
+  }
+}
+_logout= async() =>{
+  // LoginManager.logOut();
+  LoginManager.logOut();
+ console.log('vao out')
+  auth()
+  .signOut()
+  .then(() => console.log('User signed out!'));
+  const token = await AccessToken.getCurrentAccessToken();
+  Utils.nlog('gia tri token')
+  Utils.nlog(token)
+}
   render() {
-    const {showpass,email}=this.state
+    const {showpass,email,datalogin}=this.state
+    if(datalogin!=null)
+    {
+      Utils.nsetStore('1',datalogin.email)
+      return(
+      <LoginSuccess/>
+      )
+    }
+    else
+    {
     return (
       <View style={{flex:1,backgroundColor:colors.white}}>    
         <View onTouchEnd={() => {
@@ -141,8 +209,7 @@ _Viewicon=(item,index) =>
                     {dataIcon.map(this._Viewicon)} 
                     </View>
                 </View>
-                      <View style={{flex:1,justifyContent:'flex-end'}}
-                          >
+                      <View style={{flex:1,justifyContent:'flex-end'}}>
                             {/* <Text>{'Dont have account'}</Text> */}
                             <View style={{backgroundColor:null,width:FontSize.Width(100),paddingVertical:FontSize.scale(20),paddingHorizontal:FontSize.scale(10)}}>
                             <Text style={{textAlign:'center',color:colors.grayLight}}  >{'Dont have an account ?'}</Text>
@@ -156,10 +223,14 @@ _Viewicon=(item,index) =>
                             style={{height:FontSize.scale(35),backgroundColor:null}}
                             />
                             </View>
+                            {/* <TouchableOpacity onPress={() =>this._logout()}>
+                              <Text>{'Logout'}</Text>
+                            </TouchableOpacity> */}
                           </View>
       </View>
     );
   }
+}
 }
 
 // const app2=() =>{

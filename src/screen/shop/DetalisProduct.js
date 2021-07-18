@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text ,ImageBackground} from 'react-native';
+import { View, Text ,ImageBackground,StyleSheet} from 'react-native';
 import FontSize from '../../config/FontSize';
 import { colors } from '../../config/style';
 import HeaderView from '../../container/HeaderView';
 import { SwiperFlatList } from 'react-native-swiper-flatlist';
 import Icon, { TypeIcon } from '../../config/Icon';
-import { TouchableOpacity,Image } from 'react-native';
+import { TouchableOpacity,Image ,ActivityIndicator} from 'react-native';
 import {IMAGES} from '../../../assets/images/IndexImg';
 import { Button } from 'react-native';
 import Button2 from '../../component/Button2';
@@ -13,12 +13,15 @@ import { ScrollView } from 'react-native';
 import Utils from '../../app/Utilis';
 import { connect } from 'react-redux';
 import CartAction from '../../Redux/ActionsCart/CartAction';
+import { showMessage, hideMessage } from "react-native-flash-message";
 
  class DetalisProduct extends Component {
   constructor(props) {
     super(props);
     this.state = {
       index:0,
+      isLoading:true,
+      isLoangdingCart:false,
     };
   }
   _GoBack(){
@@ -32,12 +35,30 @@ import CartAction from '../../Redux/ActionsCart/CartAction';
     else
       return false;
   }
+  _loadingAddcart=() =>{
+    this.setState({isLoangdingCart:false})
+    showMessage({
+      message: "Add to cart !!",
+      type: "success",
+      })
+  }
+  _AddCart  =  async (item,index) =>{
+    const {isLoangdingCart}=this.state
+    this.setState({indexloang:index})
+    if(!isLoangdingCart)
+    {
+      this.setState({isLoangdingCart:true})
+      this.props.AddCart(item)
+      setTimeout(() =>
+     this._loadingAddcart(),600)
+  }
+}
   render() {
-    const {index}=this.state
+    const {index,isLoangdingCart}=this.state
     const {listimg,data}=this.props.route.params;
     Utils.nlog(index)
     return (
-      <View style={{flex:1,backgroundColor:colors.white}}>
+      <View style={styles.container}>
            <HeaderView
             iconright={true}
             IconLeftShow={true}
@@ -77,7 +98,6 @@ import CartAction from '../../Redux/ActionsCart/CartAction';
                                         :<Icon type={TypeIcon.AntDesign} name={'hearto'} size={22} color={colors.black} />
                                       }
                                     </TouchableOpacity>
-                              
                               </View>
                               </ImageBackground>
                         </View>
@@ -107,12 +127,10 @@ import CartAction from '../../Redux/ActionsCart/CartAction';
                       <Icon type={TypeIcon.Entypo} name={'star'} color={colors.colorStarYellow} size={22}></Icon>
                       <Icon type={TypeIcon.Entypo} name={'star'} color={colors.colorStarYellow} size={22}></Icon>
                       </View>
-                   
                       </View>
                       <View style={{height:FontSize.scale(10)}}/>
                       <Text style={{fontWeight:'bold',fontSize:FontSize.reText(30)}}>{data.nameproduct}</Text>
                       <View style={{height:FontSize.scale(10)}}/>
-                      
                       <View style={{flexDirection:'row',justifyContent:'space-between'}}>
                       <Text style={{fontWeight:'bold',fontSize:FontSize.reText(22)}}>{'$'+data.price+'.00'}</Text>
                       <View style={{flexDirection:'row'}}>
@@ -126,45 +144,26 @@ import CartAction from '../../Redux/ActionsCart/CartAction';
                         <Text style={{color:colors.grayLight}}>{'.Returns accepted within 90 days of placing order. Full policy here.Duties & taxers are non-refundable'}</Text>
                         <View style={{height:FontSize.scale(10)}}/>
                         <Text style={{color:colors.grayLight}}>{'.Returns accepted within 90 days of placing order. Full policy here.Duties & taxers are non-refundable'}</Text>
-                       
                        <View style={{flexDirection:'row',paddingVertical:FontSize.scale(10)}}> 
                               {data.color.map((item,index) =>{
                             return( 
                               <TouchableOpacity key={index} 
                               onPress={() =>{this.setState({index:index+1})}}
-                              style={{
-                                height:FontSize.scale(30),
-                                width:FontSize.scale(30),
-                                backgroundColor:item.color,
-                                borderRadius:FontSize.scale(30),
-                                marginRight:FontSize.scale(10)
-                              }}>
+                              style={{...styles.selectcolor,backgroundColor:item.color}}>
                               </TouchableOpacity>
                             )
                           })}
                           </View>
-
                     </View>
-                   
                     </ScrollView>
-                    <Button2
-                    title={'Add to Cart'}
-                    style={{
-                      backgroundColor:colors.black,
-                      height:FontSize.scale(50),
-                      marginHorizontal:FontSize.scale(10),
-                      borderRadius:FontSize.scale(3)
-                    }}
-                    styleTxt={{
-                      color:colors.white,
-                      fontSize:FontSize.reText(18)
-                    }}
-                    />
-                    <View style={{height:FontSize.scale(20),}}>
-
-                    </View>
-              
-
+                    <TouchableOpacity style={styles.btnAddcart}
+                    onPress={() => this._AddCart(data)}>
+                        {isLoangdingCart ? 
+                        <ActivityIndicator size={'large'}  color={colors.grayLight}/>:
+                        <Text style={{color:colors.white,...FontSize.TextStyles.roboto,fontSize:FontSize.sizes.sText18}} >{'Add to Cart'}</Text>
+                        }
+                    </TouchableOpacity>
+                    <View style={{height:FontSize.scale(20)}}/>
       </View>
     );
   }
@@ -180,6 +179,25 @@ const mapDispatchToProps =(dispatch) =>{
     LikeProduct:(id) =>dispatch(CartAction.ActionAdd_LikeProduct(id)),
   }
 }
-
+const styles = StyleSheet.create({
+  container:{
+    flex:1,
+    backgroundColor:colors.white
+  },
+  btnAddcart:{
+    alignItems:'center',
+    justifyContent:'center',
+    backgroundColor:colors.black,
+    height:FontSize.scale(40),
+    borderRadius:FontSize.scale(4),
+    marginHorizontal:FontSize.scale(12)
+  },
+  selectcolor:{
+    height:FontSize.scale(30),
+    width:FontSize.scale(30),
+    borderRadius:FontSize.scale(30),
+    marginRight:FontSize.scale(10)
+  }
+})
 
 export default  connect(mapStateToProps,mapDispatchToProps)(DetalisProduct)

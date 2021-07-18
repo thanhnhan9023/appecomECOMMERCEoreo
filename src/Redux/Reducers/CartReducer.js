@@ -2,14 +2,25 @@ import TypesAction from "../ActionsCart/TypeContStant";
 import produce from "immer"
 import Utils from "../../app/Utilis";
 import {IMAGES} from "../../../assets/images/IndexImg";
-import { listenerCount } from "npm";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import TypesAciton from "../Actions/TypeContStant";
 
-
+// const datannew= async () =>{
+//     try {
+//         const jsonValue = await AsyncStorage.getItem('cart')
+//          let a=jsonValue != null ? JSON.parse(jsonValue) : null;
+//          return a
+//       } catch(e) {
+//         Utils.nlog(e)
+//       }
+// }
+// let a=  datannew()
+// Utils.nlog(a);
 const initState = {
     ListLoaisp:[],
     ListSanPham:[],
     account:{},
-    ListCart: [],
+    ListCart: []  ,
     ListProductLike:[],
 }
 const Key_ID = '_id'
@@ -19,11 +30,25 @@ export const CartReducer = (state = initState, action) => {
     
     return produce(state, draft => {
         switch (type) {
+            case TypesAction.ACTION_Like:
+                {
+                        if(payload!=null)
+                        {
+                            draft.ListProductLike=JSON.parse(payload)
+                        }
+                }
+            case TypesAction.ACTION_Cart:
+            {    
+                    if(payload!=null)
+                    {
+                        draft.ListCart=JSON.parse(payload)
+                    }
+            }
             case TypesAction.ACTION_Fetch_SanPhamToLoaiSp:{
                 draft.ListSanPham=payload;
             }
             break;
-            case TypesAction.ACTIOM_Fetch_LoaiSp:{
+            case TypesAction.ACTION_Fetch_LoaiSp:{
                 draft.ListLoaisp=payload;
             }
             case TypesAction.ACTION_PostAccount:{
@@ -32,36 +57,56 @@ export const CartReducer = (state = initState, action) => {
             break;
             case TypesAction.ACTION_AddCart:
                 {
-                    if (ListCart && ListCart.length > 0) {
-                        const check = ListCart.find(item => item[Key_ID] == payload[Key_ID])
-                        if (check) 
+                    if(ListCart && ListCart.length >0)
+                    {
+                        const item = ListCart.findIndex(item=>item[Key_ID]==payload[Key_ID]);
+                        if(item>=0)
                         {
-                            draft.ListCart = ListCart.map(item => {
-                                if (item[Key_ID] == payload[Key_ID]) 
-                                {                                  
-                                    return {
-                                        ...item,                                        
-                                        sltam:item.sltam + 1
-                                    }
-                                }             
-                                else 
-                                {
-                                    return item;
-                                }
-                            })
-                        } 
-                        else {
+                            let a=[...ListCart];
+                            a[item]={...a[item],sltam:a[item].sltam+1};
+                            draft.ListCart =a;
+                        }
+                        else
+                        {
                             draft.ListCart = [...ListCart, {...payload, sltam: 1 }]
                         }
-                    } 
-                    else {
+                    }
+                    else
+                    {
                         draft.ListCart = [{...payload, sltam: 1 }]
                     }
+                    Utils.nsetStore('cart',JSON.stringify(draft.ListCart))
+                    // if (ListCart && ListCart.length > 0) {
+                    //     const check = ListCart.find(item => item[Key_ID] == payload[Key_ID])
+                    //     if (check) 
+                    //     {
+                    //         draft.ListCart = ListCart.map(item => {
+                    //             if (item[Key_ID] == payload[Key_ID]) 
+                    //             {                                  
+                    //                 return {
+                    //                     ...item,                                        
+                    //                     sltam:item.sltam + 1
+                    //                 }
+                    //             }             
+                    //             else 
+                    //             {
+                    //                 return item;
+                    //             }
+                    //         })
+                    //     } 
+                    //     else {
+                    //         draft.ListCart = [...ListCart, {...payload, sltam: 1 }]
+                    //     }
+                    // } 
+                    // else {
+                    //     draft.ListCart = [{...payload, sltam: 1 }]
+                    // }
                 }
                 break;
             case TypesAction.ACTION_DeleteCart:
                 {
                     draft.ListCart = ListCart.filter(item => item[Key_ID] != payload)
+                    Utils.nsetStore('cart',JSON.stringify(draft.ListCart))
                 }
                 break;
             case  TypesAction.ACTION_PlusNumber:
@@ -86,6 +131,7 @@ export const CartReducer = (state = initState, action) => {
                             return item;
                         }
                     })
+                    Utils.nsetStore('cart',JSON.stringify(draft.ListCart))
                 }
                 break;
              case TypesAction.ACTION_MinusNumber:
@@ -116,19 +162,13 @@ export const CartReducer = (state = initState, action) => {
                             })
                         }
                     }
+                    Utils.nsetStore('cart',JSON.stringify(draft.ListCart))
                 }
                 break;
             case TypesAction.ACTION_ADD_Remove_LikeProduct:
                 {
-                        // const check=ListProductLike.find(item => item[Key_ID]==payload[Key_ID])
-                        // if(check)
-                        // {
                                 draft.ListProductLike=ListProductLike.filter(item => item[Key_ID] != payload[Key_ID])
-                        // }
-                        // else
-                        // {
-                        //     draft.ListProductLike=[...ListProductLike,payload]
-                        // }
+                                Utils.nsetStore('like',JSON.stringify(draft.ListProductLike))
                 }
                 break;
             case TypesAction.ACTION_LikeProduct:
@@ -154,18 +194,7 @@ export const CartReducer = (state = initState, action) => {
                   
                         draft.ListProductLike=[{...payload,like:true}]
                     }
-                    // draft.ListProductLike=ListProductLike.map(item =>{
-                    //     if(item._id==payload)
-                    //     {
-                    //         return{
-                    //             ...item,
-                    //             like:!item.like
-                    //         }
-                    //     }
-                    //     else{
-                    //         return draft.ListProductLike=[...item,{...item,like:true}]
-                    //     }
-                    // })
+                    Utils.nsetStore('like',JSON.stringify(draft.ListProductLike))
                 }
                 }
     });

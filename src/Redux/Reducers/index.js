@@ -4,7 +4,6 @@ import { CartReducer } from './CartReducer';
 
 const rootReducer=combineReducers(
     {
-       Caculator:CaculatorReducer,
         CartReducer:CartReducer
     }
 )

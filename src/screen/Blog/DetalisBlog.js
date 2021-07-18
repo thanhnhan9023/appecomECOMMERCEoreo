@@ -48,15 +48,15 @@ export default class DetalisBlog extends Component {
     render() {
         const {data}=this.props.route.params
         return (
-            <View style={{flex:1,backgroundColor:colors.white}}>
+            <View style={{flex:1,backgroundColor:colors.white,paddingHorizontal:FontSize.scale(15)}}>
                 <HeadViewCustom
                     ViewLeft={
                         <TouchableOpacity onPress={() => Utils.goBack()}>
-                        <Icon type={TypeIcon.AntDesign} name={'left'} size={24}/>
+                        <Icon type={TypeIcon.AntDesign} name={'left'} size={2}/>
                         </TouchableOpacity>
                     }
                     ViewCenter={
-                        <Text style={{fontSize:FontSize.reText(24),fontWeight:'bold'}}>{'Blog'}</Text>
+                        <Text style={{...FontSize.TextStyles.semiBold,fontSize:FontSize.sizes.sText18}}>{'Blog'}</Text>
                     }
                     ViewRight={
                        <View style={{flexDirection:'row'}}>
@@ -70,24 +70,24 @@ export default class DetalisBlog extends Component {
                 <ScrollView
                 showsVerticalScrollIndicator={false}
                 > 
-                    <View style={{paddingHorizontal:FontSize.scale(15)}}>
-                        <Text style={{fontSize:FontSize.scale(24)}}>{'Lastest'}</Text>
+                    <View>
+                        <Text style={{...FontSize.TextStyles.semiBoldm,fontSize:FontSize.sizes.sText28}}>{'Lastest'}</Text>
                     </View>
                     <Carousel data={datablognew}/>
                     <View style={{height:FontSize.scale(30),borderBottomWidth:1,borderBottomColor:colors.grayLight}}></View>
-                    
                         {datablognew.map((item,index) =>{
                             return(
                                 <View key={index} style={{borderBottomWidth:1.5,borderBottomColor:colors.colorGrayBgr,flexDirection:'row',
                                 paddingVertical:FontSize.scale(20),
-                                paddingHorizontal:FontSize.scale(15)
                                 }}>
                                     <Image source={item.img} 
                                     style={{width:FontSize.scale(140),
                                         height:FontSize.scale(120),
-                                    }}/>
+                                    }}
+                                    borderRadius={FontSize.scale(4)}
+                                    />
                                     <View style={{paddingHorizontal:FontSize.scale(12)}}>
-                                        <Text>{'Sudan  Archives Flips the Script'}</Text>
+                                        <Text style={{...FontSize.TextStyles.semiBold,fontSize:FontSize.sizes.sText20}}>{'Sudan Archives Flips the Script'}</Text>
                                         <View style={{height:FontSize.scale(10)}}/>
                                         <Text>{item.time}</Text>
                                         <View style={{height:FontSize.scale(15)}}/>

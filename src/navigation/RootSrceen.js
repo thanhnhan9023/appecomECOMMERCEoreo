@@ -9,7 +9,7 @@ import MyTabBar from './ComponentBottomenu/MyTabBar';
 import Utils from '../app/Utilis';
 import { colors } from '../config/style';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import SplashScreen from '../screen/home/SplashScreen';
+import SplashScreen from '../screen/Home/SplashScreen';
 
 
 
@@ -46,18 +46,6 @@ const data=[
     };
   }
   render() {
-    const {isLoading}=this.state;
-    if(isLoading)
-    {
-      setTimeout(() => {
-        this.setState({isLoading:false})
-      }, 3000);
-      return(
-        <SplashScreen/>
-      )
-    }
-    else
-    {
     return (
         <Tab.Navigator
         initialRouteName={Config.DrawMenuSceen}
@@ -74,7 +62,6 @@ const data=[
       </Tab.Navigator>
     );
     }
-  }
 }
 class DrawMenuSceen extends Component {
   render() {
@@ -119,6 +106,7 @@ class MainStackScreen extends Component{
         <MainStack.Screen name={Config.VideoItem} component={ConfigScreen.VideoItem} />
         <MainStack.Screen name={Config.Settings} component={ConfigScreen.AppSetting} />
         <MainStack.Screen name={Config.DetalisBlogAll} component={ConfigScreen.DetalisBlogAll} />
+        <MainStack.Screen name={Config.LoginSuccess} component={ConfigScreen.LoginSuccess} />
     </MainStack.Navigator>
     )
   }

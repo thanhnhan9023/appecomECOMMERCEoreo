@@ -8,8 +8,6 @@ import Icon, { TypeIcon } from '../../config/Icon';
 import { colors } from '../../config/style';
 
 
-
-
 export default class ProductHorizontal extends Component {
     constructor(props) {
         super(props);
@@ -46,10 +44,10 @@ _renderItem({item,index})
       const {txtLeft=null,txtRight=null,styleTextLeft={},datanew=[]}=this.props
       // Utils.nlog('data=====================:',datanew)
     return (
-      <View style={{backgroundColor:colors.white}}>
+      <View style={{backgroundColor:colors.white,paddingVertical:FontSize.scale(15)}}>
           <View style={{flexDirection:'row',paddingHorizontal:FontSize.scale(12),justifyContent:'space-between'}}>
                 <Text style={{...styles.StyleTextLeftBasic,...styleTextLeft}} >{txtLeft}</Text>
-                <Text>{txtRight}</Text>
+                <Text style={styles.styleTxt}>{txtRight}</Text>
                 </View>
                 <View
                 style={{height:FontSize.scale(20)}}
@@ -69,7 +67,11 @@ _renderItem({item,index})
 }
 const styles = StyleSheet.create({
        StyleTextLeftBasic : {
-           fontSize:FontSize.reText(28)
+          ...FontSize.TextStyles.semiBold,
+           fontSize:FontSize.sizes.sText22
       },
+      styleTxt:{
+        fontSize:FontSize.reText(19)
+      }
 
 });

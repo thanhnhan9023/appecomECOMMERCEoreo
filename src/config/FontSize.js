@@ -137,5 +137,76 @@ let sizes = {
     nImgSize350: 350 * ratioImg,
     nImgSize390: 390 * ratioImg,
 };
-const FontSize = { sizes, reText, reSize, scale, verticalScale, Width, Height };
+ const Fonts = {
+    sans: {
+      regular: {
+        fontFamily: 'OpenSans-Regular',
+      },
+      bold: {
+        fontFamily: 'OpenSans-Bold',
+      },
+      semiBold: {
+        fontFamily: 'OpenSans-SemiBold',
+  
+      },
+      italic: {
+        fontFamily: 'OpenSans-Italic',
+      },
+    },
+    roboto: {
+      regular: {
+        fontFamily: 'Roboto-Regular',
+      },
+      bold: {
+        fontFamily: 'Roboto-Bold',
+      },
+      italic: {
+        fontFamily: 'Roboto-Italic',
+      },
+    },
+  }
+  const TextStyles = {
+    regular: {
+      ...Fonts.sans.regular,
+      fontSize: 14,
+    },
+    bold: {
+      ...Fonts.sans.bold,
+      fontSize: 14,
+    },
+    large: {
+      ...Fonts.sans.regular,
+      fontSize: 20,
+    },
+    largeBold: {
+      ...Fonts.sans.bold,
+      fontSize: 20,
+    },
+    optionNormal: {
+      ...Fonts.regular,
+      fontSize: 18,
+    },
+    optionBold: {
+      ...Fonts.sans.bold,
+      fontSize: 16,
+    },
+    semiBold: {
+      ...Fonts.sans.semiBold,
+      fontSize: 14,
+  
+    },
+    medium: {
+      ...Fonts.medium,
+      fontSize: 14,
+    },
+    min: {
+      ...Fonts.regular,
+      fontSize: 12,
+    },
+    roboto: {
+      ...Fonts.roboto.regular,
+      fontSize: 14,
+    },
+  }
+const FontSize = { sizes,Fonts,TextStyles,reText, reSize, scale, verticalScale, Width, Height };
 export default FontSize;

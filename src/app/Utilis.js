@@ -1,5 +1,6 @@
 
-import AsyncStorage from '@react-native-community/async-storage';
+// import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationActions } from '@react-navigation/compat';
 import  axios from 'axios'
 
@@ -87,18 +88,41 @@ const filter = (arr = [], key = 'id', vals = "tam") => {
 }
 
 async function ngetStore(keys, defaultValue = null) {
-    let temp = await AsyncStorage.getItem(keys);
-    if (temp == null) return defaultValue;
+    // let temp = await AsyncStorage.getItem(keys);
+    // if (temp == null) return defaultValue;
+    // try {
+    //     let tempValue = JSON.parse(temp);
+    //     return tempValue;
+    // } catch (error) {
+    //     return temp;
+    // }
     try {
-        let tempValue = JSON.parse(temp);
-        return tempValue;
-    } catch (error) {
-        return temp;
-    }
+        const jsonValue = await AsyncStorage.getItem(keys)
+         let a=jsonValue != null ? JSON.parse(jsonValue) : null;
+         return a
+      } catch(e) {
+        Utils.nlog(e)
+      }
 }
 async function nsetStore(keys, value) {
-    if (typeof value !== 'string') value = JSON.stringify(value);
-    await AsyncStorage.setItem(keys, value);
+    // if (typeof value !== 'string') value = JSON.stringify(value);
+    // await AsyncStorage.setItem(keys, value);
+    try {
+        if (typeof value !== 'string') value = JSON.stringify(value);
+        await AsyncStorage.setItem(keys, value)
+      } catch (e) {
+        // saving error
+        Utils.nlog(e)
+      }
+}
+async  function removeItemValue(key) {
+    try {
+        await AsyncStorage.removeItem(key);
+        return true;
+    }
+    catch(exception) {
+        return false;
+    }
 }
 const Utils = {
     nlog: log,
@@ -112,6 +136,7 @@ const Utils = {
     goBack,
     getPrams,
     CallApi,
+    removeItemValue,
 }
 
 export default Utils;

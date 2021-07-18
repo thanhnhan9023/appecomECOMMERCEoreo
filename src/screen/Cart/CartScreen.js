@@ -15,10 +15,13 @@ import Empty from '../../component/EmptyScreen/Empty';
 import { TextInput } from 'react-native';
 import Button2 from '../../component/Button2';
 import { Context } from '../../config/ThemeProvider2';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 class CartScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      datacart:[],
     };
   }
   GetToal=() =>
@@ -50,7 +53,7 @@ _RenderEmpty()
             <Icon type={TypeIcon.AntDesign} name={'down-square-o'}  color={colors.redStar} size={30}></Icon>
         </View>
     }
-    TxtTitle={'Your Whishlist is empty'}
+    TxtTitle={'Your cart is empty'}
     TxtSub={'Simply sign into pick up where you left off'}
     TitleButton={'Shop now'}
     TxtSceen={Config.Shop}
@@ -177,8 +180,23 @@ _RenderHideItem=({item}) =>{
   </View>
   )
 }
+_cart= async() =>{
+  try {
+    const jsonValue = await AsyncStorage.getItem('cart')
+     let a=jsonValue != null ? JSON.parse(jsonValue) : null;
+     this.setState({datacart:a})
+  } catch(e) {
+    Utils.nlog(e)
+  }
+  Utils.nlog(this.state.datacart)
+}
+componentDidMount= async() =>
+{
+
+}
   render() {
       const {data}=this.props
+      const {datacart}=this.state
       Utils.nlog(data)
     return (
       <Context.Consumer>
@@ -192,6 +210,7 @@ _RenderHideItem=({item}) =>{
                 <Text style={{color:colors.grayLight}}>{this.GetCountCart()+' item'}</Text>
               </View>
               <SwipeListView
+              // key={datacart}
                   showsVerticalScrollIndicator={false}
                   disableRightSwipe
                   keyExtractor={(item,index) => index}
@@ -229,6 +248,7 @@ const mapStateToProps =(state) =>{
     return {
       RemoveCart:(id) => dispatch(CartAction.ACTION_DeleteCart(id)),
       LikeProduct:(id) =>dispatch(CartAction.ActionAdd_LikeProduct(id)),
+      Datacart:() => dispatch(CartAction.ActionCart()),
     }
     
   }

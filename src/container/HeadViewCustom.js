@@ -41,8 +41,6 @@ export default class HeadViewCustom extends Component {
 }
 const styles = StyleSheet.create({
     Container:{
-        paddingVertical:FontSize.scale(10),
-        paddingHorizontal:FontSize.scale(15),
         height:FontSize.scale(60),
         justifyContent:'space-between',
         flexDirection:'row'

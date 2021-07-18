@@ -129,6 +129,8 @@ class Home extends Component {
         } catch (error) {
             Utils.nlog(error);
         }
+        await this.props.Datacart();
+        await this.props.Datalike();
       }
       _rendeitemCategory=({item,index}) =>{
           const {dataCategory}=this.props
@@ -139,7 +141,7 @@ class Home extends Component {
                         source={ {uri:item.imgproduct}}
                         >
                         </Image>
-                        <Text style={{marginTop:FontSize.scale(10),textAlign:'center',fontSize:FontSize.reText(20)}}>{item.nameproduct}</Text>
+                        <Text style={{marginTop:FontSize.scale(10),textAlign:'center',...FontSize.TextStyles.roboto,fontSize:FontSize.sizes.sText16}}>{item.nameproduct}</Text>
                     </View>
                         { index!=dataCategory.length-1 ?(<View style={{width:FontSize.scale(15),height:'100%'}}></View>):null }
             </TouchableOpacity>
@@ -157,12 +159,14 @@ class Home extends Component {
           onPress={() => Utils.navigate(Config.DetalisBlog,{item:item})}
           >
               <Image source={item.img} 
-              style={{width:FontSize.scale(140),height:FontSize.scale(120)}}  
+              style={{width:FontSize.scale(140),height:FontSize.scale(120)}} 
+              borderRadius={FontSize.scale(4)}
               /> 
               <View  style={{flex:1,paddingHorizontal:FontSize.scale(10),
               }}>
                   <Text  
-                  style={{fontSize:FontSize.reText(20),
+                  style={{...FontSize.TextStyles.semiBold,
+                    fontSize:FontSize.sizes.sText19
                   }}>{item.Titele}
                   </Text>
                   <View style={{height:FontSize.scale(10)}}></View>
@@ -188,7 +192,8 @@ class Home extends Component {
                     typeicon={TypeIcon.AntDesign}
                     iconname={'shoppingcart'}
                     righticonone={true}
-                    onPressLeft={this.props.navigation.openDrawer}
+                    ShowIconCenter={true}
+                    onPressLeft={() =>this.props.navigation.openDrawer()}
                     />
                     <Carousel 
                         {...this.props}
@@ -201,7 +206,9 @@ class Home extends Component {
                     <View>
                             <View style={{flexDirection:'row',justifyContent:'space-between',paddingHorizontal:FontSize.scale(10)}}>
                                     <Text style={styles.textMeidum}>{'Categories'}</Text>
-                                    <Text style={styles.txtSmall}>{'Show all'}</Text>
+                                    <TouchableOpacity onPress={() =>  Utils.navigate(Config.Shop)}>
+                                        <Text style={styles.txtSmall}>{'Show all'}</Text>
+                                    </TouchableOpacity>
                             </View>
                             <View style={{height:FontSize.scale(30)}}/>
                             {!isLoadingCategory ? 
@@ -294,6 +301,10 @@ class Home extends Component {
                          backgroundColor:colors.colorGrayBgr,
                          height:FontSize.scale(40)
                          }}
+                         styleTxt={{
+                             ...FontSize.TextStyles.roboto,
+                             fontSize:FontSize.sizes.sText18
+                         }}
                         />
                      <View style={{height:FontSize.scale(30)}}/>
                      <View>
@@ -321,17 +332,19 @@ const mapStateToProps =(state) =>{
 const mapDispatchToProps =(dispatch) =>{
         return {
           FetchLoaiSp:() => dispatch(CartAction.ActionFetchLoaiSpRequest()),
+          Datacart:() => dispatch(CartAction.ActionCart()),
+          Datalike:() => dispatch(CartAction.ActionLike()),
         }
       }
 export default connect(mapStateToProps,mapDispatchToProps)(Home)
 
 const styles = StyleSheet.create({
     textMeidum:{
-        fontWeight:'bold',
-        fontSize:FontSize.reText(27),
+        ...FontSize.TextStyles.semiBold,
+        fontSize:FontSize.sizes.sText22
     },
     txtSmall:{
-        fontSize:FontSize.reText(16),
+        fontSize:FontSize.reText(18),
         color:colors.grayLight,
     },
     imageCategories:

@@ -1,5 +1,6 @@
 import Utils from "../../app/Utilis"
 import TypesAction from "./TypeContStant"
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // call api  request san pham theo loai sp
 const ActionFetchSanPhamToLoaiSpRequest=(id) =>{
@@ -57,11 +58,32 @@ return{
     payload:data,
     };
 }
-
+const ActionCart=() =>{
+    return(dispatch) =>{
+        return  AsyncStorage.getItem('cart').then((val) => dispatch(ActionCartRequets(val)))
+    }
+}
+const ActionCartRequets=(data) =>{
+    return{
+    type:TypesAction.ACTION_Cart,
+    payload:data,
+    }
+}
+const ActionLike=() =>{
+    return(dispatch) =>{
+        return  AsyncStorage.getItem('like').then((val) => dispatch(ActionLikeRequets(val)))
+    }
+}
+const ActionLikeRequets=(data) =>{
+    return{
+    type:TypesAction.ACTION_Like,
+    payload:data,
+    }
+}
 // call api loai sp 
 const ActionFetchLoaiSp=(data) =>{
     return{
-        type:TypesAction.ACTIOM_Fetch_LoaiSp,
+        type:TypesAction.ACTION_Fetch_LoaiSp,
         payload:data,
     }
 }
@@ -128,6 +150,8 @@ const ActionAdd_LikeProduct=(data) =>{
  ActionFetchSanPhamRequest,
  ActionFetchSanPhamToLoaiSpRequest,
  ActionPostAccountRequest,
+ ActionCart,
+ ActionLike,
 }
 
 export default CartAction

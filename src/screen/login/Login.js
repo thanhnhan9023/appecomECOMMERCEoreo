@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
 import HeaderView from '../../container/HeaderView'
-import FontSize from '../..//config/FontSize';
+import FontSize from '../../config/FontSize';
 import { colors } from '../../config/style';
 import Button2 from '../../component/Button2';
 import Icon, { TypeIcon } from '../../config/Icon';
@@ -17,16 +17,13 @@ import { withNamespaces } from 'react-i18next';
 
 const dataList = [
     {
-        id: 1,
-        name: 'App setting',
+        name: 'App Settings',
         iconLeft: 'setting',
         iconRight: 'right',
         textRight: 'right',
         typeicon:TypeIcon.AntDesign,
-        
     },
     {
-        id: 1,
         name: 'Help & info',
         iconLeft: 'help-circle',
         iconRight: 'right',
@@ -34,7 +31,6 @@ const dataList = [
         typeicon:TypeIcon.Feather,
     },
     {
-        id: 1,
         name: 'Hotline',
         iconLeft: 'phone-call',
         iconRight: null,
@@ -44,8 +40,8 @@ const dataList = [
 ]
 const dataIcon=[
     {
-      TypeIcon:TypeIcon.AntDesign,
-      NameIcon:'facebook-square',
+      TypeIcon:TypeIcon.FontAwesome,
+      NameIcon:'facebook',
       ColorIcon:colors.blue,
       backgroundColorIcon:colors.white,
     },
@@ -56,6 +52,13 @@ const dataIcon=[
       backgroundColorIcon:colors.white,
     },
     {
+        TypeIcon:TypeIcon.FontAwesome,
+        NameIcon:'pinterest',
+        ColorIcon:colors.orangeyRed,
+        backgroundColorIcon:colors.white,
+      },
+    {
+        
       TypeIcon:TypeIcon.AntDesign,
       NameIcon:'twitter',
       ColorIcon:colors.blueZalo,
@@ -116,14 +119,14 @@ const datasetings=[
                         <View key={`${index}`} style={{backgroundColor:null,flexDirection:'row',paddingVertical:FontSize.scale(0)}}>
                             <TouchableOpacity style={{borderRadius:FontSize.scale(3),width:FontSize.scale(30),
                                 height:FontSize.scale(30),
-                                borderWidth:1,
+                                borderWidth:0.6,
                                 borderColor:colors.grayLight,
                                 justifyContent:'center',
                                 alignItems:'center',
                                 backgroundColor:colors.white,
                                 }}
                                 >
-                                    <Icon type={TypeIcon} name={NameIcon} color={ColorIcon} size={22}></Icon>
+                                    <Icon type={TypeIcon} name={NameIcon} color={ColorIcon} size={18}></Icon>
                                 </TouchableOpacity>
                                 <View style={{backgroundColor:null,width:FontSize.scale(8)}}>
                                 </View>
@@ -146,7 +149,8 @@ const datasetings=[
                         <View style={{paddingHorizontal:FontSize.scale(10)}}/>
                         <Text style={
                             {flex:7,
-                            fontSize:FontSize.reText(20),
+                            ...FontSize.TextStyles.option,
+                            fontSize:FontSize.sizes.sText18,
                             color:theme.colors.text,
                             justifyContent:'center'}}>
                             {name}
@@ -186,19 +190,16 @@ const datasetings=[
             
             <Context.Consumer>
                    {({ theme }) => (
-            <View style={{flex:1,backgroundColor:theme.colors.background}}>
+            <View style={{flex:1,backgroundColor:colors.white,paddingHorizontal:FontSize.scale(10)}}>
                 <HeadViewCustom
-                   
                    ViewLeft={
                        (
-                        <View style={{width:FontSize.scale(22)}}>
-
-                        </View>
+                        <View style={{width:FontSize.scale(22)}}/>
                         )
                    }
                     ViewCenter={
                         (
-                            <Text style={{fontSize:FontSize.reText(22),fontWeight:'bold',color:theme.colors.text}} >{'Me'}</Text>
+                            <Text style={{...FontSize.TextStyles.largeBold,color:theme.colors.text}} >{'Me'}</Text>
                         )
                     }
                     CenterContainerStyle={{
@@ -216,36 +217,36 @@ const datasetings=[
                         )
                     }
                 />
-                <View style={{paddingVertical:FontSize.scale(10),paddingHorizontal:FontSize.scale(40),justifyContent:'center',alignItems:'center'}}>
-                        <Text numberOfLines={2}  style={{textAlign:'center',color:colors.grayLight,fontSize:FontSize.reText(20),fontWeight:'800'}}>
-                            {'Sign in  to receive exclusive offfers and Promotions'}</Text>
+                <View style={{paddingHorizontal:FontSize.scale(40),justifyContent:'center',alignItems:'center'}}>
+                        <Text numberOfLines={2}  style={{...FontSize.TextStyles.roboto,fontSize:FontSize.sizes.sText17,textAlign:'center',color:colors.grayLight}}>
+                            {'Sign in to receive exclusive offfers and Promotions'}</Text>
                 </View>
                 <View style={{flexDirection:'row',paddingVertical:FontSize.scale(10),paddingHorizontal:FontSize.scale(10)}} >
                     <Button2    onPress={() =>{
                         Utils.navigate(Config.Registration)
                     }} 
-                    style={{flex:1,paddingVertical:FontSize.scale(10),borderWidth:1
+                    style={{flex:1,paddingVertical:FontSize.scale(10),borderWidth:1,
+                    backgroundColor:colors.white,
                     }} 
+                    styleTxt={{...FontSize.TextStyles.semiBold,fontSize:FontSize.sizes.sText17,color:colors.blackShadow}}
                     title={'Create an Account'} 
                     >
                     </Button2>
                     <View style={{paddingHorizontal:FontSize.scale(5)}}/>
                     <Button2  style={{flex:1,
                     paddingVertical:FontSize.scale(10),
-                    backgroundColor:colors.black}} title={'Sign In'} 
+                    backgroundColor:colors.blackShadow}} title={'Sign In'}      
                     onPress={() =>{
                         Utils.navigate(Config.Sign)
                     }}
-                    styleTxt={{color:colors.white}}></Button2>
+                    styleTxt={{...FontSize.TextStyles.roboto,fontSize:FontSize.sizes.sText17,color:colors.white}}></Button2>
                 </View>
                 <Text style={{paddingHorizontal:FontSize.scale(10),
                     paddingVertical:FontSize.scale(10),
                     color:colors.grayLight,
                     fontSize:FontSize.reText(20)}}>{'Settings'}
                 </Text>
-                <View style={{paddingVertical:FontSize.scale(10),
-                    paddingHorizontal:FontSize.scale(10)}}>
-                      
+                <View style={{paddingVertical:FontSize.scale(10)}}>
                            {
                          dataList.map((item,index) =>this._renderITem(item,index,theme))//gọi k càn đog ngoặc 
                         }
@@ -265,7 +266,7 @@ const datasetings=[
                     <View style={{paddingHorizontal:FontSize.scale(4),color:theme.colors.text}}/>
                     <Text  style={{fontSize:FontSize.reText(18),color:colors.grayLight}}>{i18n.t('home')}</Text>
                 </View>
-                <TouchableOpacity onPress={() =>{
+                {/* <TouchableOpacity onPress={() =>{
                     if(i18n.language=='vi')
                     {
                       i18n.changeLanguage('en');
@@ -275,7 +276,7 @@ const datasetings=[
                     }
                 }}>
                     <Text>{'doi ngon ngu'}</Text>
-                      </TouchableOpacity>
+                      </TouchableOpacity> */}
             </View>
                    )}
             </Context.Consumer>

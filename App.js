@@ -5,13 +5,15 @@ import Utils from './src/app/Utilis';
 import RootSrceen from './src/navigation/RootSrceen';
 import OneSignal from 'react-native-onesignal'; 
 import Config from './src/navigation/Config';
-import Test from './src/screen/Test/Test';
-import Setting from './src/component/Home/Setting';
-import Home from './src/screen/home/Home';
 import ThemeProvider2 from './src/config/ThemeProvider2';
 import { I18nextProvider } from 'react-i18next';
 import i18n from './src/config/i18n';
-import Carousel from './src/component/Home/Carousel';
+import { StatusBar,View } from 'react-native';
+import { colors } from './src/config/style';
+import SplashScreen from './src/screen/Home/SplashScreen';
+import FlashMessage from "react-native-flash-message";
+import FontSize from './src/config/FontSize';
+
 const link={
   prefixes: ['recipes://'],
   config:{
@@ -21,7 +23,13 @@ const link={
   }
 }
 
-const App=() => {
+class App extends Component{
+  constructor(props) {
+    super(props);
+    this.state = {
+        isLoading:true,
+    };
+  }
   
   // async componentDidMount() {  // cai   O N E S I G N A L 
   //   /* O N E S I G N A L   S E T U P */
@@ -61,16 +69,38 @@ const App=() => {
     //     text: colors.redStar,
     //   },
     // };
+    render() {
+    const {isLoading}=this.state;
+    if(isLoading)
+    {
+      setTimeout(() => {
+        this.setState({isLoading:false})
+      }, 3000);
+      return(  
+        <SplashScreen/>
+      )
+    }
+    else{
     return (
       <I18nextProvider i18n={i18n}>
         <ThemeProvider2>
           <NavigationContainer   linking={link} ref={ ref => Utils.setTopLevelNavigator(ref)}>
+            <StatusBar  backgroundColor={colors.white}  
+              barStyle={'dark-content'}
+              hidden={false}
+            >
+            </StatusBar>
+            <View style={{flex:1}}>
             <RootSrceen></RootSrceen>
+            <FlashMessage position="top"    titleStyle={{fontFamily:'OtomanopeeOne-Regular',fontStyle:'italic',fontSize:FontSize.sizes.sText19,textAlign:'center'}}   /> 
+            </View>
         </NavigationContainer>
         </ThemeProvider2>
        </I18nextProvider>
   
     );
+    }
+  }
   // }
 }
  export default App;

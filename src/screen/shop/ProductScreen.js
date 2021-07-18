@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TouchableOpacity,Image,ScrollView,StyleSheet,ImageBackground} from 'react-native';
+import { TouchableOpacity,Image,ScrollView,StyleSheet,ImageBackground,ActivityIndicator} from 'react-native';
 import { FlatList } from 'react-native';
 import { View, Text } from 'react-native';
 import {IMAGES} from '../../../assets/images/IndexImg';
@@ -11,8 +11,7 @@ import HeaderView from '../../container/HeaderView';
 import Config from '../../navigation/Config';
 import { connect } from 'react-redux';
 import CartAction from '../../Redux/ActionsCart/CartAction';
-
-
+import { showMessage, hideMessage } from "react-native-flash-message";
 
 const dataCategory=[
   {
@@ -43,6 +42,9 @@ const dataCategory=[
       isShowGrid:true,
       ChangeIcon:true,
       numcoloum:2,
+      isLoading:true,
+      isLoangdingCart:false,
+      indexloang:null,
     };
     this.check = React.createRef()
   }
@@ -54,20 +56,41 @@ const dataCategory=[
     else
       return false;
   }
-  componentDidMount()
+  componentDidMount = async() =>
   {
+    const {isLoading}=this.state
     const {maloai} = this.props.route.params;
-    this.props.FetchSanPham(maloai);
+    const loading= await this.props.FetchSanPham(maloai);
+    if(loading)
+    {
+      this.setState({isLoading:!isLoading})
+    }
   }
   _changeIcon=(data) =>
   {
     this.props.LikeProduct(data)
     // this.props.Add_Remove(data)
   }
-  _AddCart(item){
-    this.props.AddCart(item)
+  _loadingAddcart=() =>{
+    this.setState({isLoangdingCart:false})
+    showMessage({
+      message: "Add to cart !!",
+      type: "success",
+      })
+  }
+  _AddCart  =  async (item,index) =>{
+    const {isLoangdingCart,indexloang}=this.state
+    this.setState({indexloang:index})
+    if(!isLoangdingCart)
+    {
+      this.setState({isLoangdingCart:true})
+      this.props.AddCart(item)
+      setTimeout(() =>
+     this._loadingAddcart(),600)
+  }
   }
   _renderItemGrid=({item,index})=>{
+    const {isLoangdingCart,indexloang}=this.state
     return(
     <TouchableOpacity 
     onPress={() =>{Utils.navigate(Config.DetalisProduct,{listimg:item.imgproduct,data:item})}}
@@ -75,9 +98,8 @@ const dataCategory=[
       height:FontSize.scale(280),
       width:FontSize.scale(160),
       marginRight:FontSize.scale(10),
-     }}
-      >
-          <ImageBackground source={{uri:item.imgproduct[0].img}} style={{width:'100%',height:'90%',resizeMode:'cover'}} >
+     }}>
+          <ImageBackground resizeMode={'cover'} source={{uri:item.imgproduct[0].img}} style={{width:'100%',height:'90%'}} >
                 <View style={{
                   paddingVertical:FontSize.scale(10),
                   paddingHorizontal:FontSize.scale(10),
@@ -87,20 +109,21 @@ const dataCategory=[
                   height:'85%',
                   }}>
                     <TouchableOpacity onPress={() =>this._changeIcon(item)}>
-                    {this._checkWhishlist(item._id) ==true ? 
-                    <Icon type={TypeIcon.AntDesign} name={'hearto'} size={22} color={colors.colorRed} />
-                  :<Icon type={TypeIcon.AntDesign} name={'hearto'} size={22} color={colors.black} />
+                      {this._checkWhishlist(item._id) ==true ? 
+                      <Icon type={TypeIcon.AntDesign} name={'hearto'} size={22} color={colors.colorRed} />
+                    :<Icon type={TypeIcon.AntDesign} name={'hearto'} size={22} color={colors.black} />
                     }
                     </TouchableOpacity>
-                  <TouchableOpacity onPress={() =>this._AddCart(item)}>
+                  <TouchableOpacity ref={ref => this.add}  onPress={() =>this._AddCart(item,index)}>
+                    {isLoangdingCart && index==indexloang ? <ActivityIndicator size={'large'}  color={colors.grayLight}/> :
                     <Icon type={TypeIcon.AntDesign} name={'plussquare'} size={30}></Icon>
+                    }
                   </TouchableOpacity>
                 </View>
                 <View style={{height:FontSize.scale(20)}}></View>
-                <Text numberOfLines={2} style={{color:colors.grayLight,fontSize:FontSize.reText(18)}} >{item.nameproduct}</Text>
-                <Text style={{fontSize:FontSize.reText(22)}} >{"$"+item.price+".00"}</Text>
+                <Text numberOfLines={2} style={{color:colors.grayLight,...FontSize.TextStyles.roboto,fontSize:FontSize.sizes.sText15}} >{item.nameproduct}</Text>
+                <Text style={{...FontSize.TextStyles.optionNormal}} >{"$"+item.price+".00"}</Text>
             </ImageBackground>
-     
     </TouchableOpacity>
     )
   }
@@ -113,32 +136,40 @@ const dataCategory=[
     }
     _renderItemList=({item}) =>
   {
+    const {isLoangdingCart}=this.state
+    Utils.nlog(isLoangdingCart)
    return(
      <TouchableOpacity 
      style={{
        backgroundColor:colors.white,height:FontSize.scale(400),
      marginBottom:FontSize.scale(60)}} >
-              <ImageBackground resizeMode={'cover'} source={{uri:item.imgproduct[0].img}} style={{width:'100%',height:'100%'}}>
-                <View style={{flex:1,justifyContent:'space-between',alignItems:'flex-end',
-                paddingHorizontal:FontSize.scale(30),paddingVertical:FontSize.scale(10),
-                }}>
-                  <Icon type={TypeIcon.AntDesign} name={'hearto'} size={22} color={colors.colorRed} />
-                  <TouchableOpacity onPress={() =>this._AddCart(item)}>
-                    <Icon type={TypeIcon.AntDesign} name={'plussquare'} size={30}></Icon>
-                  </TouchableOpacity>
-                </View>
-              </ImageBackground>
+                <ImageBackground resizeMode={'cover'} source={{uri:item.imgproduct[0].img}} style={{width:'100%',height:'100%'}}>
+                  <View style={{flex:1,justifyContent:'space-between',alignItems:'flex-end',
+                  paddingHorizontal:FontSize.scale(30),paddingVertical:FontSize.scale(10),
+                  }}>
+                    <TouchableOpacity onPress={() =>this._changeIcon(item)}>
+                      {this._checkWhishlist(item._id) ==true ? 
+                      <Icon type={TypeIcon.AntDesign} name={'hearto'} size={22} color={colors.colorRed} />
+                    :<Icon type={TypeIcon.AntDesign} name={'hearto'} size={22} color={colors.black} />
+                      }
+                      </TouchableOpacity>
+                    <TouchableOpacity onPress={() =>this._AddCart(item)}>
+                      {isLoangdingCart ? <ActivityIndicator size={'large'}  color={colors.grayLight}/>:
+                      <Icon type={TypeIcon.AntDesign} name={'plussquare'} size={30}></Icon>
+                      }
+                    </TouchableOpacity>
+                  </View>
+                </ImageBackground>
               <Text numberOfLines={2} style={{color:colors.grayLight,fontSize:FontSize.reText(18)}} >{item.nameproduct}</Text>
               <View style={{height:FontSize.scale(8)}}></View>
               <Text style={{fontSize:FontSize.reText(22)}} >{"$"+item.price+".00"}</Text>
      </TouchableOpacity>
    )
-    
   }
-  render() {
-    const {isShowGrid,numcoloum}=this.state
+   render() {
+    const {isShowGrid,isLoading}=this.state
       const {data}=this.props
-      Utils.nlog(data)
+      Utils.nlog('gia tri loading '+isLoading)
     return (
       <View style={{flex:1,backgroundColor:colors.white}}>
             <HeaderView
@@ -196,17 +227,20 @@ const dataCategory=[
                       </ScrollView>
             </View>
             <View style={{flex:1}}>
-                    <FlatList
-                    key={isShowGrid}
-                    showsVerticalScrollIndicator={false}
-                    style={{
-                    paddingVertical:FontSize.scale(7),
-                    paddingHorizontal:FontSize.scale(10)}}
-                    data={this.props.data}
-                    renderItem={ isShowGrid==true ? this._renderItemGrid:this._renderItemList}
-                    numColumns={isShowGrid==true? 2:1}
-                    keyExtractor={(item,index)=> index}            
-                    />
+              {isLoading==false ?
+             <FlatList
+             key={isShowGrid}
+             showsVerticalScrollIndicator={false}
+             style={{
+             paddingVertical:FontSize.scale(7),
+             paddingHorizontal:FontSize.scale(10)}}
+             data={this.props.data}
+             renderItem={ isShowGrid==true ? this._renderItemGrid:this._renderItemList}
+             numColumns={isShowGrid==true? 2:1}
+             keyExtractor={(item,index)=> index}            
+             />  :null
+            }
+                   
             </View>
       </View>
     );

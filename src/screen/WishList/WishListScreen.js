@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text,Image,TouchableOpacity } from 'react-native';
+import { View, Text,Image,TouchableOpacity,StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import Utils from '../../app/Utilis';
 import Button2 from '../../component/Button2';
@@ -13,6 +13,8 @@ import CartAction from '../../Redux/ActionsCart/CartAction';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import { TextColor, themes } from '../../config/ThemeProvider';
 import ThemeProvider2,{Context} from '../../config/ThemeProvider2';
+import HeadViewCustom from '../../container/HeadViewCustom';
+import NumberCart from '../../container/NumberCart';
 
 
  class WishListScreen extends Component {
@@ -106,7 +108,7 @@ _RenderItem= ({item,index}) =>
     borderTopColor:colors.grayLight,
     backgroundColor:colors.white
     }}>
-              <Image source={{uri:item.imgproduct[0].img}} style={{width:FontSize.scale(100),height:FontSize.scale(120),resizeMode:'stretch'}} ></Image>
+              <Image source={{uri:item.imgproduct[0].img}} style={{width:FontSize.scale(80),height:FontSize.scale(100),resizeMode:'cover'}} ></Image>
               <View style={{flex:1,flexDirection:'row'}}>
                 <View style={{paddingHorizontal:FontSize.scale(10)}} >
                     <Text style={{color:colors.grayLight,fontSize:FontSize.reText(17)}}>{item.nameproduct}</Text>
@@ -119,7 +121,7 @@ _RenderItem= ({item,index}) =>
                     />
                 </View>
               <View View style={{flex:1,justifyContent:'flex-start',alignItems:'flex-end'}}>
-                <Text  style={{fontWeight:'bold',fontSize:FontSize.reText(18)}}>
+                <Text  style={{...FontSize.TextStyles.semiBold,fontSize:FontSize.sizes.sText18}}>
                   {'$'+item.price+'.00'}
                 </Text>
               </View>
@@ -132,17 +134,37 @@ _RenderItem= ({item,index}) =>
     return (
       <Context.Consumer>
           {({ theme, updateTheme }) => (
-          <SwipeListView 
-          showsVerticalScrollIndicator={false}
-          style={{backgroundColor:theme.colors.background}}
-          keyExtractor={(item,index) => index}
-          data={this.props.data}
-          renderItem={this._RenderItem}
-          ListHeaderComponent={this._RenderItemHeader}
-          ListEmptyComponent={this._RenderItemEmpty}
-          renderHiddenItem={this._RenderItemHiden}
-          rightOpenValue={-FontSize.scale(160)}
-          />
+           <View style={styles.container}>
+             <HeadViewCustom
+              ViewLeft={
+                <View style={{width:FontSize.scale(20)}}/>
+              }
+              ViewCenter={
+                <View>
+                  <Text style={{...FontSize.TextStyles.semiBold,fontSize:FontSize.sizes.sText18}}>{'WishList'}</Text>
+                  <View style={{alignItems:'center'}}>
+                    <Text style={{color:colors.grayLight,fontSize:FontSize.reText(18)}}>{this._GetCountLike()+' item'}</Text>
+                  </View>
+                </View>
+              }
+              ViewRight={
+                <View style={{flexDirection:'row'}}>
+                  <NumberCart  number={0} />
+                  <Icon type={TypeIcon.AntDesign} name='down-square-o' size={22}/>
+                </View>
+              }
+             />
+            <SwipeListView 
+            showsVerticalScrollIndicator={false}
+            style={{backgroundColor:theme.colors.background}}
+            keyExtractor={(item,index) => index}
+            data={this.props.data}
+            renderItem={this._RenderItem}
+            ListEmptyComponent={this._RenderItemEmpty}
+            renderHiddenItem={this._RenderItemHiden}
+            rightOpenValue={-FontSize.scale(160)}
+            />
+          </View>
           )}
         </Context.Consumer>
     )
@@ -160,5 +182,14 @@ const mapDispatchToProps =(dispatch) =>{
     LikeProduct:(id) =>dispatch(CartAction.ActionAdd_LikeProduct(id)),
   }
 }
+const styles = StyleSheet.create({
+  container:{
+    backgroundColor:colors.white,
+    flex:1,
+    paddingHorizontal:FontSize.scale(15),
+    paddingVertical:FontSize.scale(12)
+    
+  }
+})
 
 export default connect(mapStateToProps,mapDispatchToProps)(WishListScreen)

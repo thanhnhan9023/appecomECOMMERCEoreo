@@ -41,12 +41,12 @@ const databottom=[
       nameicon:'account',
       configScreen:Config.login,
   },
-  {
-    NameScreen:'Camera',
-    typeicon:TypeIcon.MaterialCommunityIcons,
-    nameicon:'account',
-    configScreen:Config.Camera,
-},
+//   {
+//     NameScreen:'Camera',
+//     typeicon:TypeIcon.MaterialCommunityIcons,
+//     nameicon:'account',
+//     configScreen:Config.Camera,
+// },
 ]
  class MyTabBar extends Component {
   constructor(props) {
@@ -95,7 +95,7 @@ const databottom=[
                 >
                   <View style={{flexDirection:'row'}}>
                    <Icon  type={item.typeicon} name={item.nameicon} size={24} color={isFocused  ==true ? colors.black:colors.grayLight} ></Icon>
-                    {index==2 && this.props.datalike.length>0 || index==3 && this.props.datacart.length>0 ? 
+                    {index==2 && this.props.datalike.length>0  && this.props.datalike!=null || index==3 && this.props.datacart.length>0 ? 
                       <View style={{width:FontSize.scale(8),height:FontSize.scale(8),
                       backgroundColor:colors.redStar,borderRadius:FontSize.scale(8),
                     position:'absolute',

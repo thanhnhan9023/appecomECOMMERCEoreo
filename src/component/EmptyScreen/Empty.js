@@ -29,14 +29,14 @@ export default class Empty extends Component {
                   />
                   <Text 
                     style={{
-                    fontSize:FontSize.reText(30),
-                    fontWeight:'bold',
+                    ...FontSize.TextStyles.semiBold,
+                    fontSize:FontSize.sizes.sText26,
                     color:theme.colors.text}}>{TxtTitle}
                   </Text>
                   <View
                   style={{height:FontSize.scale(10)}}
                   />
-                  <Text style={{color:theme.colors.text}}>{TxtSub}</Text>
+                  <Text style={{...FontSize.TextStyles.roboto,fontSize:FontSize.sizes.sText16,color:theme.colors.text}}>{TxtSub}</Text>
                   <View
                   style={{height:FontSize.scale(35)}}
                   />
@@ -44,7 +44,8 @@ export default class Empty extends Component {
                   title={TitleButton}
                   onPress={() =>{Utils.navigate(TxtSceen)}}
                   styleTxt={{
-                    fontWeight:'' 
+                      ...FontSize.TextStyles.semiBold,
+                      fontSize:FontSize.sizes.sText17
                   }}
                   style={{
                     backgroundColor:colors.white,

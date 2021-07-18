@@ -65,7 +65,6 @@ const data=[
     {
         return(
             <TouchableOpacity key={`${index}`} style={{
-                paddingVertical:FontSize.scale(7),
                 paddingHorizontal:FontSize.scale(5),
                 backgroundColor:colors.colorGrayBgr,
                 marginBottom:FontSize.scale(10),
@@ -76,24 +75,21 @@ const data=[
             }}
             >
                 <View style={{paddingVertical:FontSize.scale(4),paddingHorizontal:FontSize.scale(7),flexDirection:'row',alignItems:'center'}}>
-                {/* <View  style={{width:FontSize.scale(50),height:FontSize.scale(50),borderWdth:1,backgroundColor:colors.white,overflow:'hidden'}}> */}
-                <Image  style={{width:FontSize.scale(70),height:FontSize.scale(70),resizeMode:'cover',borderRadius:70}}   source={{uri:item.imgproduct}}></Image>
-                {/* </View> */}
+                <Image  style={{width:FontSize.scale(60),height:FontSize.scale(60),resizeMode:'cover',borderRadius:70}}   source={{uri:item.imgproduct}}></Image>
                 <View style={{width:FontSize.scale(10)}}>
                 </View>
-                <Text style={{fontSize:FontSize.reText(20)}}>
+                <Text style={{...FontSize.TextStyles.roboto,fontSize:FontSize.sizes.sText18}}>
                     {item.nameproduct}
                 </Text>
-                
                 <View style={{flex:3}}>
                     </View>
-                    <View style={{width:FontSize.scale(20),height:FontSize.scale(20),paddingVertical:FontSize.scale(2),paddingHorizontal:FontSize.scale(2),backgroundColor:colors.grayLight,borderRadius:FontSize.scale(5)}}>
-                        <Text style={{textAlign:'center'}}>{item.nameproduct}</Text>
+                    <View style={{width:FontSize.scale(20),height:FontSize.scale(20),paddingVertical:FontSize.scale(2),paddingHorizontal:FontSize.scale(2),backgroundColor:colors.colorGrayBgr,borderRadius:FontSize.scale(5)}}>
+                        <Text style={{textAlign:'center',...FontSize.TextStyles.roboto,fontSize:FontSize.sizes.sText19}}>{item.nameproduct}</Text>
                     </View>
                     <View style={{width:FontSize.scale(10)}}>
                     </View>
                     <View>
-                       <Icon type={TypeIcon.AntDesign} name={'right'} size={16} ></Icon> 
+                       <Icon type={TypeIcon.AntDesign} name={'right'} size={14} ></Icon> 
                     </View>
                 </View>
             </TouchableOpacity>
@@ -114,25 +110,18 @@ const data=[
         return (
           <Context.Consumer>
                 {({ theme, updateTheme }) => (
-                <View style={{flex:1,backgroundColor:theme.colors.background,paddingVertical:FontSize.scale(15),paddingHorizontal:FontSize.scale(15)}}>
+                <ScrollView showsVerticalScrollIndicator={false} style={{flex:1,backgroundColor:theme.colors.background,paddingVertical:FontSize.scale(15),paddingHorizontal:FontSize.scale(15)}}>
                 <SreachView  iconLeft={TypeIcon.AntDesign} txtNameIcon='search1' sizeicon={20} />
-                    <View style={{height:FontSize.scale(24)}}>
-                    </View>
+                    <View style={{height:FontSize.scale(24)}}/>
                         <ImageBackground source={IMAGES.imgBgr1}  resizeMode={'cover'}  borderRadius={10} style={{ paddingVertical:FontSize.scale(20) }} >
                                 <Text style={{textAlign:'center',fontWeight:'bold',fontSize:FontSize.reText(28),color:colors.orange}}>{'Up to 40% Off Holiday Bit'}</Text>
-                                </ImageBackground>
-                    <View style={{height:FontSize.scale(10)}}>
-
-                    </View>
-                    <ScrollView showsVerticalScrollIndicator={false}>
-                                {!isLoading ?this.props.data.map(this._renderITem):
-                                <ActivityIndicator size={'large'} color={colors.grayLight} style={{justifyContent:'center',alignItems:'center'}}/> 
-                                }
-                    </ScrollView>
-                    <TouchableOpacity onPress={this.addproduct}>
-                        <Text>{'ADD'}</Text>
-                    </TouchableOpacity>
-                </View>
+                        </ImageBackground>
+                        <View style={{paddingVertical:FontSize.scale(15)}}>
+                            {!isLoading ?this.props.data.map(this._renderITem):
+                              <ActivityIndicator size={'large'} color={colors.grayLight} style={{justifyContent:'center',alignItems:'center'}}/> 
+                            }
+                        </View>
+                </ScrollView>
                 )}
             </Context.Consumer>
         )

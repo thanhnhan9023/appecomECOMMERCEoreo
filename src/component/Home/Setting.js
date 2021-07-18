@@ -10,48 +10,6 @@ import ThemeProvider2,{Context} from '../../config/ThemeProvider2';
 import { LightTheme, DarkTheme } from '../../config/Themes'
 import i18n from '../../config/i18n';
 
-const datanew=[
-    {
-     name:'Language',
-     typeicon:'',
-     nameicon:'',
-     onpress:() =>{
-         Utils.nlog('vao chuyen doi')
-            i18n.changeLanguage('en');
-     }
-    },
-    {
-        name:'Language',
-        typeicon:TypeIcon.AntDesign,
-        nameicon:'right',
-        txtright:'EN',
-    },
-    {
-        name:'Currency',
-        typeicon:TypeIcon.AntDesign,
-        nameicon:'right',
-        txtright:'USD',
-    },
-    {
-        name:'Config Advanced',
-        typeicon:TypeIcon.AntDesign,
-        nameicon:'right',
-        txtright:'',
-    },
-    {
-        name:'Dark Theme',
-        typeicon:'',
-        nameicon:'',
-        txtright:'',
-    },
-    {
-        name:'Dark Theme',
-        typeicon:'',
-        nameicon:'',
-        txtright:'',
-    },
-]
-
  class  Setting extends Component {
      constructor(props) {
          super(props)
@@ -74,7 +32,7 @@ const datanew=[
                                 />
                             }
                             ViewCenter={
-                                <Text style={{fontSize:FontSize.reText(24),fontWeight:'bold',color:theme.colors.text}}>{txtCenter}</Text>
+                                <Text style={{...FontSize.TextStyles.optionBold,fontSize:FontSize.sizes.sText18,color:theme.colors.text}}>{txtCenter}</Text>
                             }
                             ViewRight={
                                 <View style={{flexDirection:'row'}}>
@@ -96,7 +54,7 @@ const datanew=[
                         flexDirection:'row',
                         padding:FontSize.scale(12),
                         justifyContent:'space-between'}}>
-                            <Text style={{fontSize:FontSize.reText(20),fontWeight:'900',color:theme.colors.text}}>{item.name}</Text>
+                            <Text style={{...FontSize.TextStyles.semiBold,fontSize:FontSize.sizes.sText17,color:theme.colors.text}}>{item.name}</Text>
                             <View style={{flexDirection:'row'}}>
                                 {item.txtright? (<Text style={{color:theme.colors.text}}>{item.txtright}</Text>):null}
                                 <View style={{width:FontSize.scale(10)}} />
@@ -118,12 +76,10 @@ const datanew=[
                                 </TouchableOpacity>
                             </View>
                         </TouchableOpacity>
-                     
-                        
                     )
-                    
                 })}
-                <TouchableOpacity onPress={() =>{
+
+                {/* <TouchableOpacity onPress={() =>{
                         if(i18n.language=='vi')
                         {
                             i18n.changeLanguage('en');
@@ -133,7 +89,7 @@ const datanew=[
                         }
                 }}>
                     <Text>{'doi ngon ngu'}</Text>
-                      </TouchableOpacity>
+                      </TouchableOpacity> */}
             </View>
                 )}
             </Context.Consumer>

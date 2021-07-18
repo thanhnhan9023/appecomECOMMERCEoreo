@@ -34,7 +34,6 @@ const  styles = StyleSheet.create({
     commonText:{
         fontSize:FontSize.reText(18),
         color:colors.black,    
-        fontWeight:'bold',
         textAlign:'center'
     }
 })
