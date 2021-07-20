@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationActions } from '@react-navigation/compat';
 import  axios from 'axios'
 
-const URLAPI='https://shoporeo.herokuapp.com';
+const URLAPI='https://apioreo.herokuapp.com';
 
  const  CallApi=(endpoint,method='GET',body) =>
  {
@@ -88,14 +88,6 @@ const filter = (arr = [], key = 'id', vals = "tam") => {
 }
 
 async function ngetStore(keys, defaultValue = null) {
-    // let temp = await AsyncStorage.getItem(keys);
-    // if (temp == null) return defaultValue;
-    // try {
-    //     let tempValue = JSON.parse(temp);
-    //     return tempValue;
-    // } catch (error) {
-    //     return temp;
-    // }
     try {
         const jsonValue = await AsyncStorage.getItem(keys)
          let a=jsonValue != null ? JSON.parse(jsonValue) : null;
