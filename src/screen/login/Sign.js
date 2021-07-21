@@ -11,7 +11,9 @@ import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { LoginManager,AccessToken ,Profile} from "react-native-fbsdk-next";
 import LoginSuccess from './LoginSuccess';
-import { utils } from '@react-native-firebase/app';
+import { connect } from 'react-redux'
+import AuthAction from '../../Redux/Actions/ActionAuth/AuthAction'
+
 const dataIcon=[
   {
     TypeIcon:TypeIcon.AntDesign,
@@ -33,14 +35,15 @@ const dataIcon=[
   },
 ]
 
-export default class Sign extends Component {
+ class Sign extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email:'',
       showpass:true,
       checkemail:false,
       datalogin:null,
+      UserName:null,
+      Password:null,
     };
   }
 _showpass=() =>{
@@ -141,17 +144,24 @@ _logout= async() =>{
   Utils.nlog('gia tri token')
   Utils.nlog(token)
 }
+_LoginToken=async () =>{
+  const {UserName,Password}=this.state
+  let a={
+    UserName,
+    Password
+  }
+   this.props.LoginToken(a)
+  
+}
+componentDidUpdate=() =>{
+  
+  if(this.props.data!=null)
+  {
+    Utils.goBack();
+  }
+}
   render() {
-    const {showpass,email,datalogin}=this.state
-    if(datalogin!=null)
-    {
-      Utils.nsetStore('1',datalogin.email)
-      return(
-      <LoginSuccess/>
-      )
-    }
-    else
-    {
+    const {showpass,UserName,Password,datalogin}=this.state
     return (
       <View style={{flex:1,backgroundColor:colors.white}}>    
         <View onTouchEnd={() => {
@@ -173,17 +183,18 @@ _logout= async() =>{
                     <TextInput
                     style={{borderWidth:0.7,borderColor:colors.grayLight}}
                     placeholder={'Email Address or Username * '}
-                    value={email}
+                    value={UserName}
                     autoFocus = {true}
-                    onChangeText={val => this.setState({email:val})}
-                    onTouchEnd={() =>this._checkemial(email)}
+                    onChangeText={val => this.setState({UserName:val})}
+                    // onTouchEnd={() =>this._checkemial(UserName)}
                     />
                     <View style={{height:FontSize.scale(12)}}/>
                     <TextInput 
                       style={{borderWidth:0.7,borderColor:colors.grayLight}}
                       placeholder={'Password'}
                       secureTextEntry={showpass}
-                     
+                      value={Password}
+                      onChangeText={val => this.setState({Password:val})}
                     />
                     <Icon style={{position:'absolute',right:20,bottom:10}}  onPress={this._showpass} type={TypeIcon.Ionicons} 
                      name={showpass?'eye-off-outline':'eye-outline'} size={22}/>
@@ -192,7 +203,9 @@ _logout= async() =>{
             <View View style={{height:FontSize.scale(10)}}/>
                 <View style={{paddingHorizontal:FontSize.scale(10)}}>
                 <View style={{height:FontSize.scale(15)}}/>
-                    <TouchableOpacity style={{borderRadius:3,paddingVertical:FontSize.scale(12),backgroundColor:'red',backgroundColor:colors.black}}>
+                    <TouchableOpacity 
+                    onPress={() => this._LoginToken()}
+                    style={{borderRadius:3,paddingVertical:FontSize.scale(12),backgroundColor:'red',backgroundColor:colors.black}}>
                       <Text style={{fontSize:FontSize.reText(20),color:colors.white,textAlign:'center'}}>{'Sign In'}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={{paddingVertical:FontSize.scale(20),alignItems:'center'}}>
@@ -229,12 +242,20 @@ _logout= async() =>{
                           </View>
       </View>
     );
+
   }
 }
-}
+ 
 
-// const app2=() =>{
-//   return(
-//     <Login {...props}></Login>
-//   )
-// }
+const mapStateToProps =(state) =>{
+  return{
+    data:state.AuthReducer.token
+  }
+}
+const mapDispatchToProps =(dispatch) =>{
+  return {
+    LoginToken:(data) => dispatch(AuthAction.Login(data)),
+   
+  }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(Sign)

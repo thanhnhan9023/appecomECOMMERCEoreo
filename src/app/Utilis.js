@@ -12,10 +12,9 @@ const URLAPI='https://apioreo.herokuapp.com';
             method:method,
             url:`${URLAPI}/${endpoint}`,
             data:body,
-     }).catch(err =>{
+     }).catch(
 
-        console.log(err);
-     })
+     )
  }
  
 let _navigator;

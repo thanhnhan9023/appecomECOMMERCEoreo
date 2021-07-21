@@ -12,8 +12,9 @@ import HeadViewCustom from '../../container/HeadViewCustom';
 import NumberCart from '../../container/NumberCart';
 import i18n from '../../config/i18n';
 import { withNamespaces } from 'react-i18next';
-
-
+import { connect } from 'react-redux'
+import AuthAction from '../../Redux/Actions/ActionAuth/AuthAction'
+import LoginSuccess from './LoginSuccess';
 
 const dataList = [
     {
@@ -185,9 +186,9 @@ const datasetings=[
     }
     render() {
         const { t } = this.props;
-        Utils.nlog(i18n);
+        if(this.props.token==null)
+        {
         return (
-            
             <Context.Consumer>
                    {({ theme }) => (
             <View style={{flex:1,backgroundColor:colors.white,paddingHorizontal:FontSize.scale(10)}}>
@@ -266,24 +267,24 @@ const datasetings=[
                     <View style={{paddingHorizontal:FontSize.scale(4),color:theme.colors.text}}/>
                     <Text  style={{fontSize:FontSize.reText(18),color:colors.grayLight}}>{i18n.t('home')}</Text>
                 </View>
-                {/* <TouchableOpacity onPress={() =>{
-                    if(i18n.language=='vi')
-                    {
-                      i18n.changeLanguage('en');
-                    }
-                    else{
-                        i18n.changeLanguage('vi');
-                    }
-                }}>
-                    <Text>{'doi ngon ngu'}</Text>
-                      </TouchableOpacity> */}
             </View>
                    )}
             </Context.Consumer>
            
         )
     }
+    else{
+        return(
+            <LoginSuccess/>
+        )
+    }
+    }
 }
+const mapStateToProps =(state) =>{
+    return{
+        token:state.AuthReducer.token
+    }
+  }
 
-export default withNamespaces()(login);
+export default connect(mapStateToProps,null)(login);
 

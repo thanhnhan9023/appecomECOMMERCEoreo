@@ -1,11 +1,10 @@
-import Utils from "../../app/Utilis"
+import Utils from "../../../app/Utilis"
 import TypesAction from "./TypeContStant"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // call api  request san pham theo loai sp
 const ActionFetchSanPhamToLoaiSpRequest=(id) =>{
-    console.log('gia tri  id:'+id)
-    return(dispatch) =>{
+        return(dispatch) =>{
         return Utils.CallApi(`api/prodcut/getProductIdcategory/${id}`,'GET',null).then(
             res => 
             dispatch(ActionFetchSanPhamToLoaiSp(res.data),
@@ -47,7 +46,8 @@ const ActionFetchSanPhamRequest=() =>{
 const ActionFetchLoaiSpRequest=() =>{
     return(dispatch) =>{
             return Utils.CallApi('api/Category/getALLCategory','GET',null).then(
-                res => dispatch(ActionFetchLoaiSp(res.data))
+                res => 
+                dispatch(ActionFetchLoaiSp(res.data))
             );
     };
 }

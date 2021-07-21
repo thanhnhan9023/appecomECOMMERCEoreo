@@ -8,7 +8,7 @@ import {IMAGES} from '../../../assets/images/IndexImg'
 import Utils from '../../app/Utilis'
 import Config from '../../navigation/Config'
 import { connect } from 'react-redux'
-import CartAction from '../../Redux/ActionsCart/CartAction'
+import CartAction from '../../Redux/Actions/ActionCart/CartAction'
 import { Context } from '../../config/ThemeProvider2'
 const data=[
     {

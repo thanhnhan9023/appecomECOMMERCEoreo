@@ -6,7 +6,7 @@ import Utils from '../../app/Utilis';
 import FontSize from '../../config/FontSize';
 import Icon, { TypeIcon } from '../../config/Icon';
 import { colors } from '../../config/style';
-import CartAction from '../../Redux/ActionsCart/CartAction';
+import CartAction from '../../Redux/Actions/ActionCart/CartAction';
 
  class SniperInput extends Component {
   constructor(props) {

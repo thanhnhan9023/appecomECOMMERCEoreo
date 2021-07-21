@@ -9,7 +9,7 @@ import Icon, { TypeIcon } from '../../config/Icon';
 import { colors } from '../../config/style';
 import HeaderView from '../../container/HeaderView';
 import Config from '../../navigation/Config';
-import CartAction from '../../Redux/ActionsCart/CartAction';
+import CartAction from '../../Redux/Actions/ActionCart/CartAction';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import { TextColor, themes } from '../../config/ThemeProvider';
 import ThemeProvider2,{Context} from '../../config/ThemeProvider2';

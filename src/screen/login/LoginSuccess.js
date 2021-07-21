@@ -9,6 +9,9 @@ import Icon,{ TypeIcon } from '../../config/Icon'
 import { colors } from '../../config/style'
 import HeadViewCustom from '../../container/HeadViewCustom'
 import NumberCart from '../../container/NumberCart'
+import { connect } from 'react-redux'
+import AuthAction from '../../Redux/Actions/ActionAuth/AuthAction'
+import Config from '../../navigation/Config'
 
  const dataiInformation=[
     {
@@ -36,40 +39,43 @@ import NumberCart from '../../container/NumberCart'
         phone:'',
     },
 ]
- const dataSettings=[
-    {
-        nameicon1:'setting',
-        typeicon1:TypeIcon.AntDesign,
-        name:'App Settings',
-        nameicon2:'right',
-        typeicon2:TypeIcon.AntDesign,
-        phone:'',
-    },
-    {
-        nameicon1:'help-circle',
-        typeicon1:TypeIcon.Feather,
-        name:'Help & info',
-        nameicon2:'right',
-        typeicon2:TypeIcon.AntDesign,
-        phone:'',
-    },
-    {
-        nameicon1:'phone-call',
-        typeicon1:TypeIcon.Feather,
-        name:'Hotline',
-        nameicon2:'right',
-        typeicon2:TypeIcon.AntDesign,
-        phone:'',
-    },
-    {
-        nameicon1:'log-out',
-        typeicon1:TypeIcon.Entypo,
-        name:'Sign Out',
-        nameicon2:'right',
-        typeicon2:TypeIcon.AntDesign,
-        phone:'0123 456 789',
-    },
-]
+//  const dataSettings=[
+//     {
+//         nameicon1:'setting',
+//         typeicon1:TypeIcon.AntDesign,
+//         name:'App Settings',
+//         nameicon2:'right',
+//         typeicon2:TypeIcon.AntDesign,
+//         phone:'',
+//     },
+//     {
+//         nameicon1:'help-circle',
+//         typeicon1:TypeIcon.Feather,
+//         name:'Help & info',
+//         nameicon2:'right',
+//         typeicon2:TypeIcon.AntDesign,
+//         phone:'',
+//     },
+//     {
+//         nameicon1:'phone-call',
+//         typeicon1:TypeIcon.Feather,
+//         name:'Hotline',
+//         nameicon2:'right',
+//         typeicon2:TypeIcon.AntDesign,
+//         phone:'',
+//     },
+//     {
+//         nameicon1:'log-out',
+//         typeicon1:TypeIcon.Entypo,
+//         name:'Sign Out',
+//         nameicon2:'right',
+//         typeicon2:TypeIcon.AntDesign,
+//         phone:'0123 456 789',
+//         onPress:() =>{
+            
+//         }
+//     },
+// ]
 const dataIcon=[
     {
       TypeIcon:TypeIcon.FontAwesome,
@@ -98,6 +104,51 @@ const dataIcon=[
     },
   ]
 class LoginSuccess extends Component {
+    constructor(props) {
+    super(props);
+    this.state = {
+        dataSettings:[
+            {
+                nameicon1:'setting',
+                typeicon1:TypeIcon.AntDesign,
+                name:'App Settings',
+                nameicon2:'right',
+                typeicon2:TypeIcon.AntDesign,
+                phone:'',
+            },
+            {
+                nameicon1:'help-circle',
+                typeicon1:TypeIcon.Feather,
+                name:'Help & info',
+                nameicon2:'right',
+                typeicon2:TypeIcon.AntDesign,
+                phone:'',
+            },
+            {
+                nameicon1:'phone-call',
+                typeicon1:TypeIcon.Feather,
+                name:'Hotline',
+                nameicon2:'right',
+                typeicon2:TypeIcon.AntDesign,
+                phone:'',
+            },
+            {
+                nameicon1:'log-out',
+                typeicon1:TypeIcon.Entypo,
+                name:'Sign Out',
+                nameicon2:'right',
+                typeicon2:TypeIcon.AntDesign,
+                phone:'0123 456 789',
+                onPress:() =>{
+                    let a={RefreshToken:this.props.token.RefreshToken}
+                    console.log(a)
+                    this.props.Logout(a);
+                    Utils.navigate(Config.login)
+                }
+            },
+        ]
+    };
+    }
     _renderItemInformation=(item,index,indexTxt,isTxt,isIcon) =>{
         return(
             <View key={index}>
@@ -115,8 +166,9 @@ class LoginSuccess extends Component {
         )
     }
     _renderItemSettings=(item,index,indexTxt,indexIcon,isTxt,isIcon) =>{
+        const {dataSettings}=this.state
         return(
-            <View key={index}>
+            <TouchableOpacity key={index}  onPress={() => item.onPress()}>
                 <View style={{flexDirection:'row',justifyContent:'space-between',borderBottomWidth:index==dataSettings.length-1?0:0.7,
             borderBottomColor:colors.grayLight,paddingVertical:FontSize.scale(10)}}>
                     <View style={{flexDirection:'row'}}>
@@ -127,7 +179,7 @@ class LoginSuccess extends Component {
                     {isTxt==true && index==indexTxt  ?<Text style={{...FontSize.TextStyles.roboto,fontSize:FontSize.sizes.sText16,color:colors.grayLight}}>{item.phone}</Text>:null }
                     {isIcon==true && index!=indexIcon && index!=indexTxt  ?<Icon type={item.typeicon2} name={item.nameicon2} size={18}/>:null}
                 </View>
-            </View>
+            </TouchableOpacity>
         )
     }
     _renderItemIconsmall=(item,index) =>{
@@ -155,8 +207,9 @@ class LoginSuccess extends Component {
         )
     }
     render() {
-                let a=Utils.ngetStore('nhandycu28@gmail.com')
-                Utils.nlog(a)
+        let a=Utils.ngetStore('nhandycu28@gmail.com')
+        const {dataSettings}=this.state
+        console.log(dataSettings)
         return (
             <View style={{flex:1,backgroundColor:colors.white,paddingVertical:FontSize.scale(10),paddingHorizontal:FontSize.scale(15)}}>
                 <HeadViewCustom
@@ -178,7 +231,6 @@ class LoginSuccess extends Component {
                                  <NumberCart
                                          number={0}
                                     />
-                                  
                                     <Icon type={TypeIcon.AntDesign} name='down-square-o' size={22}/>
                            </View>
                         )
@@ -200,7 +252,6 @@ class LoginSuccess extends Component {
                <View style={{flexDirection:'row',paddingVertical:FontSize.scale(20)}}>
                {dataIcon.map(this._renderItemIconsmall)}   
                </View>
-                   {/* {Utils.ngetStore(1)} */}
             </View>
         )
     }
@@ -210,4 +261,16 @@ const styles = StyleSheet.create({
 
 })
  
-export default LoginSuccess
+const mapStateToProps =(state) =>{
+    return{
+        token:state.AuthReducer.token
+    }
+  }
+
+  const mapDispatchToProps =(dispatch) =>{
+    return {
+      Logout:(data) => dispatch(AuthAction.Logout(data)),
+    }
+  }
+
+  export default connect(mapStateToProps,mapDispatchToProps)(LoginSuccess)

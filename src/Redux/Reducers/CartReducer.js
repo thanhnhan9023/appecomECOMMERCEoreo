@@ -1,21 +1,8 @@
-import TypesAction from "../ActionsCart/TypeContStant";
+import TypesAction from "../Actions/ActionCart/TypeContStant";
 import produce from "immer"
 import Utils from "../../app/Utilis";
 import {IMAGES} from "../../../assets/images/IndexImg";
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
-// const datannew= async () =>{
-//     try {
-//         const jsonValue = await AsyncStorage.getItem('cart')
-//          let a=jsonValue != null ? JSON.parse(jsonValue) : null;
-//          return a
-//       } catch(e) {
-//         Utils.nlog(e)
-//       }
-// }
-// let a=  datannew()
-// Utils.nlog(a);
 const initState = {
     ListLoaisp:[],
     ListSanPham:[],
@@ -39,8 +26,10 @@ export const CartReducer = (state = initState, action) => {
             break;
             case TypesAction.ACTION_Cart:
             {    
-                    
+                if(payload!=null)
+                {
                         draft.ListCart=JSON.parse(payload)
+                }
              }
              break;        
             case TypesAction.ACTION_Fetch_SanPhamToLoaiSp:{

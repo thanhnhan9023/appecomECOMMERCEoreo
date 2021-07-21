@@ -10,8 +10,7 @@ import Utils from '../app/Utilis';
 import { colors } from '../config/style';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import SplashScreen from '../screen/Home/SplashScreen';
-
-
+import { connect } from 'react-redux'
 
 
 const Drawer = createDrawerNavigator();
@@ -59,6 +58,7 @@ const data=[
            <Tab.Screen name={Config.Categories} component={ConfigScreen.CartScreen} />
            <Tab.Screen name={Config.login} component={ConfigScreen.login} />
            <Tab.Screen name={Config.Camera} component={ConfigScreen.Camera} />
+           <Tab.Screen name={Config.LoginSuccess} component={ConfigScreen.LoginSuccess} />
       </Tab.Navigator>
     );
     }
@@ -71,11 +71,11 @@ class DrawMenuSceen extends Component {
       drawerContent= {(props) => <DrawMenuComponent data={data} {...props}></DrawMenuComponent>}>
       <Drawer.Screen {...this.props} name={Config.HomeScreen} component={ConfigScreen.Home} />
       <Drawer.Screen name={Config.Categories} component={ConfigScreen.Categories} />
+      <Tab.Screen name={Config.LoginSuccess} component={ConfigScreen.LoginSuccess} />
     </Drawer.Navigator>
     );
   }
 }
-
 
 const MainStack= createStackNavigator();
 class MainStackScreen extends Component{
@@ -143,4 +143,6 @@ class MainStackScreen extends Component{
       </Stack.Navigator>
     );
 }
+
+
 export default RootSrceen

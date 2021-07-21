@@ -10,7 +10,7 @@ import { colors } from '../../config/style';
 import HeaderView from '../../container/HeaderView';
 import Config from '../../navigation/Config';
 import { connect } from 'react-redux';
-import CartAction from '../../Redux/ActionsCart/CartAction';
+import CartAction from '../../Redux/Actions/ActionCart/CartAction';
 import { showMessage, hideMessage } from "react-native-flash-message";
 
 const dataCategory=[

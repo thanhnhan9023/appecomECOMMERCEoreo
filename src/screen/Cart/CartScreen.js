@@ -5,10 +5,9 @@ import Icon, { TypeIcon } from '../../config/Icon';
 import { colors } from '../../config/style';
 import HeaderView from '../../container/HeaderView';
 import Utils from '../../app/Utilis';
-import {IMAGES} from '../../../assets/images/IndexImg';
 import {connect} from 'react-redux'
 import { SwipeListView } from 'react-native-swipe-list-view';
-import CartAction from '../../Redux/ActionsCart/CartAction';
+import CartAction from '../../Redux/Actions/ActionCart/CartAction';
 import SniperInput from '../../component/SniperInput/SniperInput';
 import Config from '../../navigation/Config';
 import Empty from '../../component/EmptyScreen/Empty';
@@ -35,10 +34,7 @@ class CartScreen extends Component {
      return Total;
   }
  GetCountCart=() =>{
-    return this.props.data.length+"";
- }
- GetAllCart=() =>{
-    const array=this.state.DataCart
+     this.props.data.length+"";
  }
  RemoveCart=(id) =>{
    this.props.RemoveCart(id)
@@ -186,9 +182,7 @@ _cart= async() =>{
      let a=jsonValue != null ? JSON.parse(jsonValue) : null;
      this.setState({datacart:a})
   } catch(e) {
-    Utils.nlog(e)
   }
-  Utils.nlog(this.state.datacart)
 }
   render() {
       const {data}=this.props

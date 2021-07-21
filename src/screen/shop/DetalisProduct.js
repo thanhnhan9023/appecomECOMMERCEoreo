@@ -12,7 +12,7 @@ import Button2 from '../../component/Button2';
 import { ScrollView } from 'react-native';
 import Utils from '../../app/Utilis';
 import { connect } from 'react-redux';
-import CartAction from '../../Redux/ActionsCart/CartAction';
+import CartAction from '../../Redux/Actions/ActionCart/CartAction';
 import { showMessage, hideMessage } from "react-native-flash-message";
 
  class DetalisProduct extends Component {
