@@ -34,7 +34,7 @@ class CartScreen extends Component {
      return Total;
   }
  GetCountCart=() =>{
-     this.props.data.length+"";
+     return this.props.data.length+"";
  }
  RemoveCart=(id) =>{
    this.props.RemoveCart(id)
