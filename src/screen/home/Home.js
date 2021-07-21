@@ -172,7 +172,6 @@ class Home extends Component {
                   <View style={{height:FontSize.scale(10)}}></View>
                   <Text style={{color:colors.colorGrayLight }}>{item.time}</Text>
               </View>
-              
           </TouchableOpacity>
         )
     }

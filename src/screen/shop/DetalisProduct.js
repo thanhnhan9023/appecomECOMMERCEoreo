@@ -69,7 +69,7 @@ import { showMessage, hideMessage } from "react-native-flash-message";
             />
             <ScrollView
             showsVerticalScrollIndicator={false}
-            >
+            > 
             <SwiperFlatList
                     key={index}
                     index={index}
@@ -148,7 +148,7 @@ import { showMessage, hideMessage } from "react-native-flash-message";
                               {data.color.map((item,index) =>{
                             return( 
                               <TouchableOpacity key={index} 
-                              onPress={() =>{this.setState({index:index+1})}}
+                              onPress={() =>{this.setState({index:index})}}
                               style={{...styles.selectcolor,backgroundColor:item.color}}>
                               </TouchableOpacity>
                             )

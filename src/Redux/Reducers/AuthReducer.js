@@ -56,6 +56,27 @@ const initState = {
                 error:payload,
                 }
         }
+        case TypesAction.Loading_Registration:{
+            return{
+                ...state,
+                isLoading:true,
+                }
+        }
+        case TypesAction.Succes_Registration:{
+            return{
+                ...state,
+                isLoading:false,
+                token:null,
+                isLogin:false,
+                }
+        }
+        case TypesAction.Fail_Registration:{
+            return{
+                ...state,
+                isLoading:false,
+                error:payload,
+                }
+        }
     }
     return state;
 }

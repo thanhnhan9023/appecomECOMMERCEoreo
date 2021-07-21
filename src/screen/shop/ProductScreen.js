@@ -97,16 +97,15 @@ const dataCategory=[
      style={{
       height:FontSize.scale(280),
       width:FontSize.scale(160),
-      marginRight:FontSize.scale(10),
+      marginRight:FontSize.scale(4),
      }}>
-          <ImageBackground resizeMode={'cover'} source={{uri:item.imgproduct[0].img}} style={{width:'100%',height:'90%'}} >
+          <ImageBackground resizeMode={'stretch'} source={{uri:item.imgproduct[0].img}} style={{width:FontSize.scale(156),height:FontSize.scale(200)}} >
                 <View style={{
                   paddingVertical:FontSize.scale(10),
                   paddingHorizontal:FontSize.scale(10),
                   justifyContent:'space-between',
                   alignItems:'flex-end',
-                  width:'100%',
-                  height:'85%',
+                  height:FontSize.scale(200),
                   }}>
                     <TouchableOpacity onPress={() =>this._changeIcon(item)}>
                       {this._checkWhishlist(item._id) ==true ? 
@@ -120,8 +119,8 @@ const dataCategory=[
                     }
                   </TouchableOpacity>
                 </View>
-                <View style={{height:FontSize.scale(20)}}></View>
-                <Text numberOfLines={2} style={{color:colors.grayLight,...FontSize.TextStyles.roboto,fontSize:FontSize.sizes.sText15}} >{item.nameproduct}</Text>
+                <View style={{height:FontSize.scale(15)}}></View>
+                <Text numberOfLines={2} style={{color:colors.grayLight,...FontSize.TextStyles.roboto,fontSize:FontSize.sizes.sText14}} >{item.nameproduct}</Text>
                 <Text style={{...FontSize.TextStyles.optionNormal}} >{"$"+item.price+".00"}</Text>
             </ImageBackground>
     </TouchableOpacity>
@@ -141,11 +140,15 @@ const dataCategory=[
    return(
      <TouchableOpacity 
      style={{
-       backgroundColor:colors.white,height:FontSize.scale(400),
-     marginBottom:FontSize.scale(60)}} >
-                <ImageBackground resizeMode={'cover'} source={{uri:item.imgproduct[0].img}} style={{width:'100%',height:'100%'}}>
+      height:FontSize.scale(430),
+      marginBottom:FontSize.scale(20)
+      // backgroundColor:'red'
+     }} 
+     onPress={()=>{Utils.navigate(Config.DetalisProduct,{listimg:item.imgproduct,data:item})}}
+     >
+                <ImageBackground resizeMode={'stretch'} source={{uri:item.imgproduct[0].img}} style={{width:'100%',height:FontSize.scale(380)}}>
                   <View style={{flex:1,justifyContent:'space-between',alignItems:'flex-end',
-                  paddingHorizontal:FontSize.scale(30),paddingVertical:FontSize.scale(10),
+                  paddingHorizontal:FontSize.scale(20),paddingVertical:FontSize.scale(10),
                   }}>
                     <TouchableOpacity onPress={() =>this._changeIcon(item)}>
                       {this._checkWhishlist(item._id) ==true ? 
@@ -153,23 +156,22 @@ const dataCategory=[
                     :<Icon type={TypeIcon.AntDesign} name={'hearto'} size={22} color={colors.black} />
                       }
                       </TouchableOpacity>
-                    <TouchableOpacity onPress={() =>this._AddCart(item)}>
+                    <TouchableOpacity onPress={() =>this._AddCart(item) }>
                       {isLoangdingCart ? <ActivityIndicator size={'large'}  color={colors.grayLight}/>:
                       <Icon type={TypeIcon.AntDesign} name={'plussquare'} size={30}></Icon>
                       }
                     </TouchableOpacity>
-                  </View>
+                    </View>
                 </ImageBackground>
-              <Text numberOfLines={2} style={{color:colors.grayLight,fontSize:FontSize.reText(18)}} >{item.nameproduct}</Text>
-              <View style={{height:FontSize.scale(8)}}></View>
-              <Text style={{fontSize:FontSize.reText(22)}} >{"$"+item.price+".00"}</Text>
+                <View style={{height:FontSize.scale(10)}} />
+                <Text numberOfLines={2} style={{color:colors.grayLight,...FontSize.TextStyles.roboto,fontSize:FontSize.sizes.sText17}} >{item.nameproduct}</Text>
+                <Text style={{...FontSize.TextStyles.optionNormal}} >{"$"+item.price+".00"}</Text>
      </TouchableOpacity>
    )
   }
    render() {
     const {isShowGrid,isLoading}=this.state
       const {data}=this.props
-      Utils.nlog('gia tri loading '+isLoading)
     return (
       <View style={{flex:1,backgroundColor:colors.white}}>
             <HeaderView
@@ -232,8 +234,8 @@ const dataCategory=[
              key={isShowGrid}
              showsVerticalScrollIndicator={false}
              style={{
-             paddingVertical:FontSize.scale(7),
-             paddingHorizontal:FontSize.scale(10)}}
+             paddingVertical:FontSize.scale(10),
+             paddingHorizontal:FontSize.scale(15)}}
              data={this.props.data}
              renderItem={ isShowGrid==true ? this._renderItemGrid:this._renderItemList}
              numColumns={isShowGrid==true? 2:1}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Alert,AsyncStorage } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert,StyleSheet } from 'react-native';
 import Utils from '../../app/Utilis';
 import Button2 from '../../component/Button2';
 import FontSize from '../../config/FontSize';
@@ -13,6 +13,7 @@ import { LoginManager,AccessToken ,Profile} from "react-native-fbsdk-next";
 import LoginSuccess from './LoginSuccess';
 import { connect } from 'react-redux'
 import AuthAction from '../../Redux/Actions/ActionAuth/AuthAction'
+import Loading from '../../component/Loading';
 
 const dataIcon=[
   {
@@ -155,7 +156,7 @@ _LoginToken=async () =>{
 }
 componentDidUpdate=() =>{
   
-  if(this.props.data!=null)
+  if(this.props.data.token!=null)
   {
     Utils.goBack();
   }
@@ -163,7 +164,7 @@ componentDidUpdate=() =>{
   render() {
     const {showpass,UserName,Password,datalogin}=this.state
     return (
-      <View style={{flex:1,backgroundColor:colors.white}}>    
+      <View style={styles.container}>    
         <View onTouchEnd={() => {
                     this.props.navigation.goBack()
                 }} style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor:'transparent' }}></View>     
@@ -205,8 +206,12 @@ componentDidUpdate=() =>{
                 <View style={{height:FontSize.scale(15)}}/>
                     <TouchableOpacity 
                     onPress={() => this._LoginToken()}
-                    style={{borderRadius:3,paddingVertical:FontSize.scale(12),backgroundColor:'red',backgroundColor:colors.black}}>
-                      <Text style={{fontSize:FontSize.reText(20),color:colors.white,textAlign:'center'}}>{'Sign In'}</Text>
+                    style={styles.btnSign}>
+                      {this.props.data.isLoading ? <Loading/> :
+                      <Text style={{fontSize:FontSize.reText(20),color:colors.white,textAlign:'center'}}>
+                      {'Sign In'}
+                    </Text>
+                      }
                     </TouchableOpacity>
                     <TouchableOpacity style={{paddingVertical:FontSize.scale(20),alignItems:'center'}}>
                             <Text style={{fontSize:FontSize.reText(18),fontWeight:'bold',color:colors.black}}>{'Forgot Password ?'}</Text>
@@ -223,7 +228,6 @@ componentDidUpdate=() =>{
                     </View>
                 </View>
                       <View style={{flex:1,justifyContent:'flex-end'}}>
-                            {/* <Text>{'Dont have account'}</Text> */}
                             <View style={{backgroundColor:null,width:FontSize.Width(100),paddingVertical:FontSize.scale(20),paddingHorizontal:FontSize.scale(10)}}>
                             <Text style={{textAlign:'center',color:colors.grayLight}}  >{'Dont have an account ?'}</Text>
                             <View style={{height:FontSize.scale(10)}}></View>
@@ -236,10 +240,7 @@ componentDidUpdate=() =>{
                             style={{height:FontSize.scale(35),backgroundColor:null}}
                             />
                             </View>
-                            {/* <TouchableOpacity onPress={() =>this._logout()}>
-                              <Text>{'Logout'}</Text>
-                            </TouchableOpacity> */}
-                          </View>
+                        </View>
       </View>
     );
 
@@ -249,7 +250,7 @@ componentDidUpdate=() =>{
 
 const mapStateToProps =(state) =>{
   return{
-    data:state.AuthReducer.token
+    data:state.AuthReducer
   }
 }
 const mapDispatchToProps =(dispatch) =>{
@@ -258,4 +259,18 @@ const mapDispatchToProps =(dispatch) =>{
    
   }
 }
+
+
+const styles = StyleSheet.create({
+  container:{
+    flex:1,
+    backgroundColor:colors.white
+  },
+  btnSign:{
+    borderRadius:3,
+    paddingVertical:FontSize.scale(12),
+    backgroundColor:'red',
+    backgroundColor:colors.black
+  }
+})
 export default connect(mapStateToProps,mapDispatchToProps)(Sign)

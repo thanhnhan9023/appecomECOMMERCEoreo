@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import { Text, StyleSheet, View,Image,TouchableOpacity } from 'react-native'
-import { Item } from 'react-native-paper/lib/typescript/components/List/List'
 import { IMAGES } from '../../../assets/images/IndexImg'
 import Utils from '../../app/Utilis'
-import Setting from '../../component/Home/Setting'
 import FontSize from '../../config/FontSize'
 import Icon,{ TypeIcon } from '../../config/Icon'
 import { colors } from '../../config/style'
@@ -39,43 +37,6 @@ import Config from '../../navigation/Config'
         phone:'',
     },
 ]
-//  const dataSettings=[
-//     {
-//         nameicon1:'setting',
-//         typeicon1:TypeIcon.AntDesign,
-//         name:'App Settings',
-//         nameicon2:'right',
-//         typeicon2:TypeIcon.AntDesign,
-//         phone:'',
-//     },
-//     {
-//         nameicon1:'help-circle',
-//         typeicon1:TypeIcon.Feather,
-//         name:'Help & info',
-//         nameicon2:'right',
-//         typeicon2:TypeIcon.AntDesign,
-//         phone:'',
-//     },
-//     {
-//         nameicon1:'phone-call',
-//         typeicon1:TypeIcon.Feather,
-//         name:'Hotline',
-//         nameicon2:'right',
-//         typeicon2:TypeIcon.AntDesign,
-//         phone:'',
-//     },
-//     {
-//         nameicon1:'log-out',
-//         typeicon1:TypeIcon.Entypo,
-//         name:'Sign Out',
-//         nameicon2:'right',
-//         typeicon2:TypeIcon.AntDesign,
-//         phone:'0123 456 789',
-//         onPress:() =>{
-            
-//         }
-//     },
-// ]
 const dataIcon=[
     {
       TypeIcon:TypeIcon.FontAwesome,
@@ -115,6 +76,9 @@ class LoginSuccess extends Component {
                 nameicon2:'right',
                 typeicon2:TypeIcon.AntDesign,
                 phone:'',
+                onPress:() =>{
+                   
+                }
             },
             {
                 nameicon1:'help-circle',
@@ -123,6 +87,9 @@ class LoginSuccess extends Component {
                 nameicon2:'right',
                 typeicon2:TypeIcon.AntDesign,
                 phone:'',
+                onPress:() =>{
+                   
+                }
             },
             {
                 nameicon1:'phone-call',
@@ -131,6 +98,9 @@ class LoginSuccess extends Component {
                 nameicon2:'right',
                 typeicon2:TypeIcon.AntDesign,
                 phone:'',
+                onPress:() =>{
+                   
+                }
             },
             {
                 nameicon1:'log-out',
@@ -190,14 +160,7 @@ class LoginSuccess extends Component {
         }=item
         return(
                     <View key={`${index}`} style={{backgroundColor:null,flexDirection:'row',paddingVertical:FontSize.scale(0)}}>
-                        <TouchableOpacity style={{borderRadius:FontSize.scale(3),width:FontSize.scale(30),
-                            height:FontSize.scale(30),
-                            borderWidth:0.6,
-                            borderColor:colors.grayLight,
-                            justifyContent:'center',
-                            alignItems:'center',
-                            backgroundColor:colors.white,
-                            }}
+                        <TouchableOpacity style={styles.itemIcon}
                             >
                                 <Icon type={TypeIcon} name={NameIcon} color={ColorIcon} size={18}></Icon>
                             </TouchableOpacity>
@@ -207,9 +170,7 @@ class LoginSuccess extends Component {
         )
     }
     render() {
-        let a=Utils.ngetStore('nhandycu28@gmail.com')
         const {dataSettings}=this.state
-        console.log(dataSettings)
         return (
             <View style={{flex:1,backgroundColor:colors.white,paddingVertical:FontSize.scale(10),paddingHorizontal:FontSize.scale(15)}}>
                 <HeadViewCustom
@@ -223,7 +184,6 @@ class LoginSuccess extends Component {
                     }
                     CenterContainerStyle={{
                          justifyContent:'center'
-
                     }}
                     ViewRight={
                         (
@@ -231,7 +191,7 @@ class LoginSuccess extends Component {
                                  <NumberCart
                                          number={0}
                                     />
-                                    <Icon type={TypeIcon.AntDesign} name='down-square-o' size={22}/>
+                                 <Icon type={TypeIcon.AntDesign} name='down-square-o' size={22}/>
                            </View>
                         )
                     }
@@ -251,14 +211,32 @@ class LoginSuccess extends Component {
                {dataSettings.map((item,index) =>this._renderItemSettings(item,index,3,2,true,true))}
                <View style={{flexDirection:'row',paddingVertical:FontSize.scale(20)}}>
                {dataIcon.map(this._renderItemIconsmall)}   
+               <View style={{height:FontSize.scale(20)}}/>
                </View>
+               <Text>{'sdsdsds'}</Text>
+               <View style={{height:FontSize.scale(20)}}/>
             </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
-
+    container:{
+        flex:1,
+        backgroundColor:colors.white,
+        paddingVertical:FontSize.scale(10),
+        paddingHorizontal:FontSize.scale(15),
+    },
+    itemIcon:{
+        borderRadius:FontSize.scale(3),
+        width:FontSize.scale(30),
+        height:FontSize.scale(30),
+        borderWidth:0.6,
+        borderColor:colors.grayLight,
+        justifyContent:'center',
+        alignItems:'center',
+        backgroundColor:colors.white,
+    }
 })
  
 const mapStateToProps =(state) =>{

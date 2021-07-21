@@ -7,7 +7,8 @@ import HeaderView from '../../container/HeaderView';
 import Button2 from '../../component/Button2';
 import Utils from '../../app/Utilis';
 import Config from '../../navigation/Config';
-
+import AuthAction from '../../Redux/Actions/ActionAuth/AuthAction'
+import { connect } from 'react-redux'
 
 const dataIcon=[
   {
@@ -29,27 +30,7 @@ const dataIcon=[
     backgroundColorIcon:colors.black,
   },
 ]
-// const data=[
-//     {
-//       label:'Frist Name *',
-//     },
-//     {
-//       label:'Last Name*'
-//     },
-//     {
-//       label:'User Name *'
-//     },
-//     {
-//       label:'Phone'
-//     },
-//     {
-//       label:'Email *'
-//     },
-//     {
-//       label:'Password *'
-//     },
-// ]
-export default class Registration extends Component {
+class Registration extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -64,7 +45,6 @@ export default class Registration extends Component {
       Password:null,
     };
   }
- 
   togelePassword=() =>{
     this.setState({isshowpass:!this.state.isshowpass})
   }
@@ -82,6 +62,10 @@ export default class Registration extends Component {
       </View>
       </View>
     )
+  }
+  _Resgistration= async(data) =>{
+
+
   }
   render() {
     const {data,
@@ -156,7 +140,12 @@ export default class Registration extends Component {
 
                     </View>
                     <View style={{paddingHorizontal:FontSize.scale(12),height:FontSize.scale(30)}}>
-                    <Button2  style={{height:FontSize.scale(40),backgroundColor:colors.black}} styleTxt={{color:colors.white,fontSize:FontSize.reText(18)}} title={'Register'}    ></Button2>
+                    <Button2  style={styles.btnRegister} 
+                    styleTxt={{color:colors.white,
+                    fontSize:FontSize.reText(18)}} 
+                    title={'Register'}
+                    // onPress={() =>}
+                    />
                     </View>
                     <View style={{height:FontSize.scale(14)}}>
                     </View>
@@ -180,5 +169,25 @@ const styles = StyleSheet.create({
       borderWidth:0.6,
       marginTop:FontSize.scale(10),
       borderColor:colors.grayLight,
+    },
+    btnRegister:{
+      height:FontSize.scale(40),
+      backgroundColor:colors.black
     }
 })
+
+
+
+const mapStateToProps =(state) =>{
+  return{
+    data:state.AuthReducer
+  }
+}
+const mapDispatchToProps =(dispatch) =>{
+  return {
+    LoginToken:(data) => dispatch(AuthAction(data)),
+   
+  }
+}
+
+export default Registration

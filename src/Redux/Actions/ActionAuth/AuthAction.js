@@ -31,8 +31,6 @@ const ActionFallLogin=(error) =>{
         payload:error,
     }
 }
-
-
 //logout
 const  Logout=(data) =>async dispatch =>{
         dispatch(ActionLoadingLogout())
@@ -41,15 +39,6 @@ const  Logout=(data) =>async dispatch =>{
         ).catch(
             err => dispatch(ActionFallLogout(err.response.data))
         )
-}
-// resgistration
-const resgistration=(data) =>{
-    dispatch(ActionLoadingLogout())
-    Utils.CallApi('api/User/LogoutUser','PATCH',data).then(
-        res => dispatch(ActionSuccesLogout(res.data))
-    ).catch(
-        err => dispatch(ActionFallLogout(err.response.data))
-    )
 }
 const ActionLoadingLogout=() =>{
     return{
@@ -67,11 +56,37 @@ const ActionFallLogout=(error) =>{
         payload:error,
     }
 }
-
+// resgistration
+const Resgistration=(data) =>{
+    dispatch(ActionLoadingResgistration())
+    Utils.CallApi('api/User/createUser','POST',data).then(
+        res => dispatch(ActionSuccesResgistration(res.data))
+    ).catch(
+        err => dispatch(ActionFallResgistration(err.response.data))
+    )
+}
+const ActionLoadingResgistration=() =>{
+    return{
+        type:TypesAciton.Loading_Registration,
+    }
+}
+const ActionSuccesResgistration=(token) =>{
+    return{
+        type:TypesAciton.Succes_Registration,
+    }
+}
+const ActionFallResgistration=(error) =>{
+    return{
+        type:TypesAciton.Fail_Registration,
+        payload:error,
+    }
+}
 
 
 const  AuthAction ={
     Login,
     Logout,
+    Resgistration,
+    
 }
 export default AuthAction
