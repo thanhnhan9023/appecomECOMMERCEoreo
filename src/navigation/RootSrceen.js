@@ -67,11 +67,10 @@ class DrawMenuSceen extends Component {
   render() {
     return (
       <Drawer.Navigator 
-      initialRouteName={ConfigScreen.Home}
       drawerContent= {(props) => <DrawMenuComponent data={data} {...props}></DrawMenuComponent>}>
+        {/* <Drawer.Screen {...this.props} name={Config.bottomenu} component={BottomMenu} /> */}
       <Drawer.Screen {...this.props} name={Config.HomeScreen} component={ConfigScreen.Home} />
       <Drawer.Screen name={Config.Categories} component={ConfigScreen.Categories} />
-      <Tab.Screen name={Config.LoginSuccess} component={ConfigScreen.LoginSuccess} />
     </Drawer.Navigator>
     );
   }
@@ -85,7 +84,7 @@ class MainStackScreen extends Component{
         <MainStack.Navigator
         mode="modal"
         headerMode={false}
-        // initialRouteName={Config.Splashscreen}    
+        initialRouteName={Config.bottomenu}    
         >
         <MainStack.Screen name={Config.bottomenu} component={BottomMenu} /> 
         <MainStack.Screen name={Config.Splashscreen} component={ConfigScreen.Splashscreen} /> 

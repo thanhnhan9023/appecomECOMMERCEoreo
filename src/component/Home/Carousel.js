@@ -18,7 +18,10 @@ export default class Carousel extends Component {
       }
     componentDidMount()
     {
-        this._inifiniteScroll();
+        // this._inifiniteScroll();
+        this.props.navigation.addListener('focus',() =>{
+            this._inifiniteScroll();
+        })
         this.props.navigation.addListener('blur', () => {
             this._stop();
         })

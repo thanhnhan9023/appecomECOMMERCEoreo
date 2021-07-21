@@ -56,7 +56,7 @@ import { connect } from 'react-redux';
           NameScreen:'Home',
           typeicon:TypeIcon.Feather,
           nameicon:'home',
-          configScreen:Config.HomeScreen,
+          configScreen:Config.DrawMenuSceen,
       },
       {
           NameScreen:'Shop',
