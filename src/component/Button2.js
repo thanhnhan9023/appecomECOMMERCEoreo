@@ -3,6 +3,7 @@ import { Text, View,TouchableOpacity,StyleSheet } from 'react-native'
 import Utils from '../app/Utilis';
 import FontSize from '../config/FontSize';
 import { colors } from '../config/style';
+import Loading from './Loading';
 
 
 class Button2 extends Component {
@@ -12,13 +13,16 @@ class Button2 extends Component {
             title='Sign',
             style={},
             onPress=() =>{},
-            styleTxt={} 
+            styleTxt={} ,
+            isloading=false,
         } = this.props
         return (
                 <TouchableOpacity  onPress={onPress}  style={{...styles.commontBt,...style,}}  >
+                                {isloading ? <Loading/>:
                                 <Text style={{...styles.commonText,...styleTxt,}} >
                                         {title}
                                 </Text>
+                                }
                 </TouchableOpacity>
         )
     }

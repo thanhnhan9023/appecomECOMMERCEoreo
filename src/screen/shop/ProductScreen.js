@@ -11,7 +11,6 @@ import HeaderView from '../../container/HeaderView';
 import Config from '../../navigation/Config';
 import { connect } from 'react-redux';
 import CartAction from '../../Redux/Actions/ActionCart/CartAction';
-import { showMessage, hideMessage } from "react-native-flash-message";
 
 const dataCategory=[
   {
@@ -73,10 +72,9 @@ const dataCategory=[
   }
   _loadingAddcart=() =>{
     this.setState({isLoangdingCart:false})
-    showMessage({
-      message: "Add to cart !!",
-      type: "success",
-      })
+    let type="success"
+    let data="Add to cart !!"
+    Utils.showMessages(type,data)
   }
   _AddCart  =  async (item,index) =>{
     const {isLoangdingCart,indexloang}=this.state

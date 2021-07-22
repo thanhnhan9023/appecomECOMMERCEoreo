@@ -6,9 +6,12 @@ import { colors } from '../../config/style';
 import HeaderView from '../../container/HeaderView';
 import Button2 from '../../component/Button2';
 import Utils from '../../app/Utilis';
-import Config from '../../navigation/Config';
 import AuthAction from '../../Redux/Actions/ActionAuth/AuthAction'
 import { connect } from 'react-redux'
+import { emailValidator,phoneValidator,passwordValidator, nameValidator, infoValidator }
+ from '../../moudels/auth.validation';
+import ConfigStack from '../../navigation/ConfigStack';
+import Config from '../../navigation/Config'
 
 const dataIcon=[
   {
@@ -33,6 +36,12 @@ const dataIcon=[
 class Registration extends Component {
   constructor(props) {
     super(props);
+    this.ref_input1  = React.createRef();
+    this.ref_input2  = React.createRef();
+    this.ref_input3  = React.createRef();
+    this.ref_input4  = React.createRef();
+    this.ref_input5  = React.createRef();
+    this.ref_input6  = React.createRef();
     this.state = {
       value:'',
       isshowpass:true,
@@ -63,9 +72,65 @@ class Registration extends Component {
       </View>
     )
   }
-  _Resgistration= async(data) =>{
-
-
+  _Resgistration= async() =>{
+    const {FirstName,LastName,UserName,Email,Phone,Password,isEnabled}=this.state
+    let data={
+      FirstName:FirstName,
+      LastName:LastName,
+      UserName:UserName,
+      Email:Email,
+      Phone:Phone,
+      Password:Password,
+    }
+    if(isEnabled)
+    {
+     this.props.Registration(data)
+    }
+    else{
+      Utils.showMessages('Danger',"Age like oreo")
+    }
+  }
+  _checkEmail=(val) =>{
+   if(emailValidator(val)==true)
+  return  this.ref_input6.current.focus();
+    Utils.showMessages('Danger',emailValidator(val))
+  }
+  _checkPhone=(val) =>{
+      if(phoneValidator(val)==true)
+     return this.ref_input5.current.focus()
+    Utils.showMessages('Danger',phoneValidator(val))
+  }
+  _checkPassword=(val) =>{
+    if(passwordValidator(val)==true)
+      return;
+    Utils.showMessages('Danger',passwordValidator(val))
+  }
+  _checkUserName=val =>{
+    if(nameValidator(val))
+    return
+    Utils.showMessages('Danger',nameValidator(val))
+  }
+  _checkFistName=val =>{
+    if(infoValidator(val))
+    return
+    Utils.showMessages('Danger',infoValidator(val))
+  }
+  _checkLastName=val=>{
+    if(infoValidator(val))
+    return
+    Utils.showMessages('Danger',infoValidator(val))
+  }
+  componentDidUpdate=() =>{
+    if(this.props.data.error!=null)
+    {
+      Utils.showMessages('Danger',this.props.data.error.messge)
+    }
+    if(this.props.data.isRes==true)
+    {
+      Utils.navigate(ConfigStack.AuthStack,{screen:Config.Sign})
+    }
+  }
+  componentDidMount=() =>{
   }
   render() {
     const {data,
@@ -76,7 +141,6 @@ class Registration extends Component {
       Phone,
       Password,
     }=this.state
-    Utils.nlog(this.state.FirstName)
     return (
       <View style={{flex:1,backgroundColor:colors.white}}>
             <HeaderView
@@ -94,31 +158,50 @@ class Registration extends Component {
                   <TextInput style={styles.input}
                   value={FirstName}
                   placeholder={'Frist Name *'}
+                  autoFocus={false}
+                  blurOnSubmit={false}
+                  ref={ref => (this.ref_input1.current = ref)}
+                  onSubmitEditing={() => { this.ref_input2.current.focus()}}
                   onChangeText={(val) => this.setState({FirstName:val})}
                   />
                   <TextInput style={styles.input}
+                  ref={ref => { this.ref_input2.current = ref }}
                   placeholder={'Last Name*'}
                   value={LastName}
+                  onSubmitEditing={() => this.ref_input3.current.focus()}
                   onChangeText={(val) => this.setState({LastName:val})}
                   />
                   <TextInput style={styles.input}
+                  ref={ref => (this.ref_input3.current = ref)}
                   placeholder={'User Name *'}
                   value={UserName}
                   onChangeText={(val) => this.setState({UserName:val})}
+                  onSubmitEditing={() => this.ref_input4.current.focus()}
                   />
                   <TextInput style={styles.input}
+                   ref={ref => (this.ref_input4.current = ref)}
                   placeholder={'Phone *'}
                   value={Phone}
                   onChangeText={(val) => this.setState({Phone:val})}
+                  onEndEditing={() =>this._checkPhone(Phone)}
+                  onSubmitEditing={() => this._checkPhone(Phone)}
+                  keyboardType="phone-pad"
                   />
                   <TextInput style={styles.input}
+                    ref={ref => (this.ref_input5.current = ref)}
                   placeholder={'Email *'}
                   value={Email}
+                  textContentType="emailAddress"
                   onChangeText={(val) => this.setState({Email:val})}
+                  onEndEditing={() =>this._checkEmail(Email)}
+                  onSubmitEditing={() =>this._checkEmail(Email)}
+                  // onTouchEnd={() => this._checkEmail(Email)}
                   />
                   <TextInput style={styles.input}
+                    ref={ref => (this.ref_input6.current = ref)}
                   placeholder={'Password *'}
                   value={Password}
+                  secureTextEntry={true}
                   onChangeText={(val) => this.setState({Password:val})}
                   />
                </View>
@@ -144,7 +227,8 @@ class Registration extends Component {
                     styleTxt={{color:colors.white,
                     fontSize:FontSize.reText(18)}} 
                     title={'Register'}
-                    // onPress={() =>}
+                    onPress={() => this._Resgistration()}
+                    isloading={this.props.data.isLoading}
                     />
                     </View>
                     <View style={{height:FontSize.scale(14)}}>
@@ -165,7 +249,7 @@ class Registration extends Component {
 
 const styles = StyleSheet.create({
     input:{
-      height:FontSize.scale(35),
+      height:FontSize.scale(37),
       borderWidth:0.6,
       marginTop:FontSize.scale(10),
       borderColor:colors.grayLight,
@@ -177,17 +261,17 @@ const styles = StyleSheet.create({
 })
 
 
-
 const mapStateToProps =(state) =>{
   return{
     data:state.AuthReducer
   }
 }
+
 const mapDispatchToProps =(dispatch) =>{
   return {
-    LoginToken:(data) => dispatch(AuthAction(data)),
+    Registration:(data) => dispatch(AuthAction.Resgistration(data)),
    
   }
 }
 
-export default Registration
+export default connect(mapStateToProps,mapDispatchToProps)(Registration)

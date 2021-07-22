@@ -3,8 +3,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationActions } from '@react-navigation/compat';
 import  axios from 'axios'
-
-const URLAPI='https://apioreo.herokuapp.com';
+import { showMessage } from "react-native-flash-message";
+import { colors } from '../config/style';
+const URLAPI='http://192.168.1.55:5000';
 
  const  CallApi=(endpoint,method='GET',body=null) =>
  {
@@ -16,6 +17,14 @@ const URLAPI='https://apioreo.herokuapp.com';
 
      )
  }
+ const showMessages=(type,data) =>{
+    showMessage({
+        message: data,
+        type: type,
+        backgroundColor:colors.orangeyRed
+        })
+ }
+
  
 let _navigator;
 function setTopLevelNavigator(navigatorRef) {
@@ -115,6 +124,8 @@ async  function removeItemValue(key) {
         return false;
     }
 }
+
+
 const Utils = {
     nlog: log,
     filter: filter,
@@ -128,6 +139,7 @@ const Utils = {
     getPrams,
     CallApi,
     removeItemValue,
+    showMessages,
 }
 
 export default Utils;

@@ -10,6 +10,7 @@ const initState = {
   isLoading:false,
   user:null,
   error:null,
+  isRes:false,
 }
 
  const AuthReducer=(state=initState,action) =>{
@@ -68,6 +69,7 @@ const initState = {
                 isLoading:false,
                 token:null,
                 isLogin:false,
+                isRes:true,
                 }
         }
         case TypesAction.Fail_Registration:{
@@ -75,6 +77,13 @@ const initState = {
                 ...state,
                 isLoading:false,
                 error:payload,
+                isRes:false,
+                }
+        }
+        case TypesAction.ClearError:{
+            return{
+                ...state,
+                error:null,
                 }
         }
     }

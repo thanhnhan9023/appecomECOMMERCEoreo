@@ -185,13 +185,14 @@ componentDidUpdate=() =>{
                     style={{borderWidth:0.7,borderColor:colors.grayLight}}
                     placeholder={'Email Address or Username * '}
                     value={UserName}
-                    autoFocus = {true}
+                    autoFocus = {false}
                     onChangeText={val => this.setState({UserName:val})}
                     // onTouchEnd={() =>this._checkemial(UserName)}
                     />
                     <View style={{height:FontSize.scale(12)}}/>
                     <TextInput 
                       style={{borderWidth:0.7,borderColor:colors.grayLight}}
+                      autoFocus = {false}
                       placeholder={'Password'}
                       secureTextEntry={showpass}
                       value={Password}

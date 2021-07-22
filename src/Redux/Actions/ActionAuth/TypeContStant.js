@@ -10,7 +10,10 @@ const Fail_Logout='Fail_Logout'
 //registration
 const Loading_Registration='Loading_Registration'
 const Succes_Registration='Succes_Registration'
-const Fail_Registration='Fail_registration'
+const Fail_Registration='Fail_Registration'
+//Clear error
+const ClearError='ClearError'
+
 const TypeActions={
     Loading_Login,
     Succes_Login,
@@ -21,6 +24,7 @@ const TypeActions={
     Loading_Registration,
     Succes_Registration,
     Fail_Registration,
+    ClearError,
 }
 
 export default  TypeActions

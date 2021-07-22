@@ -3,6 +3,7 @@ import Utils from "../../../app/Utilis"
 import TypesAciton from "../ActionAuth/TypeContStant"
 
 
+
 // const baseurl='http://192.168.1.55:5000'
 
 // login
@@ -57,12 +58,16 @@ const ActionFallLogout=(error) =>{
     }
 }
 // resgistration
-const Resgistration=(data) =>{
-    dispatch(ActionLoadingResgistration())
+const Resgistration=(data) =>async dispatch=>{
+    console.log(data)
+    dispatch(ActionLoadingResgistration());
     Utils.CallApi('api/User/createUser','POST',data).then(
-        res => dispatch(ActionSuccesResgistration(res.data))
+        res => dispatch(ActionSuccesResgistration())
     ).catch(
-        err => dispatch(ActionFallResgistration(err.response.data))
+        (err) => {
+            dispatch(ActionFallResgistration(err.response.data))
+            dispatch(ActionClearError())
+        }
     )
 }
 const ActionLoadingResgistration=() =>{
@@ -70,7 +75,7 @@ const ActionLoadingResgistration=() =>{
         type:TypesAciton.Loading_Registration,
     }
 }
-const ActionSuccesResgistration=(token) =>{
+const ActionSuccesResgistration=(n) =>{
     return{
         type:TypesAciton.Succes_Registration,
     }
@@ -79,6 +84,11 @@ const ActionFallResgistration=(error) =>{
     return{
         type:TypesAciton.Fail_Registration,
         payload:error,
+    }
+}
+const ActionClearError=()=>{
+    return{
+        type:TypesAciton.ClearError,
     }
 }
 
