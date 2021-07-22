@@ -6,6 +6,7 @@ import Utils from '../../app/Utilis';
 import FontSize from '../../config/FontSize';
 import Icon, { TypeIcon } from '../../config/Icon';
 import { colors } from '../../config/style';
+import Loading from '../Loading';
 
 
 export default class ProductHorizontal extends Component {
@@ -19,30 +20,28 @@ export default class ProductHorizontal extends Component {
       }
 _renderItem({item,index})
 {
-    // const {OnPress=() =>{} }=this.props
             return(
                 <View style={{height:FontSize.scale(350),width:FontSize.scale(250),marginRight:FontSize.scale(10)}}>
                 <View style={{flex:7,backgroundColor:colors.grayLight,flexDirection:'row'}}>
-                                <ImageBackground  source={item.img} style={{position:'absolute',width:'100%' ,height:'100%'}}>
+                                <ImageBackground  source={{uri:item.imgproduct[0].img}} style={{position:'absolute',width:'100%' ,height:'100%'}}>
                                 </ImageBackground>
                         <View style={{flex:2,justifyContent:'space-between',alignItems:'flex-end',paddingVertical:FontSize.verticalScale(8),paddingHorizontal:FontSize.scale(8)}}>
                             <Icon type={TypeIcon.AntDesign} name={'hearto'} color={colors.white} size={22} ></Icon>
-                            <TouchableOpacity >
+                            <TouchableOpacity>
                             <Icon type={TypeIcon.AntDesign} name={'plussquare'}   size={30}></Icon>
                             </TouchableOpacity>
                         </View>
                 </View>
                 <View style={{height:FontSize.scale(10)}}>
                 </View>
-                <Text style={{color:colors.grayLight,fontSize:FontSize.reText(18)}}>{item.name}</Text>
+                <Text style={{color:colors.grayLight,fontSize:FontSize.reText(18)}}>{item.nameproduct}</Text>
                 <Text style={{fontSize:FontSize.reText(25)}}>{item.price}</Text>
 
             </View>
             )
 }
   render() {
-      const {txtLeft=null,txtRight=null,styleTextLeft={},datanew=[]}=this.props
-      // Utils.nlog('data=====================:',datanew)
+      const {txtLeft=null,txtRight=null,styleTextLeft={},datanew=[],isloading=false}=this.props
     return (
       <View style={{backgroundColor:colors.white,paddingVertical:FontSize.scale(15)}}>
           <View style={{flexDirection:'row',paddingHorizontal:FontSize.scale(12),justifyContent:'space-between'}}>
@@ -52,15 +51,17 @@ _renderItem({item,index})
                 <View
                 style={{height:FontSize.scale(20)}}
                 />
-                      <FlatList
-                        showsHorizontalScrollIndicator={false}
-                        style={{height:FontSize.scale(400),backgroundColor:'white',paddingHorizontal:FontSize.scale(15)}}
-                        renderItem={this._renderItem}
-                        data={datanew}
-                        horizontal={true}
-                        keyExtractor={(item,index) => index}
-                      >
-                      </FlatList>
+                    {!isloading ?
+                     <FlatList
+                     showsHorizontalScrollIndicator={false}
+                     style={{height:FontSize.scale(400),backgroundColor:'white',paddingHorizontal:FontSize.scale(15)}}
+                     renderItem={this._renderItem}
+                     data={datanew}
+                     horizontal={true}
+                     keyExtractor={(item,index) => index}
+                   >
+                   </FlatList>: <Loading/>
+                  }
       </View>
     );
   }

@@ -37,7 +37,7 @@ const ActionFetchSanPhamToLoaiSp=(data) =>{
 //  call api request loai sp
 const ActionFetchSanPhamRequest=() =>{
     return(dispatch) =>{
-            return Utils.CallApi('get-all-sanpham','GET',null).then(
+            return Utils.CallApi('getALLProduct','GET',null).then(
                 res => dispatch(ActionFetchSanPham(res.data))
             );
     };

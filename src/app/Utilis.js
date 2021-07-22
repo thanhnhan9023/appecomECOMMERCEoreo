@@ -6,7 +6,7 @@ import  axios from 'axios'
 
 const URLAPI='https://apioreo.herokuapp.com';
 
- const  CallApi=(endpoint,method='GET',body) =>
+ const  CallApi=(endpoint,method='GET',body=null) =>
  {
      return axios({
             method:method,

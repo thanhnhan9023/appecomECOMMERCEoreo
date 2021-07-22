@@ -23,9 +23,12 @@ import Utils from '../../app/Utilis';
 import Config from '../../navigation/Config';
 import Button2 from '../../component/Button2';
 import { connect } from 'react-redux'
-import CartAction from '../../Redux/Actions/ActionCart//CartAction'
+import CartAction from '../../Redux/Actions/ActionCart/CartAction'
+import CategoriesACtion from '../../Redux/Actions/ActionCategories/CategoriesACtion'
+import ProductACtion from '../../Redux/Actions/ActionProduct/ProductAction'
 import CarsoulItem from '../../component/Home/CarouselItem';
 import ConfigStack from '../../navigation/ConfigStack';
+
 
 const {width,height}=Dimensions.get('window')
 
@@ -119,22 +122,13 @@ class Home extends Component {
         };
       }
       componentDidMount= async() =>{
-        const {isLoadingCategory}=this.state
-        try 
-        {
-           const post= await this.props.FetchLoaiSp();
-           if(post)
-           {
-                this.setState({isLoadingCategory:!isLoadingCategory});
-           }
-        } catch (error) {
-            Utils.nlog(error);
-        }
+        await this.props.FetchProduct();
+        await this.props.FetchLoaiSp();
         await this.props.Datacart();
         await this.props.Datalike();
       }
       _rendeitemCategory=({item,index}) =>{
-          const {dataCategory}=this.props
+          const {ListLoaisp}=this.props.dataCategory
             return(
                 <TouchableOpacity onPress={() =>{Utils.navigate(Config.ProductScreen,{maloai:item._id})}}  style={{flexDirection:'row'}}>
                     <View>
@@ -144,7 +138,7 @@ class Home extends Component {
                         </Image>
                         <Text style={{marginTop:FontSize.scale(10),textAlign:'center',...FontSize.TextStyles.roboto,fontSize:FontSize.sizes.sText16}}>{item.nameproduct}</Text>
                     </View>
-                        { index!=dataCategory.length-1 ?(<View style={{width:FontSize.scale(15),height:'100%'}}></View>):null }
+                        { index!=ListLoaisp.length-1 ?(<View style={{width:FontSize.scale(15),height:'100%'}}></View>):null }
             </TouchableOpacity>
             )
       }
@@ -177,8 +171,8 @@ class Home extends Component {
         )
     }
     render() {
-        const {dataCategory}=this.props
-        const {isLoadingCategory}=this.state
+        const {ListLoaisp,isLoading}=this.props.dataCategory
+        const {Listsp,isLoadingsp}=this.props.dataProduct
         return ( 
              <Context.Consumer>
              {({ theme, updateTheme }) => (
@@ -211,12 +205,12 @@ class Home extends Component {
                                     </TouchableOpacity>
                             </View>
                             <View style={{height:FontSize.scale(30)}}/>
-                            {!isLoadingCategory ? 
+                            {!isLoading ? 
                                     <FlatList
                                     style={{marginHorizontal:15}}
                                     horizontal
                                     showsHorizontalScrollIndicator={false}
-                                    data={dataCategory}
+                                    data={ListLoaisp}
                                     renderItem={this._rendeitemCategory}
                                     keyExtractor={(item,index) => index}
                               />:
@@ -263,14 +257,16 @@ class Home extends Component {
                     <ProductHorizontal
                     txtLeft={'Best seller'}
                     txtRight={'Show all'}
-                    datanew={dataProduct}
+                    datanew={Listsp}
+                    isloading={isLoadingsp}
                     />
                     <ImageBackground source={IMAGES.imgBackGroud} style={{height:FontSize.scale(170)}}/>   
                     <View style={{height:FontSize.scale(40)}}/>
                     <ProductHorizontal
                     txtLeft={'New Arrivals'}
                     txtRight={'Show all'}
-                    datanew={dataProduct}
+                    datanew={Listsp}
+                    isloading={isLoadingsp}
                     />
                         <ImageBackground source={IMAGES.imgBackGroudShop} 
                         style=
@@ -323,15 +319,16 @@ class Home extends Component {
         )
         }
     }
-    
 const mapStateToProps =(state) =>{
         return{
-          dataCategory:state.CartReducer.ListLoaisp
+          dataCategory:state.CategoriesReducer,
+          dataProduct:state.ProductReducer,
         }
       }
 const mapDispatchToProps =(dispatch) =>{
         return {
-          FetchLoaiSp:() => dispatch(CartAction.ActionFetchLoaiSpRequest()),
+          FetchLoaiSp:() => dispatch(CategoriesACtion.FecthCategories()),
+          FetchProduct:() =>dispatch(ProductACtion.FecthProduct()),
           Datacart:() => dispatch(CartAction.ActionCart()),
           Datalike:() => dispatch(CartAction.ActionLike()),
         }

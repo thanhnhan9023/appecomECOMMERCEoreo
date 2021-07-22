@@ -10,7 +10,7 @@ const initState = {
     ListProductLike:[],
 }
 const Key_ID = '_id'
-export const CartReducer = (state = initState, action) => {
+const  CartReducer = (state = initState, action) => {
     const { type, payload } = action;
     const { ListCart ,ListProductLike,ListLoaisp,ListSanPham} = state;
     
@@ -61,31 +61,6 @@ export const CartReducer = (state = initState, action) => {
                         draft.ListCart =[{...payload,sltam:1}]
                     }
                     Utils.nsetStore('cart',JSON.stringify(draft.ListCart))
-                    // if (ListCart && ListCart.length > 0) {
-                    //     const check = ListCart.find(item => item[Key_ID] == payload[Key_ID])
-                    //     if (check) 
-                    //     {
-                    //         draft.ListCart = ListCart.map(item => {
-                    //             if (item[Key_ID] == payload[Key_ID]) 
-                    //             {                                  
-                    //                 return {
-                    //                     ...item,                                        
-                    //                     sltam:item.sltam + 1
-                    //                 }
-                    //             }             
-                    //             else 
-                    //             {
-                    //                 return item;
-                    //             }
-                    //         })
-                    //     } 
-                    //     else {
-                    //         draft.ListCart = [...ListCart, {...payload, sltam: 1 }]
-                    //     }
-                    // } 
-                    // else {
-                    //     draft.ListCart = [{...payload, sltam: 1 }]
-                    // }
                 }
                 break;
             case TypesAction.ACTION_DeleteCart:
@@ -185,3 +160,5 @@ export const CartReducer = (state = initState, action) => {
                 }
     });
 }
+
+export default CartReducer

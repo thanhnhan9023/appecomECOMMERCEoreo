@@ -8,7 +8,7 @@ import thunk from 'redux-thunk'
 const persistConfig = {
     key: 'root',
     storage:AsyncStorage,
-    blacklist: ['AuthReducer','CartReducer']
+    blacklist: ['AuthReducer','CartReducer','ProductReducer','CategoriesReducer']
   }
   
 const middleware = [thunk];
