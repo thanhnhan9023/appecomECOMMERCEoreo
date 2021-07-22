@@ -88,24 +88,14 @@ import { connect } from 'react-redux';
   
   _moveScreen(txtSccreen,index)
   {
-    // console.log(this.props.token)
-    // if(this.props.token!=null && index==4)
-    // {
-    //   console.log('vao login')
-    // Utils.navigate(Config.LoginSuccess)
-    // return;
-    // }
-    // if(this.props.token==null && index==4)
-    // {
-    //   console.log('vao logout')
-    // Utils.navigate(Config.login)
-    // return;
-    // }
-    Utils.navigate(txtSccreen)
+    this.props.navigation.navigate(txtSccreen)
+   
+    // Utils.push(txtSccreen)
   
   }
   render() {
     const {state}=this.props
+    console.log(this.props)
     return (
       <View style={{flexDirection:'row',
       paddingVertical:FontSize.scale(10),
@@ -116,7 +106,7 @@ import { connect } from 'react-redux';
       }}
       >
           {this.state.databottom.map((item,index) =>{
-                 const isFocused = state.index-1== index;
+                 const isFocused = state.index-2== index;
                 return(
                 <View key={index}
                 style={{

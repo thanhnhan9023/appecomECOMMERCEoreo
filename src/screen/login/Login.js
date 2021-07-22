@@ -224,7 +224,7 @@ const datasetings=[
                 </View>
                 <View style={{flexDirection:'row',paddingVertical:FontSize.scale(10),paddingHorizontal:FontSize.scale(10)}} >
                     <Button2    onPress={() =>{
-                        Utils.navigate(Config.Registration)
+                        Utils.navigate('Auth',{screen:Config.Registration})
                     }} 
                     style={{flex:1,paddingVertical:FontSize.scale(10),borderWidth:1,
                     backgroundColor:colors.white,
