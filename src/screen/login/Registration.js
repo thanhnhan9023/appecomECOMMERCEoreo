@@ -130,8 +130,7 @@ class Registration extends Component {
       Utils.navigate(ConfigStack.AuthStack,{screen:Config.Sign})
     }
   }
-  componentDidMount=() =>{
-  }
+ 
   render() {
     const {data,
       FirstName,

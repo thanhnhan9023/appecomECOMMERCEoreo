@@ -14,6 +14,7 @@ import LoginSuccess from './LoginSuccess';
 import { connect } from 'react-redux'
 import AuthAction from '../../Redux/Actions/ActionAuth/AuthAction'
 import Loading from '../../component/Loading';
+import ConfigStack from '../../navigation/ConfigStack';
 
 const dataIcon=[
   {
@@ -158,7 +159,7 @@ componentDidUpdate=() =>{
   
   if(this.props.data.token!=null)
   {
-    Utils.goBack();
+    Utils.navigate(ConfigStack.AuthStack,{screen:Config.login})
   }
 }
   render() {
@@ -247,8 +248,6 @@ componentDidUpdate=() =>{
 
   }
 }
- 
-
 const mapStateToProps =(state) =>{
   return{
     data:state.AuthReducer

@@ -12,7 +12,9 @@ const  Login=(data) =>async dispatch =>{
        Utils.CallApi('api/User/LoginUser','POST',data).then(
            res => dispatch(ActionSuccesLogin(res.data))
        ).catch(
-           err => dispatch(ActionFallLogin(err.response.data))
+           err =>{ dispatch(ActionFallLogin(err.response.data))
+            dispatch(ActionClearError())
+        }
        )
 }
 const ActionLoadingLogin=() =>{
@@ -38,7 +40,9 @@ const  Logout=(data) =>async dispatch =>{
         Utils.CallApi('api/User/LogoutUser','PATCH',data).then(
             res => dispatch(ActionSuccesLogout(res.data))
         ).catch(
-            err => dispatch(ActionFallLogout(err.response.data))
+            err => {dispatch(ActionFallLogout(err.response.data))
+                dispatch(ActionClearError())
+            }
         )
 }
 const ActionLoadingLogout=() =>{
