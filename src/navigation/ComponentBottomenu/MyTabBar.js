@@ -74,7 +74,7 @@ import { connect } from 'react-redux';
           NameScreen:'Cart',
           typeicon:TypeIcon.MaterialCommunityIcons,
           nameicon:'archive-arrow-down-outline',
-          configScreen:Config.Categories,
+          configScreen:Config.CartScreen,
       },
       {
         NameScreen:'Me',
@@ -88,7 +88,7 @@ import { connect } from 'react-redux';
   
   _moveScreen(txtSccreen,index)
   {
-    this.props.navigation.navigate(txtSccreen)
+    Utils.navigate(txtSccreen)
    
     // Utils.push(txtSccreen)
   

@@ -10,7 +10,7 @@ import { I18nextProvider } from 'react-i18next';
 import i18n from './src/config/i18n';
 import { StatusBar,View } from 'react-native';
 import { colors } from './src/config/style';
-import SplashScreen from './src/screen/Home/SplashScreen';
+import SplashScreen from './src/screen/home/SplashScreen';
 import FlashMessage from "react-native-flash-message";
 import FontSize from './src/config/FontSize';
 

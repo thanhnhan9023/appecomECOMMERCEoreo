@@ -15,6 +15,7 @@ import { withNamespaces } from 'react-i18next';
 import { connect } from 'react-redux'
 import AuthAction from '../../Redux/Actions/ActionAuth/AuthAction'
 import LoginSuccess from './LoginSuccess';
+import ConfigStack from '../../navigation/ConfigStack';
 
 const dataList = [
     {
@@ -224,7 +225,7 @@ const datasetings=[
                 </View>
                 <View style={{flexDirection:'row',paddingVertical:FontSize.scale(10),paddingHorizontal:FontSize.scale(10)}} >
                     <Button2    onPress={() =>{
-                        Utils.navigate('Auth',{screen:Config.Registration})
+                        Utils.navigate(ConfigStack.AuthStack,{screen:Config.Registration})
                     }} 
                     style={{flex:1,paddingVertical:FontSize.scale(10),borderWidth:1,
                     backgroundColor:colors.white,
@@ -238,7 +239,7 @@ const datasetings=[
                     paddingVertical:FontSize.scale(10),
                     backgroundColor:colors.blackShadow}} title={'Sign In'}      
                     onPress={() =>{
-                        Utils.navigate(Config.Sign)
+                        Utils.navigate(ConfigStack.AuthStack,{screen:Config.Sign})
                     }}
                     styleTxt={{...FontSize.TextStyles.roboto,fontSize:FontSize.sizes.sText17,color:colors.white}}></Button2>
                 </View>

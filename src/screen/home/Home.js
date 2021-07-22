@@ -25,6 +25,7 @@ import Button2 from '../../component/Button2';
 import { connect } from 'react-redux'
 import CartAction from '../../Redux/Actions/ActionCart//CartAction'
 import CarsoulItem from '../../component/Home/CarouselItem';
+import ConfigStack from '../../navigation/ConfigStack';
 
 const {width,height}=Dimensions.get('window')
 
@@ -156,7 +157,7 @@ class Home extends Component {
           borderBottomWidth:0.8,
           borderBottomColor:colors.colorGrayBgr
           }}
-          onPress={() => Utils.navigate(Config.DetalisBlog,{item:item})}
+          onPress={() => Utils.navigate(ConfigStack.HomeStack,{screen:Config.DetalisBlog,initial: false,params:{item:item}},)}
           >
               <Image source={item.img} 
               style={{width:FontSize.scale(140),height:FontSize.scale(120)}} 
@@ -309,7 +310,7 @@ class Home extends Component {
                      <View>
                      <View style={{flexDirection:'row',justifyContent:'space-between',paddingHorizontal:FontSize.scale(10)}}>
                                         <Text style={styles.textMeidum}>{'Blogs'}</Text>
-                                        <TouchableOpacity onPress={() => Utils.navigate(Config.DetalisBlogAll,{data:datablog})}> 
+                                        <TouchableOpacity onPress={() => Utils.navigate(ConfigStack.HomeStack,{screen:Config.DetalisBlogAll,params:{data:datablog}})}> 
                                         <Text style={styles.txtSmall} >{'Show all'}</Text>
                                         </TouchableOpacity>
                         </View>

@@ -49,12 +49,12 @@ const data=[
         activeColor={colors.black}
         tabBar={props => <MyTabBar {...props}></MyTabBar>} 
         >
-           <Tab.Screen {...this.props} name={Config.HomeScreen} component={ConfigScreen.Home} />
+           <Tab.Screen {...this.props} name={'HomeStack'} component={HomeScreen} />
            <Tab.Screen name={'Auth'} component={AuthScreen} />
            <Tab.Screen name={Config.DrawMenuSceen} component={DrawMenuSceen} />
            <Tab.Screen name={Config.Shop} component={ConfigScreen.Shop} />
            <Tab.Screen name={Config.WishListScreen} component={ConfigScreen.WishListScreen} />
-           <Tab.Screen name={Config.Categories} component={ConfigScreen.CartScreen} />
+           <Tab.Screen name={Config.CartScreen} component={ConfigScreen.CartScreen} />
            <Tab.Screen name={Config.login} component={ConfigScreen.login} />
            <Tab.Screen name={Config.LoginSuccess} component={ConfigScreen.LoginSuccess} />
       </Tab.Navigator>
@@ -74,7 +74,6 @@ class DrawMenuSceen extends Component {
 }
 
 const AuthStack=createStackNavigator();
-
 class AuthScreen extends Component{
   render()
   {
@@ -92,6 +91,23 @@ class AuthScreen extends Component{
   }
 }
 
+const HomeStack=createStackNavigator();
+class HomeScreen extends Component{
+  render()
+  {
+    return(
+    <HomeStack.Navigator 
+    initialRouteName={ConfigScreen.Home}
+    headerMode={false}
+    >
+    <HomeStack.Screen  name={Config.HomeScreen}  component={ConfigScreen.Home} />
+    <HomeStack.Screen name={Config.DetalisBlog} component={ConfigScreen.DetalisBlog} />
+    <HomeStack.Screen name={Config.DetalisBlogAll} component={ConfigScreen.DetalisBlogAll} />
+    </HomeStack.Navigator>
+    )
+  }
+}
+
 
 const MainStack= createStackNavigator();
 class MainStackScreen extends Component{
@@ -104,20 +120,19 @@ class MainStackScreen extends Component{
         initialRouteName={Config.bottomenu}
         >
         <MainStack.Screen name={Config.bottomenu} component={BottomMenu} /> 
-        <MainStack.Screen name={Config.HomeScreen} component={ConfigScreen.Home} />
+        <MainStack.Screen name={'Auth'} component={AuthScreen}  options={{ headerShown: false }} /> 
+        <MainStack.Screen name={'HomeStack'} component={HomeScreen}  options={{ headerShown: false }} /> 
         <MainStack.Screen name={Config.Shop} component={ConfigScreen.Shop} />
         <MainStack.Screen  name={Config.WishListScreen} component={ConfigScreen.WishListScreen} />
         <MainStack.Screen name={Config.Categories} component={ConfigScreen.Categories} />
         <MainStack.Screen  name={Config.ProductScreen}  component={ConfigScreen.ProductScreen}/>
         <MainStack.Screen name={Config.DetalisProduct} component={ConfigScreen.DetalisProduct} />
         <MainStack.Screen name={Config.CartScreen} component={ConfigScreen.CartScreen} />
-        <MainStack.Screen name={Config.DetalisBlog} component={ConfigScreen.DetalisBlog} />
         <MainStack.Screen name={Config.Camera} component={ConfigScreen.Camera} />
         <MainStack.Screen name={Config.CameraSelect} component={ConfigScreen.CameraSelect} />
         <MainStack.Screen name={Config.ImageSelect} component={ConfigScreen.ImageSelect} />
         <MainStack.Screen name={Config.VideoItem} component={ConfigScreen.VideoItem} />
         <MainStack.Screen name={Config.Settings} component={ConfigScreen.AppSetting} />
-        <MainStack.Screen name={Config.DetalisBlogAll} component={ConfigScreen.DetalisBlogAll} />
     </MainStack.Navigator>
     )
   }
@@ -149,7 +164,6 @@ class MainStackScreen extends Component{
       }}
         >
         <StackRoot.Screen name={'Main'} component={MainStackScreen}  options={{ headerShown: false }} /> 
-        <StackRoot.Screen name={'Auth'} component={AuthScreen}  options={{ headerShown: false }} /> 
         
       </StackRoot.Navigator>
     );
