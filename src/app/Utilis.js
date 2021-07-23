@@ -5,7 +5,7 @@ import { NavigationActions } from '@react-navigation/compat';
 import  axios from 'axios'
 import { showMessage } from "react-native-flash-message";
 import { colors } from '../config/style';
-const URLAPI='http://192.168.1.55:5000';
+const URLAPI='https://apioreo.herokuapp.com';
 
  const  CallApi=(endpoint,method='GET',body=null) =>
  {
