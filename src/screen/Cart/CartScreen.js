@@ -39,6 +39,17 @@ class CartScreen extends Component {
  RemoveCart=(id) =>{
    this.props.RemoveCart(id)
  }
+ _checkWhishlist=(id) =>{
+  const check=this.props.datalike.findIndex(item => item._id==id)
+  if(check>=0)
+    return true;
+  else
+    return false;
+}
+_changeIcon=(data) =>
+{
+  this.props.LikeProduct(data)
+}
 _RenderEmpty()
 {
   return(
@@ -154,17 +165,18 @@ _RenderHideItem=({item}) =>{
       alignItems: 'flex-end'
   }}>
       <View style={{ flexDirection: 'row' ,flex:1}}>
-                   <TouchableOpacity style={{backgroundColor:colors.grayLight,
+                   <TouchableOpacity style={{backgroundColor:colors.colorGrayBgr,
                    alignItems:'center',
                    justifyContent:'center',width:FontSize.scale(70)}}
-                   onPress={() =>{this.props.LikeProduct(item.id)}}
+                   onPress={() =>this._changeIcon(item)}
                    >
-                      {item.like==false ? <Icon type={TypeIcon.AntDesign} name={'hearto'} size={24} >
-                      </Icon>: 
-                      <Icon type={TypeIcon.AntDesign} name={'heart'} size={22} ></Icon>}     
+                     {this._checkWhishlist(item._id) ?
+                        <Icon type={TypeIcon.AntDesign} name={'hearto'} size={22} color={colors.colorRed} />
+                        :<Icon type={TypeIcon.AntDesign} name={'hearto'} size={22} color={colors.black} />
+                     }
                    </TouchableOpacity>
                    <TouchableOpacity  
-                   style={{backgroundColor:colors.redStar,
+                   style={{backgroundColor:colors.orangeyRed,
                     alignItems:'center',
                     justifyContent:'center',
                     width:FontSize.scale(70)}}
@@ -227,7 +239,8 @@ _cart= async() =>{
 
 const mapStateToProps =(state) =>{
     return{
-      data:state.CartReducer.ListCart
+      data:state.CartReducer.ListCart,
+      datalike:state.CartReducer.ListProductLike,
     }
   }
   

@@ -8,6 +8,7 @@ import MyTabBar from './ComponentBottomenu/MyTabBar';
 import Utils from '../app/Utilis';
 import { colors } from '../config/style';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import ConfigStack from './ConfigStack';
 
 
 
@@ -35,7 +36,7 @@ const data=[
   },
 ]
 
- class BottomMenu extends Component {
+ export class BottomMenu extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -49,14 +50,13 @@ const data=[
         activeColor={colors.black}
         tabBar={props => <MyTabBar {...props}></MyTabBar>} 
         >
-           <Tab.Screen {...this.props} name={'HomeStack'} component={HomeScreen} />
-           <Tab.Screen name={'Auth'} component={AuthScreen} />
+           <Tab.Screen {...this.props} name={ConfigStack.HomeStack} component={HomeScreen} />
+           <Tab.Screen name={ConfigStack.AuthStack} component={AuthScreen} />
            <Tab.Screen name={Config.DrawMenuSceen} component={DrawMenuSceen} />
            <Tab.Screen name={Config.Shop} component={ConfigScreen.Shop} />
            <Tab.Screen name={Config.WishListScreen} component={ConfigScreen.WishListScreen} />
            <Tab.Screen name={Config.CartScreen} component={ConfigScreen.CartScreen} />
            <Tab.Screen name={Config.login} component={ConfigScreen.login} />
-           <Tab.Screen name={Config.LoginSuccess} component={ConfigScreen.LoginSuccess} />
       </Tab.Navigator>
     );
     }
@@ -74,7 +74,7 @@ class DrawMenuSceen extends Component {
 }
 
 const AuthStack=createStackNavigator();
-class AuthScreen extends Component{
+ export  class AuthScreen extends Component{
   render()
   {
     return(
@@ -90,7 +90,6 @@ class AuthScreen extends Component{
     )
   }
 }
-
 const HomeStack=createStackNavigator();
 class HomeScreen extends Component{
   render()
@@ -120,8 +119,7 @@ class MainStackScreen extends Component{
         initialRouteName={Config.bottomenu}
         >
         <MainStack.Screen name={Config.bottomenu} component={BottomMenu} /> 
-        <MainStack.Screen name={'Auth'} component={AuthScreen}  options={{ headerShown: false }} /> 
-        <MainStack.Screen name={'HomeStack'} component={HomeScreen}  options={{ headerShown: false }} /> 
+        <MainStack.Screen name={ConfigStack.AuthStack} component={AuthScreen}  options={{ headerShown: false }} /> 
         <MainStack.Screen name={Config.Shop} component={ConfigScreen.Shop} />
         <MainStack.Screen  name={Config.WishListScreen} component={ConfigScreen.WishListScreen} />
         <MainStack.Screen name={Config.Categories} component={ConfigScreen.Categories} />

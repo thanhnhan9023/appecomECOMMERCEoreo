@@ -255,6 +255,7 @@ class Home extends Component {
                     </View>
                     <View style={{height:FontSize.scale(20),borderBottomWidth:0.8,borderBottomColor:colors.grayLight}}/>
                     <ProductHorizontal
+                    {...this.props}
                     txtLeft={'Best seller'}
                     txtRight={'Show all'}
                     datanew={Listsp}
@@ -263,6 +264,7 @@ class Home extends Component {
                     <ImageBackground source={IMAGES.imgBackGroud} style={{height:FontSize.scale(170)}}/>   
                     <View style={{height:FontSize.scale(40)}}/>
                     <ProductHorizontal
+                    {...this.props}
                     txtLeft={'New Arrivals'}
                     txtRight={'Show all'}
                     datanew={Listsp}
@@ -321,6 +323,7 @@ class Home extends Component {
     }
 const mapStateToProps =(state) =>{
         return{
+          datalike:state.CartReducer.ListProductLike,
           dataCategory:state.CategoriesReducer,
           dataProduct:state.ProductReducer,
         }
@@ -331,6 +334,9 @@ const mapDispatchToProps =(dispatch) =>{
           FetchProduct:() =>dispatch(ProductACtion.FecthProduct()),
           Datacart:() => dispatch(CartAction.ActionCart()),
           Datalike:() => dispatch(CartAction.ActionLike()),
+          AddCart:(data) => dispatch(CartAction.ActionAddCart(data)),
+          Add_Remove:(data) => dispatch(CartAction.ActionAdd_RemoveLike(data)),
+          LikeProduct:(id) =>dispatch(CartAction.ActionAdd_LikeProduct(id)),
         }
       }
 export default connect(mapStateToProps,mapDispatchToProps)(Home)

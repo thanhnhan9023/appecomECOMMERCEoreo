@@ -247,6 +247,20 @@ const dataCategory=[
   }
 }
 
+const styles = StyleSheet.create({
+  absoluteFillObject:{
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0
+  },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: colors.grayLight
+  }
+})
+
 const mapStateToProps =(state) =>{
   return{
     data:state.CartReducer.ListSanPham,
@@ -264,17 +278,3 @@ const mapDispatchToProps =(dispatch) =>{
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(ProductScreen)
-
-const styles = StyleSheet.create({
-  absoluteFillObject:{
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0
-  },
-  overlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: colors.grayLight
-  }
-})

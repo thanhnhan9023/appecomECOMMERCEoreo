@@ -21,7 +21,7 @@ const URLAPI='https://apioreo.herokuapp.com';
     showMessage({
         message: data,
         type: type,
-        backgroundColor:colors.orangeyRed
+        backgroundColor:type=='success'?colors.green :colors.orangeyRed
         })
  }
 
@@ -115,6 +115,13 @@ async function nsetStore(keys, value) {
         Utils.nlog(e)
       }
 }
+async function RemoveStore(keys, defaultValue = null) {
+    try {
+     return AsyncStorage.removeItem(keys)
+      } catch(e) {
+        Utils.nlog(e)
+      }
+}
 async  function removeItemValue(key) {
     try {
         await AsyncStorage.removeItem(key);
@@ -140,6 +147,7 @@ const Utils = {
     CallApi,
     removeItemValue,
     showMessages,
+    RemoveStore,
 }
 
 export default Utils;

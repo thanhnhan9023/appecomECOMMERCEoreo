@@ -159,7 +159,7 @@ componentDidUpdate=() =>{
   
   if(this.props.data.token!=null)
   {
-    Utils.navigate(ConfigStack.AuthStack,{screen:Config.login})
+    Utils.goBack(ConfigStack.AuthStack,{screen:Config.login})
   }
 }
   render() {
