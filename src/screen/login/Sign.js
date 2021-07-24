@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert,StyleSheet } from 'react-native';
 import Utils from '../../app/Utilis';
 import Button2 from '../../component/Button2';
@@ -6,16 +6,16 @@ import FontSize from '../../config/FontSize';
 import Icon, { TypeIcon } from '../../config/Icon';
 import { colors } from '../../config/style';
 import Config from '../../navigation/Config';
-import Login from './Login';
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
-import { LoginManager,AccessToken ,Profile} from "react-native-fbsdk-next";
-import LoginSuccess from './LoginSuccess';
+import { LoginManager,AccessToken ,Profile} from "react-native-fbsdk-next"
 import { connect } from 'react-redux'
 import AuthAction from '../../Redux/Actions/ActionAuth/AuthAction'
 import Loading from '../../component/Loading';
 import ConfigStack from '../../navigation/ConfigStack';
-
+import {  emailValidatorCheck }
+ from '../../moudels/auth.validation';
+import LinearGradient from 'react-native-linear-gradient';
 const dataIcon=[
   {
     TypeIcon:TypeIcon.AntDesign,
@@ -40,6 +40,7 @@ const dataIcon=[
  class Sign extends Component {
   constructor(props) {
     super(props);
+    this.Texinput1=createRef();
     this.state = {
       showpass:true,
       checkemail:false,
@@ -147,19 +148,27 @@ _logout= async() =>{
   Utils.nlog(token)
 }
 _LoginToken=async () =>{
-  const {UserName,Password}=this.state
-  let a={
-    UserName,
-    Password
+  const {UserName,Password,Email}=this.state
+  let b=null
+  if(emailValidatorCheck(UserName))
+  {
+    b={
+      Email:UserName,
+      Password,
+    }
   }
-   this.props.LoginToken(a)
-  
+  else{
+    b={
+      UserName,
+      Password,
+    }
+  }
+   this.props.LoginToken(b)
 }
 componentDidUpdate=() =>{
   if(this.props.data.error!=null)
   {
     Utils.showMessages('Danger',this.props.data.error.messge);
-    this.props.ClearError();
   }
   if(this.props.data.token!=null)
   {
@@ -185,16 +194,16 @@ componentDidUpdate=() =>{
             <View style={{height:FontSize.scale(15)}}/>
             <View style={{paddingHorizontal:FontSize.scale(10)}}>
                     <TextInput
-                    style={{borderWidth:0.7,borderColor:colors.grayLight}}
+                    ref={ref => this.Texinput1=ref}
+                    style={{height:FontSize.scale(40),borderWidth:0.7,borderColor:colors.grayLight,borderRadius:FontSize.scale(4)}}
                     placeholder={'Email Address or Username * '}
                     value={UserName}
                     autoFocus = {false}
                     onChangeText={val => this.setState({UserName:val})}
-                    // onTouchEnd={() =>this._checkemial(UserName)}
                     />
                     <View style={{height:FontSize.scale(12)}}/>
                     <TextInput 
-                      style={{borderWidth:0.7,borderColor:colors.grayLight}}
+                      style={{height:FontSize.scale(40),borderWidth:0.7,borderColor:colors.grayLight,borderRadius:FontSize.scale(4)}}
                       autoFocus = {false}
                       placeholder={'Password'}
                       secureTextEntry={showpass}
@@ -203,19 +212,20 @@ componentDidUpdate=() =>{
                     />
                     <Icon style={{position:'absolute',right:20,bottom:10}}  onPress={this._showpass} type={TypeIcon.Ionicons} 
                      name={showpass?'eye-off-outline':'eye-outline'} size={22}/>
-                    <Text style={{position:'absolute',left:20,top:-10}}>{'Email Address or Username *'}</Text>
+                    {/* <Text style={{position:'absolute',left:20,top:-10}}>{'Email Address or Username *'}</Text> */}
              </View>
             <View View style={{height:FontSize.scale(10)}}/>
                 <View style={{paddingHorizontal:FontSize.scale(10)}}>
                 <View style={{height:FontSize.scale(15)}}/>
                     <TouchableOpacity 
                     onPress={() => this._LoginToken()}
-                    style={styles.btnSign}>
-                      {this.props.data.isLoading ? <Loading/> :
-                      <Text style={{fontSize:FontSize.reText(20),color:colors.white,textAlign:'center'}}>
-                      {'Sign In'}
-                    </Text>
-                      }
+                    >
+                      <LinearGradient colors={[colors.colorStarYellow, colors.black]} style={styles.btnSign}>
+                         {this.props.data.isLoading ? <Loading/> :
+                          <Text style={{fontSize:FontSize.reText(20),color:colors.white,textAlign:'center'}}>
+                          {'Sign In'}
+                        </Text>}
+                     </LinearGradient>
                     </TouchableOpacity>
                     <TouchableOpacity style={{paddingVertical:FontSize.scale(20),alignItems:'center'}}>
                             <Text style={{fontSize:FontSize.reText(18),fontWeight:'bold',color:colors.black}}>{'Forgot Password ?'}</Text>
@@ -261,7 +271,6 @@ const mapDispatchToProps =(dispatch) =>{
     ClearError:() =>dispatch(AuthAction.ActionClearError()),
   }
 }
-
 
 const styles = StyleSheet.create({
   container:{

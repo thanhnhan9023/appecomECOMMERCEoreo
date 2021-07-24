@@ -89,13 +89,9 @@ import { connect } from 'react-redux';
   _moveScreen(txtSccreen,index)
   {
     Utils.navigate(txtSccreen)
-   
-    // Utils.push(txtSccreen)
-  
   }
   render() {
     const {state}=this.props
-    console.log(this.props)
     return (
       <View style={{flexDirection:'row',
       paddingVertical:FontSize.scale(10),

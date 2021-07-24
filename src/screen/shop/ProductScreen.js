@@ -93,11 +93,17 @@ const dataCategory=[
     <TouchableOpacity 
     onPress={() =>{Utils.navigate(Config.DetalisProduct,{listimg:item.imgproduct,data:item})}}
      style={{
-      height:FontSize.scale(280),
-      width:FontSize.scale(160),
-      marginRight:FontSize.scale(4),
+      height:FontSize.scale(270),
+      width:FontSize.scale(160-15),
+      elevation:FontSize.scale(4),
+      marginRight:FontSize.scale(30),
+      marginBottom:FontSize.scale(10),
+      marginTop:index%2!=0?FontSize.scale(20):0,
+      borderRadius:FontSize.scale(10),
+      backgroundColor:colors.whiteTwo,
      }}>
-          <ImageBackground resizeMode={'stretch'} source={{uri:item.imgproduct[0].img}} style={{width:FontSize.scale(156),height:FontSize.scale(200)}} >
+        <ImageBackground borderRadius={FontSize.scale(10)}
+        resizeMode={'stretch'} source={{uri:item.imgproduct[0].img}} style={{ widthL:FontSize.scale(160),height:FontSize.scale(200)}} >
                 <View style={{
                   paddingVertical:FontSize.scale(10),
                   paddingHorizontal:FontSize.scale(10),
@@ -118,9 +124,11 @@ const dataCategory=[
                   </TouchableOpacity>
                 </View>
                 <View style={{height:FontSize.scale(15)}}></View>
-                <Text numberOfLines={2} style={{color:colors.grayLight,...FontSize.TextStyles.roboto,fontSize:FontSize.sizes.sText14}} >{item.nameproduct}</Text>
+                <View style={{paddingHorizontal:FontSize.scale(10)}} >
+                <Text  numberOfLines={2} style={{color:colors.grayLight,...FontSize.TextStyles.roboto,fontSize:FontSize.sizes.sText14}} >{item.nameproduct}</Text>
                 <Text style={{...FontSize.TextStyles.optionNormal}} >{"$"+item.price+".00"}</Text>
-            </ImageBackground>
+                </View>
+            </ImageBackground> 
     </TouchableOpacity>
     )
   }
@@ -232,7 +240,7 @@ const dataCategory=[
              key={isShowGrid}
              showsVerticalScrollIndicator={false}
              style={{
-             paddingVertical:FontSize.scale(10),
+              //  backgroundColor:'red',
              paddingHorizontal:FontSize.scale(15)}}
              data={this.props.data}
              renderItem={ isShowGrid==true ? this._renderItemGrid:this._renderItemList}
@@ -240,7 +248,7 @@ const dataCategory=[
              keyExtractor={(item,index)=> index}            
              />  :null
             }
-                   
+                   <View style={{height:FontSize.scale(20)}}/>
             </View>
       </View>
     );

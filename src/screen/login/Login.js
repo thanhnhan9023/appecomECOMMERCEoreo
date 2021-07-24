@@ -16,6 +16,7 @@ import { connect } from 'react-redux'
 import AuthAction from '../../Redux/Actions/ActionAuth/AuthAction'
 import LoginSuccess from './LoginSuccess';
 import ConfigStack from '../../navigation/ConfigStack';
+import ButtonLinear from '../../container/ButtonLinear';
 
 const dataList = [
     {
@@ -224,25 +225,24 @@ const datasetings=[
                             {'Sign in to receive exclusive offfers and Promotions'}</Text>
                 </View>
                 <View style={{flexDirection:'row',paddingVertical:FontSize.scale(10),paddingHorizontal:FontSize.scale(10)}} >
-                    <Button2    onPress={() =>{
-                        Utils.navigate(ConfigStack.AuthStack,{screen:Config.Registration,initial: false,})
-                    }} 
-                    style={{flex:1,paddingVertical:FontSize.scale(10),borderWidth:1,
-                    backgroundColor:colors.white,
-                    }} 
-                    styleTxt={{...FontSize.TextStyles.semiBold,fontSize:FontSize.sizes.sText17,color:colors.blackShadow}}
-                    title={'Create an Account'} 
-                    >
-                    </Button2>
+                    <ButtonLinear
+                    title={'Create an Account'}
+                    color={[colors.green,colors.yellowishOrange]}
+                    style={{flex:1,paddingVertical:FontSize.scale(10),paddingHorizontal:FontSize.scale(10),justifyContent:'center',alignItems:'center'}}
+                    txtStyle={{...FontSize.TextStyles.roboto,fontSize:FontSize.sizes.sText17,color:colors.black}}
+                    onPress={() =>Utils.navigate(ConfigStack.AuthStack,{screen:Config.Registration,initial: false})}
+                    />
                     <View style={{paddingHorizontal:FontSize.scale(5)}}/>
-                  <Button2  style={{flex:1,
-                    paddingVertical:FontSize.scale(10),
-                    backgroundColor:colors.blackShadow}} title={'Sign In'}      
-                    onPress={() =>{
-                        Utils.navigate(ConfigStack.AuthStack,{screen:Config.Sign,initial: false})
-                    }}
-                    styleTxt={{...FontSize.TextStyles.roboto,fontSize:FontSize.sizes.sText17,color:colors.white}}></Button2>
+                    <ButtonLinear
+                    title={'Sign In'}
+                    color={[colors.black,colors.black]}
+                    styleContainer={{flex:1}}
+                    style={{paddingVertical:FontSize.scale(10),paddingHorizontal:FontSize.scale(10),justifyContent:'center',alignItems:'center'}}
+                    txtStyle={{...FontSize.TextStyles.roboto,fontSize:FontSize.sizes.sText17,color:colors.white}}
+                    onPress={() =>Utils.navigate(ConfigStack.AuthStack,{screen:Config.Sign,initial: false})}
+                    />
                 </View>
+                
                 <Text style={{paddingHorizontal:FontSize.scale(10),
                     paddingVertical:FontSize.scale(10),
                     color:colors.grayLight,

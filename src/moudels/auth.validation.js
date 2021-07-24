@@ -6,6 +6,11 @@ export const emailValidator = email => {
     return true;
   };
   
+  export const emailValidatorCheck = email => {
+    const re = /\S+@\S+\.\S+/;
+    if (!re.test(email)) return false;
+    return true;
+  };
   export const infoValidator = info => {
     if (!info || info.length <= 0) return 'Cannot be empty.';
     return true;

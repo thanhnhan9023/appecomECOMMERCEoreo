@@ -12,7 +12,7 @@ import { emailValidator,phoneValidator,passwordValidator, nameValidator, infoVal
  from '../../moudels/auth.validation';
 import ConfigStack from '../../navigation/ConfigStack';
 import Config from '../../navigation/Config'
-import { config } from 'npm';
+import LinearGradient from 'react-native-linear-gradient';
 
 const dataIcon=[
   {
@@ -121,6 +121,8 @@ class Registration extends Component {
     return
     Utils.showMessages('Danger',infoValidator(val))
   }
+
+ 
   componentDidUpdate=() =>{
     if(this.props.data.error!=null)
     {
