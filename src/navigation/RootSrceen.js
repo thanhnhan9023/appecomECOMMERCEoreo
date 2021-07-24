@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Config from './Config';
 import ConfigScreen from './ConfigScreen';
-import { createStackNavigator } from '@react-navigation/stack';
+import {Animated, Easing } from 'react-native'
+import { createStackNavigator,CardStyleInterpolators } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import DrawMenuComponent from '../navigation/ComponentDrawmenu/DrawMenuComponent'
 import MyTabBar from './ComponentBottomenu/MyTabBar';
@@ -55,7 +56,8 @@ const data=[
            <Tab.Screen name={Config.DrawMenuSceen} component={DrawMenuSceen} />
            <Tab.Screen name={Config.Shop} component={ConfigScreen.Shop} />
            <Tab.Screen name={Config.WishListScreen} component={ConfigScreen.WishListScreen} />
-           <Tab.Screen name={Config.CartScreen} component={ConfigScreen.CartScreen} />
+           <Tab.Screen name={Config.CartScreen} component={ConfigScreen.CartScreen} 
+           />
            <Tab.Screen name={Config.login} component={ConfigScreen.login} />
       </Tab.Navigator>
     );
@@ -74,6 +76,49 @@ class DrawMenuSceen extends Component {
 }
 
 const AuthStack=createStackNavigator();
+const forSlide = ({ current, next, inverted, layouts: { screen } }) => {
+  const progress = Animated.add(
+      current.progress.interpolate({
+          inputRange: [0, 1],
+          outputRange: [0, 1],
+          extrapolate: 'clamp',
+      }),
+      next
+      ? next.progress.interpolate({
+          inputRange: [0, 1],
+          outputRange: [0, 1],
+          extrapolate: 'clamp',
+      })
+      : 0
+  );
+
+  return {
+      cardStyle: {
+          transform: [
+              {
+                  translateX: Animated.multiply(
+                      progress.interpolate({
+                          inputRange: [0, 1, 2],
+                          outputRange: [
+                              screen.width, // Focused, but offscreen in the beginning
+                              0, // Fully focused
+                              screen.width * -0.3, // Fully unfocused
+                          ],
+                          extrapolate: 'clamp',
+                      }),
+                      inverted
+                  ),
+              },
+          ],
+      },
+  };
+};
+
+const config = {
+  duration: 300,
+  easing: Easing.out(Easing.poly(4)),
+  timing: Animated.timing,
+};
  export  class AuthScreen extends Component{
   render()
   {
@@ -82,10 +127,15 @@ const AuthStack=createStackNavigator();
     initialRouteName={ConfigScreen.login}
     headerMode={false}
     >
-    <AuthStack.Screen  name={Config.login}  component={ConfigScreen.login} />
-    <AuthStack.Screen  name={Config.Sign}  component={ConfigScreen.Sign} />
-    <AuthStack.Screen  name={Config.Registration}  component={ConfigScreen.Registration} />
-    <AuthStack.Screen name={Config.LoginSuccess} component={ConfigScreen.LoginSuccess} />
+    <AuthStack.Screen  name={Config.login}  component={ConfigScreen.login} 
+     options={{ headerShown: false, transitionSpec: { open: config, close: config }, cardStyleInterpolator: forSlide}}
+    />
+    <AuthStack.Screen  name={Config.Sign}  component={ConfigScreen.Sign} 
+      options={{ headerShown: false, transitionSpec: { open: config, close: config }, cardStyleInterpolator: forSlide}}
+    />
+    <AuthStack.Screen  name={Config.Registration}  component={ConfigScreen.Registration} 
+    options={{ transitionSpec: { open: config, close: config },cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS}}
+    />
     </AuthStack.Navigator>
     )
   }
@@ -98,10 +148,16 @@ class HomeScreen extends Component{
     <HomeStack.Navigator 
     initialRouteName={ConfigScreen.Home}
     headerMode={false}
+    screenOptions={{
+      headerShown: false,
+      cardStyleInterpolator:
+        CardStyleInterpolators.forRevealFromBottomAndroid,
+    }}
     >
     <HomeStack.Screen  name={Config.HomeScreen}  component={ConfigScreen.Home} />
     <HomeStack.Screen name={Config.DetalisBlog} component={ConfigScreen.DetalisBlog} />
-    <HomeStack.Screen name={Config.DetalisBlogAll} component={ConfigScreen.DetalisBlogAll} />
+    <HomeStack.Screen name={Config.DetalisBlogAll} component={ConfigScreen.DetalisBlogAll} 
+    />
     </HomeStack.Navigator>
     )
   }
@@ -119,18 +175,35 @@ class MainStackScreen extends Component{
         initialRouteName={Config.bottomenu}
         >
         <MainStack.Screen name={Config.bottomenu} component={BottomMenu} /> 
-        <MainStack.Screen name={ConfigStack.AuthStack} component={AuthScreen}  options={{ headerShown: false }} /> 
         <MainStack.Screen name={Config.Shop} component={ConfigScreen.Shop} />
         <MainStack.Screen  name={Config.WishListScreen} component={ConfigScreen.WishListScreen} />
         <MainStack.Screen name={Config.Categories} component={ConfigScreen.Categories} />
-        <MainStack.Screen  name={Config.ProductScreen}  component={ConfigScreen.ProductScreen}/>
-        <MainStack.Screen name={Config.DetalisProduct} component={ConfigScreen.DetalisProduct} />
-        <MainStack.Screen name={Config.CartScreen} component={ConfigScreen.CartScreen} />
+        <MainStack.Screen  name={Config.ProductScreen}  component={ConfigScreen.ProductScreen}
+            options={{
+            headerShown: false,
+            cardStyleInterpolator:
+              CardStyleInterpolators.forRevealFromBottomAndroid,
+          }}
+        />
+        <MainStack.Screen name={Config.DetalisProduct} component={ConfigScreen.DetalisProduct} 
+            options={{
+              headerShown: false,
+              cardStyleInterpolator:
+                CardStyleInterpolators.forRevealFromBottomAndroid,
+            }}
+        />
         <MainStack.Screen name={Config.Camera} component={ConfigScreen.Camera} />
         <MainStack.Screen name={Config.CameraSelect} component={ConfigScreen.CameraSelect} />
         <MainStack.Screen name={Config.ImageSelect} component={ConfigScreen.ImageSelect} />
         <MainStack.Screen name={Config.VideoItem} component={ConfigScreen.VideoItem} />
-        <MainStack.Screen name={Config.Settings} component={ConfigScreen.AppSetting} />
+        <MainStack.Screen name={Config.Settings} component={ConfigScreen.AppSetting} 
+          options={{
+            headerShown: false,
+            cardStyleInterpolator:
+              CardStyleInterpolators.forRevealFromBottomAndroid,
+          }}
+        
+        />
     </MainStack.Navigator>
     )
   }

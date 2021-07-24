@@ -225,7 +225,7 @@ const datasetings=[
                 </View>
                 <View style={{flexDirection:'row',paddingVertical:FontSize.scale(10),paddingHorizontal:FontSize.scale(10)}} >
                     <Button2    onPress={() =>{
-                        Utils.navigate(ConfigStack.AuthStack,{screen:Config.Registration})
+                        Utils.navigate(ConfigStack.AuthStack,{screen:Config.Registration,initial: false,})
                     }} 
                     style={{flex:1,paddingVertical:FontSize.scale(10),borderWidth:1,
                     backgroundColor:colors.white,
@@ -235,11 +235,11 @@ const datasetings=[
                     >
                     </Button2>
                     <View style={{paddingHorizontal:FontSize.scale(5)}}/>
-                    <Button2  style={{flex:1,
+                  <Button2  style={{flex:1,
                     paddingVertical:FontSize.scale(10),
                     backgroundColor:colors.blackShadow}} title={'Sign In'}      
                     onPress={() =>{
-                        Utils.navigate(ConfigStack.AuthStack,{screen:Config.Sign})
+                        Utils.navigate(ConfigStack.AuthStack,{screen:Config.Sign,initial: false})
                     }}
                     styleTxt={{...FontSize.TextStyles.roboto,fontSize:FontSize.sizes.sText17,color:colors.white}}></Button2>
                 </View>

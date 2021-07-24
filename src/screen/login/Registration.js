@@ -12,6 +12,7 @@ import { emailValidator,phoneValidator,passwordValidator, nameValidator, infoVal
  from '../../moudels/auth.validation';
 import ConfigStack from '../../navigation/ConfigStack';
 import Config from '../../navigation/Config'
+import { config } from 'npm';
 
 const dataIcon=[
   {
@@ -84,7 +85,7 @@ class Registration extends Component {
     }
     if(isEnabled)
     {
-     this.props.Registration(data)
+         this.props.Registration(data)
     }
     else{
       Utils.showMessages('Danger',"Age like oreo")
@@ -123,11 +124,13 @@ class Registration extends Component {
   componentDidUpdate=() =>{
     if(this.props.data.error!=null)
     {
-      Utils.showMessages('Danger',this.props.data.error.messge)
+      Utils.showMessages('Danger',this.props.data.error.messge);
+      this.props.ClearError();
     }
     if(this.props.data.isRes==true)
     {
-      Utils.navigate(ConfigStack.AuthStack,{screen:Config.Sign})
+      this.props.ClearRs(); 
+      Utils.navigate(ConfigStack.AuthStack,{screen:Config.Sign,initial: false});
     }
   }
  
@@ -269,6 +272,8 @@ const mapStateToProps =(state) =>{
 const mapDispatchToProps =(dispatch) =>{
   return {
     Registration:(data) => dispatch(AuthAction.Resgistration(data)),
+    ClearRs:() => dispatch(AuthAction.ActionClearIsRes()),
+    ClearError:() => dispatch(AuthAction.ActionClearError()),
    
   }
 }

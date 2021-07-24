@@ -19,6 +19,7 @@ const initState = {
         case TypesAction.Loading_Login:
             return{
             ...state,
+            isLogin:false,
             isLoading:true,
             }
         case TypesAction.Succes_Login:
@@ -31,7 +32,6 @@ const initState = {
         case TypesAction.Fail_Login:
             return{
             ...state,
-            isLogin:false,
             token:null,
             isLoading:false,
             error:payload,
@@ -60,6 +60,7 @@ const initState = {
         case TypesAction.Loading_Registration:{
             return{
                 ...state,
+                isRes:false,
                 isLoading:true,
                 }
         }
@@ -77,6 +78,12 @@ const initState = {
                 ...state,
                 isLoading:false,
                 error:payload,
+                isRes:false,
+                }
+        }
+        case TypesAction.Clear_Res:{
+            return{
+                ...state,
                 isRes:false,
                 }
         }

@@ -10,6 +10,7 @@ import NumberCart from '../../container/NumberCart'
 import { connect } from 'react-redux'
 import AuthAction from '../../Redux/Actions/ActionAuth/AuthAction'
 import Config from '../../navigation/Config'
+import ConfigStack from '../../navigation/ConfigStack'
 
  const dataiInformation=[
     {
@@ -111,9 +112,8 @@ class LoginSuccess extends Component {
                 phone:'0123 456 789',
                 onPress:() =>{
                     let a={RefreshToken:this.props.token.RefreshToken}
-                    console.log(a)
                     this.props.Logout(a);
-                    Utils.navigate(Config.login)
+                    Utils.navigate(ConfigStack.AuthStack,{screen:Config.login,initial: false})
                 }
             },
         ]

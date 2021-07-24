@@ -308,7 +308,7 @@ class Home extends Component {
                      <View>
                      <View style={{flexDirection:'row',justifyContent:'space-between',paddingHorizontal:FontSize.scale(10)}}>
                                         <Text style={styles.textMeidum}>{'Blogs'}</Text>
-                                        <TouchableOpacity onPress={() => Utils.navigate(ConfigStack.HomeStack,{screen:Config.DetalisBlogAll,params:{data:datablog}})}> 
+                                        <TouchableOpacity onPress={() => Utils.navigate(ConfigStack.HomeStack,{screen:Config.DetalisBlogAll,initial: false,params:{data:datablog}})}> 
                                         <Text style={styles.txtSmall} >{'Show all'}</Text>
                                         </TouchableOpacity>
                         </View>

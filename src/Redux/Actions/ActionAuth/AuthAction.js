@@ -17,6 +17,7 @@ const  Login=(data) =>async dispatch =>{
         }
        )
 }
+
 const ActionLoadingLogin=() =>{
     return{
         type:TypesAciton.Loading_Login,
@@ -90,6 +91,13 @@ const ActionFallResgistration=(error) =>{
         payload:error,
     }
 }
+
+
+const ActionClearIsRes=() =>{
+     return{
+        type:TypesAciton.Clear_Res,
+     }
+}
 const ActionClearError=()=>{
     return{
         type:TypesAciton.ClearError,
@@ -101,6 +109,7 @@ const  AuthAction ={
     Login,
     Logout,
     Resgistration,
-    
+    ActionClearIsRes,
+    ActionClearError,
 }
 export default AuthAction

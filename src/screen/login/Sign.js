@@ -156,19 +156,21 @@ _LoginToken=async () =>{
   
 }
 componentDidUpdate=() =>{
-  
+  if(this.props.data.error!=null)
+  {
+    Utils.showMessages('Danger',this.props.data.error.messge);
+    this.props.ClearError();
+  }
   if(this.props.data.token!=null)
   {
-    Utils.goBack(ConfigStack.AuthStack,{screen:Config.login})
+    Utils.navigate(ConfigStack.AuthStack,{screen:Config.login})
   }
 }
   render() {
     const {showpass,UserName,Password,datalogin}=this.state
     return (
       <View style={styles.container}>    
-        <View onTouchEnd={() => {
-                    this.props.navigation.goBack()
-                }} style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor:'transparent' }}></View>     
+        <View  style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor:'transparent' }}></View>     
             <View style={{flexDirection:'row',paddingVertical:FontSize.scale(8),paddingHorizontal:FontSize.scale(10)}}>
                 <TouchableOpacity  onPress={() =>{
                   this.props.navigation.goBack()
@@ -256,7 +258,7 @@ const mapStateToProps =(state) =>{
 const mapDispatchToProps =(dispatch) =>{
   return {
     LoginToken:(data) => dispatch(AuthAction.Login(data)),
-   
+    ClearError:() =>dispatch(AuthAction.ActionClearError()),
   }
 }
 
