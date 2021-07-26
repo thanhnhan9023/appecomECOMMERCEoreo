@@ -3,6 +3,7 @@ import { Type } from 'es-abstract/es5';
 import React, { Component } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { View, Text } from 'react-native';
+import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 import Utils from '../../app/Utilis';
 import FontSize from '../../config/FontSize';
 import Icon, { TypeIcon } from '../../config/Icon';
@@ -41,12 +42,12 @@ import Config from '../Config';
       onTouchEnd={this._goback}
       style={{flex:1,backgroundColor: 'transparent',justifyContent:'center',alignItems:'center',paddingHorizontal:FontSize.scale(40)
       }}>
-         <View style={{width:'100%',height:FontSize.scale(300),backgroundColor:colors.whiteTwo,borderRadius:FontSize.scale(8),
-       paddingVertical:FontSize.scale(50),
+         <View style={{width:'100%',height:verticalScale(340),backgroundColor:colors.whiteTwo,borderRadius:FontSize.scale(8),
+       paddingVertical:verticalScale(50),
        alignItems:'center'
          }}>
-           <View style={{width:FontSize.scale(100),height:FontSize.verticalScale(100),
-            borderRadius:FontSize.scale(100),
+           <View style={{width:scale(100),height:scale(100),
+            borderRadius:moderateScale(100),
             backgroundColor:colors.white,elevation:FontSize.scale(8),
             justifyContent:'center',
             alignItems:'center',
@@ -58,15 +59,15 @@ import Config from '../Config';
               width: FontSize.scale(5),
             }
             }}>
-             <View style={{width:FontSize.scale(85),height:FontSize.verticalScale(85),borderRadius:FontSize.scale(85),backgroundColor:colors.black,
+             <View style={{width:scale(85),height:scale(85),borderRadius:scale(85),backgroundColor:colors.black,
             justifyContent:'center',alignItems:'center'
             }}>
                <Icon name={'shopping-bag'}  type={TypeIcon.FontAwesome5} size={30} style={{color:colors.white}}/>
              </View>
             <View style={{position:'absolute',top:FontSize.verticalScale(60),bottom:FontSize.verticalScale(10),right:FontSize.scale(0),
             }}>
-                <View style={{width:FontSize.scale(30),height:FontSize.verticalScale(30),
-                backgroundColor:colors.greenFE,borderRadius:FontSize.scale(30),
+                <View style={{width:scale(30),height:scale(30),
+                backgroundColor:colors.greenFE,borderRadius:moderateScale(30),
                 shadowColor: colors.green,
                 elevation:FontSize.scale(2),
                 shadowOpacity: 0.8,

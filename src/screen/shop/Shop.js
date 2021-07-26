@@ -11,6 +11,7 @@ import { connect } from 'react-redux'
 import CartAction from '../../Redux/Actions/ActionCart/CartAction'
 import { Context } from '../../config/ThemeProvider2'
 import LinearGradient from 'react-native-linear-gradient'
+import { RFValue } from 'react-native-responsive-fontsize'
 const data=[
     {
         id:1,
@@ -83,7 +84,7 @@ const data=[
                 <Image  style={{width:FontSize.scale(60),height:FontSize.scale(60),resizeMode:'cover',borderRadius:70}}   source={{uri:item.imgproduct}}></Image>
                 <View style={{width:FontSize.scale(10)}}>
                 </View>
-                <Text style={{...FontSize.TextStyles.roboto,fontSize:FontSize.sizes.sText18}}>
+                <Text style={{...FontSize.TextStyles.roboto,fontSize:RFValue(17,FontSize.Height(100))}}>
                     {item.nameproduct}
                 </Text>
                 <View style={{flex:3}}>
@@ -120,7 +121,7 @@ const data=[
                 <SreachView  iconLeft={TypeIcon.AntDesign} txtNameIcon='search1' sizeicon={20} />
                     <View style={{height:FontSize.scale(24)}}/>
                         <ImageBackground source={IMAGES.imgBgr1}  resizeMode={'cover'}  borderRadius={10} style={{ paddingVertical:FontSize.scale(20) }} >
-                                <Text style={{textAlign:'center',fontWeight:'bold',fontSize:FontSize.reText(28),color:colors.orange}}>{'Up to 40% Off Holiday Bit'}</Text>
+                                <Text style={{textAlign:'center',fontWeight:'bold',fontSize:RFValue(40,FontSize.Height(100)),color:colors.orange}}>{'Up to 40% Off Holiday Bit'}</Text>
                         </ImageBackground>
                         <View style={{paddingVertical:FontSize.scale(15)}}>
                             {!isLoading ?this.props.data.map(this._renderITem):

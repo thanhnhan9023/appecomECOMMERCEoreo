@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Text, View,StyleSheet} from 'react-native'
+import { RFValue } from 'react-native-responsive-fontsize'
 import FontSize from '../config/FontSize'
 import { colors } from '../config/style'
 
@@ -24,7 +25,7 @@ Container:{
 },
 TextNumber:{
     color:colors.white,
-    fontSize:FontSize.reText(14),
+    fontSize:RFValue(14,FontSize.Height(100)),
 }
 
 })

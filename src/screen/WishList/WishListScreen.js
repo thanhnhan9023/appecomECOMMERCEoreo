@@ -15,6 +15,7 @@ import { TextColor, themes } from '../../config/ThemeProvider';
 import ThemeProvider2,{Context} from '../../config/ThemeProvider2';
 import HeadViewCustom from '../../container/HeadViewCustom';
 import NumberCart from '../../container/NumberCart';
+import { scale } from 'react-native-size-matters';
 
 
  class WishListScreen extends Component {
@@ -148,10 +149,10 @@ _RenderItem= ({item,index}) =>
                 </View>
               }
               ViewRight={
-                <View style={{flexDirection:'row'}}>
+                <TouchableOpacity style={{flexDirection:'row'}} onPress={Config.CartScreen} >
                   <NumberCart  number={0} />
-                  <Icon type={TypeIcon.AntDesign} name='down-square-o' size={22}/>
-                </View>
+                  <Icon type={TypeIcon.AntDesign} name='down-square-o' size={scale(20)}/>
+                </TouchableOpacity>
               }
              />
             <SwipeListView 

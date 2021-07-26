@@ -11,6 +11,7 @@ import { connect } from 'react-redux'
 import AuthAction from '../../Redux/Actions/ActionAuth/AuthAction'
 import Config from '../../navigation/Config'
 import ConfigStack from '../../navigation/ConfigStack'
+import { ScrollView } from 'react-native'
 
  const dataiInformation=[
     {
@@ -172,7 +173,7 @@ class LoginSuccess extends Component {
     render() {
         const {dataSettings}=this.state
         return (
-            <View style={{flex:1,backgroundColor:colors.white,paddingVertical:FontSize.scale(10),paddingHorizontal:FontSize.scale(15)}}>
+            <ScrollView style={{flex:1,backgroundColor:colors.white,paddingVertical:FontSize.scale(10),paddingHorizontal:FontSize.scale(15)}}>
                 <HeadViewCustom
                     ViewLeft={
                         <View style={{width:FontSize.scale(20)}}/>
@@ -215,7 +216,7 @@ class LoginSuccess extends Component {
                </View>
                <Text>{'sdsdsds'}</Text>
                <View style={{height:FontSize.scale(20)}}/>
-            </View>
+            </ScrollView>
         )
     }
 }

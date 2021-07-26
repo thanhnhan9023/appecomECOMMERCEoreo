@@ -4,6 +4,8 @@ import Icon, { TypeIcon } from '../../config/Icon';
 import FontSize from '../../config/FontSize';
 import { colors } from '../../config/style';
 import Config from '../Config';
+import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
+import { RFValue } from 'react-native-responsive-fontsize';
 
  class DrawMenuComponent extends Component {
   constructor(props) {
@@ -23,12 +25,12 @@ import Config from '../Config';
     const {isshowmenu}=this.state
     return (
        
-      <View style={{paddingHorizontal:FontSize.scale(10),paddingVertical:FontSize.scale(15)}}>
+      <View style={{paddingHorizontal:scale(10),paddingVertical:verticalScale(15)}}>
             <Text
             style={styles.TxtTitle}
             >{'Categories'}</Text>
             <View
-            style={{height:FontSize.scale(20)}}
+            style={{height:verticalScale(20)}}
             />
         {data.map((item,index) =>{
                     if(item.IsShowIcon ==true)
@@ -38,7 +40,7 @@ import Config from '../Config';
                             <View key={index} style={{flexDirection:'row',justifyContent:'space-between',borderBottomWidth:0.6,borderBottomColor:colors.grayLight}}
                             >
                                   <TouchableOpacity>
-                                      <Text style={{fontSize:FontSize.reText(20)}} >{item.Name}</Text>
+                                      <Text style={{fontSize:RFValue(20,FontSize.Height(100))}} >{item.Name}</Text>
                                   </TouchableOpacity>
                                   <TouchableOpacity>
                                         <Icon type={typeIcon} name={NameIcon}  size={SizeIcon}></Icon>
@@ -58,7 +60,7 @@ import Config from '../Config';
                                 style={{flexDirection:'row',justifyContent:'space-between',borderBottomWidth:0.6,borderBottomColor:colors.grayLight}
                               }>
                             <Text
-                            style={{fontSize:FontSize.reText(20)}}
+                            style={{fontSize:RFValue(30,FontSize.Height(100))}}
                             >{item.Name}</Text>
                                 </View>
                                 <View style={{height:FontSize.scale(10)}}></View>
@@ -73,7 +75,7 @@ import Config from '../Config';
 const styles = StyleSheet.create({
   TxtTitle:
   {
-    fontSize:FontSize.reText(28),fontWeight:'bold'
+    fontSize:RFValue(30,FontSize.Height(100)),fontWeight:'bold'
   }
 });
 

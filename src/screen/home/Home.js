@@ -28,7 +28,10 @@ import CategoriesACtion from '../../Redux/Actions/ActionCategories/CategoriesACt
 import ProductACtion from '../../Redux/Actions/ActionProduct/ProductAction'
 import CarsoulItem from '../../component/Home/CarouselItem';
 import ConfigStack from '../../navigation/ConfigStack';
-
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+import HeadViewCustom from '../../container/HeadViewCustom';
+import { scale, verticalScale } from 'react-native-size-matters';
+import NumberCart from '../../container/NumberCart';
 
 const {width,height}=Dimensions.get('window')
 
@@ -136,7 +139,7 @@ class Home extends Component {
                         source={ {uri:item.imgproduct}}
                         >
                         </Image>
-                        <Text style={{marginTop:FontSize.scale(10),textAlign:'center',...FontSize.TextStyles.roboto,fontSize:FontSize.sizes.sText16}}>{item.nameproduct}</Text>
+                        <Text style={{marginTop:FontSize.scale(10),textAlign:'center',...FontSize.TextStyles.roboto,fontSize:RFValue(18,FontSize.Height(100))}}>{item.nameproduct}</Text>
                     </View>
                         { index!=ListLoaisp.length-1 ?(<View style={{width:FontSize.scale(15),height:'100%'}}></View>):null }
             </TouchableOpacity>
@@ -177,17 +180,34 @@ class Home extends Component {
              <Context.Consumer>
              {({ theme, updateTheme }) => (
                 <ScrollView showsVerticalScrollIndicator={false} style={{flex:1,backgroundColor:colors.white}}>
-                    <HeaderView
-                    {...this.props}
-                    IconLeftShow={true}
-                    IconLefType={TypeIcon.Entypo}
-                    IconNameLeft={'menu'}
-                    iconright={true}
-                    typeicon={TypeIcon.AntDesign}
-                    iconname={'shoppingcart'}
-                    righticonone={true}
-                    ShowIconCenter={true}
-                    onPressLeft={() =>this.props.navigation.openDrawer()}
+                    
+                    <HeadViewCustom
+                    ContainerStyle={{paddingHorizontal:scale(15),paddingVertical:verticalScale(20)}}
+                    ViewLeft={
+                        <TouchableOpacity  onPress={() =>{this.props.navigation.openDrawer()}}>
+                               <Icon
+                            name='menu'
+                            type={TypeIcon.Entypo}
+                            size={scale(20)}
+                                />
+                        </TouchableOpacity>
+                    }
+                    ViewCenter={
+                        <Image
+                        source={IMAGES.imgLogoOreo}
+                        style={{width:scale(50),height:verticalScale(40)}}
+                        resizeMode={'stretch'}
+                        />
+                    }
+                    ViewRight={
+                        <TouchableOpacity  onPress={() => Utils.navigate(Config.CartScreen)} style={{flexDirection:'row'}}>
+                            <NumberCart number={this.props.dataCart.length}/>
+                            <Icon name='shoppingcart'
+                            type={TypeIcon.AntDesign}
+                            size={scale(20)}
+                            />
+                        </TouchableOpacity>
+                    }
                     />
                     <Carousel 
                         {...this.props}
@@ -200,14 +220,14 @@ class Home extends Component {
                     <View>
                             <View style={{flexDirection:'row',justifyContent:'space-between',paddingHorizontal:FontSize.scale(10)}}>
                                     <Text style={styles.textMeidum}>{'Categories'}</Text>
-                                    <TouchableOpacity onPress={() =>  Utils.navigate(Config.ProductTest)}>
+                                    <TouchableOpacity onPress={() =>  Utils.navigate(Config.Shop)}>
                                         <Text style={styles.txtSmall}>{'Show all'}</Text>
                                     </TouchableOpacity>
                             </View>
                             <View style={{height:FontSize.scale(30)}}/>
                             {!isLoading ? 
                                     <FlatList
-                                    style={{marginHorizontal:15}}
+                                    style={{marginHorizontal:FontSize.scale(15)}}
                                     horizontal
                                     showsHorizontalScrollIndicator={false}
                                     data={ListLoaisp}
@@ -308,7 +328,7 @@ class Home extends Component {
                      <View>
                      <View style={{flexDirection:'row',justifyContent:'space-between',paddingHorizontal:FontSize.scale(10)}}>
                                         <Text style={styles.textMeidum}>{'Blogs'}</Text>
-                                        <TouchableOpacity onPress={() => Utils.navigate(ConfigStack.HomeStack,{screen:Config.DetalisBlogAll,initial: false,params:{data:datablog}})}> 
+                                        <TouchableOpacity onPress={() => Utils.navigate(ConfigStack.HomeStack,{screen:Config.DetalisBlogAll,initial: false,params:{data:datablog,numbercart:this.props.dataCart.length}})}> 
                                         <Text style={styles.txtSmall} >{'Show all'}</Text>
                                         </TouchableOpacity>
                         </View>
@@ -326,6 +346,7 @@ const mapStateToProps =(state) =>{
           datalike:state.CartReducer.ListProductLike,
           dataCategory:state.CategoriesReducer,
           dataProduct:state.ProductReducer,
+          dataCart:state.CartReducer.ListCart,
         }
       }
 const mapDispatchToProps =(dispatch) =>{
@@ -344,10 +365,10 @@ export default connect(mapStateToProps,mapDispatchToProps)(Home)
 const styles = StyleSheet.create({
     textMeidum:{
         ...FontSize.TextStyles.semiBold,
-        fontSize:FontSize.sizes.sText22
+        fontSize:RFValue(22,FontSize.Height(100))
     },
     txtSmall:{
-        fontSize:FontSize.reText(18),
+        fontSize:RFValue(18,FontSize.Height(100)),
         color:colors.grayLight,
     },
     imageCategories:

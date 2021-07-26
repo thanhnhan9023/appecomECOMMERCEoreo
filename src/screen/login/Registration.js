@@ -13,6 +13,8 @@ import { emailValidator,phoneValidator,passwordValidator, nameValidator, infoVal
 import ConfigStack from '../../navigation/ConfigStack';
 import Config from '../../navigation/Config'
 import LinearGradient from 'react-native-linear-gradient';
+import { ScrollView } from 'react-native';
+import { Dimensions } from 'react-native';
 
 const dataIcon=[
   {
@@ -34,6 +36,7 @@ const dataIcon=[
     backgroundColorIcon:colors.black,
   },
 ]
+
 class Registration extends Component {
   constructor(props) {
     super(props);
@@ -146,7 +149,7 @@ class Registration extends Component {
       Password,
     }=this.state
     return (
-      <View style={{flex:1,backgroundColor:colors.white}}>
+      <ScrollView  showsVerticalScrollIndicator={false} style={{flex:1,backgroundColor:colors.white}}>
             <HeaderView
             IconLefType={TypeIcon.AntDesign}
             IconNameLeft={'left'}
@@ -156,9 +159,7 @@ class Registration extends Component {
             iconright={false}
             onPressLeft={() => Utils.goBack()}
             />
-            <View style={{height:FontSize.scale(14)}}> 
-            </View>
-               <View style={{paddingHorizontal:FontSize.scale(12)}}>
+               <View style={{paddingHorizontal:FontSize.scale(12),height:'55%'}}>
                   <TextInput style={styles.input}
                   value={FirstName}
                   placeholder={'Frist Name *'}
@@ -209,8 +210,7 @@ class Registration extends Component {
                   onChangeText={(val) => this.setState({Password:val})}
                   />
                </View>
-                <View style={{height:FontSize.scale(14)}}></View>
-                <View style={{flex:1}}>
+                <View style={{flex:1,paddingVertical:FontSize.scale(10)}}>
                     <View style={{flexDirection:'row',paddingHorizontal:FontSize.scale(12)}}>
                       <Text style={{flex:8,fontSize:FontSize.reText(18)}}>
                         {`I'd like to receive exclusive offers and style advice by email and sms from Oreo` }
@@ -223,9 +223,7 @@ class Registration extends Component {
                       value={this.state.isEnabled}
                     />
                    </View>
-                    <View style={{height:FontSize.scale(14)}}>
-
-                    </View>
+                    <View style={{height:FontSize.scale(14)}}/>
                     <View style={{paddingHorizontal:FontSize.scale(12),height:FontSize.scale(30)}}>
                     <Button2  style={styles.btnRegister} 
                     styleTxt={{color:colors.white,
@@ -240,12 +238,12 @@ class Registration extends Component {
                    <View style={{flexDirection:'row',justifyContent:'center'}}>
                     {dataIcon.map(this._Viewicon)} 
                     </View>
-                    <View style={{height:FontSize.scale(20)}} ></View>
                     <TouchableOpacity  onPress={() => Utils.navigate(Config.login)}>
                        <Text style={{textAlign:'center',fontSize:FontSize.reText(18)}}>{'Already have an account?'}</Text>
                     </TouchableOpacity>
                 </View>
-      </View>
+                <View style={{height:FontSize.scale(30)}}/>
+      </ScrollView>
     );
   }
 }
@@ -253,7 +251,7 @@ class Registration extends Component {
 
 const styles = StyleSheet.create({
     input:{
-      height:FontSize.scale(37),
+      height:FontSize.scale(38),
       borderWidth:0.6,
       marginTop:FontSize.scale(10),
       borderColor:colors.grayLight,

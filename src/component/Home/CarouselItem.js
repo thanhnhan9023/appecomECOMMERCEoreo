@@ -12,7 +12,7 @@ export default class CarsoulItem extends Component {
         let position=Animated.divide(scrollX, width)
         return (
             <View style={styles.cardView}>
-                <ImageBackground style={styles.image} source={item.img}>
+                <ImageBackground style={styles.image} source={item.img} resizeMode={'stretch'} >
                     <View>
                         <Text style={styles.txtSale}>{'30%  OFF'}</Text>
                         <Text style={styles.txtTitle}>{'New Capp'}</Text>

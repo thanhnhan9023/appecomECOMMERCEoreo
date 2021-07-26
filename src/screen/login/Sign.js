@@ -16,6 +16,8 @@ import ConfigStack from '../../navigation/ConfigStack';
 import {  emailValidatorCheck }
  from '../../moudels/auth.validation';
 import LinearGradient from 'react-native-linear-gradient';
+import { ScrollView } from 'react-native';
+import { RFValue } from 'react-native-responsive-fontsize';
 const dataIcon=[
   {
     TypeIcon:TypeIcon.AntDesign,
@@ -81,12 +83,12 @@ _Viewicon=(item,index) =>
     style={{width:FontSize.scale(44),
     height:FontSize.scale(44),
     backgroundColor:item.backgroundColorIcon,
-    borderRadius:FontSize.scale(40),
+    borderRadius:FontSize.scale(44),
     justifyContent:'center',
     alignItems:'center'}} 
     onPress={() =>this._login(index)}
     >
-        <Icon type={item.TypeIcon}  size={18} name={item.NameIcon} color={item.ColorIcon}></Icon>
+        <Icon type={item.TypeIcon}  size={FontSize.scale(18)} name={item.NameIcon} color={item.ColorIcon}></Icon>
     </TouchableOpacity>
     <View style={{width:FontSize.scale(20)}}>
     </View>
@@ -178,7 +180,7 @@ componentDidUpdate=() =>{
   render() {
     const {showpass,UserName,Password,datalogin}=this.state
     return (
-      <View style={styles.container}>    
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>    
         <View  style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor:'transparent' }}></View>     
             <View style={{flexDirection:'row',paddingVertical:FontSize.scale(8),paddingHorizontal:FontSize.scale(10)}}>
                 <TouchableOpacity  onPress={() =>{
@@ -220,15 +222,15 @@ componentDidUpdate=() =>{
                     <TouchableOpacity 
                     onPress={() => this._LoginToken()}
                     >
-                      <LinearGradient colors={[colors.colorStarYellow, colors.black]} style={styles.btnSign}>
+                      <LinearGradient colors={[colors.black, colors.orange]} style={styles.btnSign}>
                          {this.props.data.isLoading ? <Loading/> :
-                          <Text style={{fontSize:FontSize.reText(20),color:colors.white,textAlign:'center'}}>
+                          <Text style={{fontSize:RFValue(20,FontSize.Height(100)),color:colors.white,textAlign:'center'}}>
                           {'Sign In'}
                         </Text>}
                      </LinearGradient>
                     </TouchableOpacity>
                     <TouchableOpacity style={{paddingVertical:FontSize.scale(20),alignItems:'center'}}>
-                            <Text style={{fontSize:FontSize.reText(18),fontWeight:'bold',color:colors.black}}>{'Forgot Password ?'}</Text>
+                            <Text style={{fontSize:RFValue(18,FontSize.Height(100)),fontWeight:'bold',color:colors.black}}>{'Forgot Password ?'}</Text>
                     </TouchableOpacity>
                     <View style={{flexDirection:'row',paddingVertical:FontSize.scale(10)}}>
                     <View style={{flex:1,borderBottomWidth:0.2,borderBottomColor:colors.grayLight,marginBottom:FontSize.scale(6)}}></View>
@@ -243,7 +245,7 @@ componentDidUpdate=() =>{
                 </View>
                       <View style={{flex:1,justifyContent:'flex-end'}}>
                             <View style={{backgroundColor:null,width:FontSize.Width(100),paddingVertical:FontSize.scale(20),paddingHorizontal:FontSize.scale(10)}}>
-                            <Text style={{textAlign:'center',color:colors.grayLight}}  >{'Dont have an account ?'}</Text>
+                            <Text style={{textAlign:'center',color:colors.grayLight,fontSize:RFValue(22,FontSize.Height(100))}}  >{'Dont have an account ?'}</Text>
                             <View style={{height:FontSize.scale(10)}}></View>
                             <Button2
                             title={'Register'}
@@ -255,7 +257,7 @@ componentDidUpdate=() =>{
                             />
                             </View>
                         </View>
-      </View>
+      </ScrollView>
     );
 
   }

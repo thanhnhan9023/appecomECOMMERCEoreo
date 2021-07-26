@@ -14,6 +14,8 @@ import Utils from '../../app/Utilis';
 import { connect } from 'react-redux';
 import CartAction from '../../Redux/Actions/ActionCart/CartAction';
 import { showMessage, hideMessage } from "react-native-flash-message";
+import { verticalScale } from 'react-native-size-matters';
+import { RFValue } from 'react-native-responsive-fontsize';
 
  class DetalisProduct extends Component {
   constructor(props) {
@@ -56,17 +58,8 @@ import { showMessage, hideMessage } from "react-native-flash-message";
   render() {
     const {index,isLoangdingCart}=this.state
     const {listimg,data}=this.props.route.params;
-    Utils.nlog(index)
     return (
       <View style={styles.container}>
-           <HeaderView
-            iconright={true}
-            IconLeftShow={true}
-            IconLefType={TypeIcon.AntDesign}
-            IconNameLeft={'left'}
-            StyleTxtCenter={{fontSize:FontSize.reText(22)}}
-            onPressLeft={this._GoBack}
-            />
             <ScrollView
             showsVerticalScrollIndicator={false}
             > 
@@ -76,8 +69,8 @@ import { showMessage, hideMessage } from "react-native-flash-message";
                     showPagination
                     data={listimg}
                     renderItem={({ item }) => (
-                        <View style={{  width:FontSize.Width(100),height:FontSize.Height(45)}}>
-                              <ImageBackground style={{width:'100%',height:'100%'}} resizeMode={'stretch'} source={{uri:item.img}}  >
+                        <View style={{  width:FontSize.Width(100),height:FontSize.Height(50)}}>
+                              <ImageBackground style={{width:FontSize.Width(100),height:'100%'}} resizeMode={'stretch'} source={{uri:item.img}}  >
                               <View style={{
                                 flexDirection:'row',
                                 flex:1,
@@ -118,7 +111,7 @@ import { showMessage, hideMessage } from "react-native-flash-message";
                         }
                     }
                     />
-                    <View style={{height:FontSize.Height(45),paddingVertical:FontSize.scale(10),paddingHorizontal:FontSize.scale(10)}}>
+                    <View style={{paddingVertical:FontSize.scale(10),paddingHorizontal:FontSize.scale(10)}}>
                       <View style={{flexDirection:'row',justifyContent:'space-between'}}>
                       <Text>{'Women'}</Text>
                       <View style={{flexDirection:'row'}}>
@@ -129,13 +122,13 @@ import { showMessage, hideMessage } from "react-native-flash-message";
                       </View>
                       </View>
                       <View style={{height:FontSize.scale(10)}}/>
-                      <Text style={{fontWeight:'bold',fontSize:FontSize.reText(30)}}>{data.nameproduct}</Text>
+                      <Text style={{fontWeight:'bold',fontSize:RFValue(25,FontSize.Height(100))}}>{data.nameproduct}</Text>
                       <View style={{height:FontSize.scale(10)}}/>
                       <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-                      <Text style={{fontWeight:'bold',fontSize:FontSize.reText(22)}}>{'$'+data.price+'.00'}</Text>
+                      <Text style={{fontWeight:'bold',fontSize:RFValue(18,FontSize.Height(100))}}>{'$'+data.price+'.00'}</Text>
                       <View style={{flexDirection:'row'}}>
                         <Icon type={TypeIcon.Ionicons} name={'md-chevron-down-outline'} color={colors.green} size={30}></Icon>
-                        <Text  style={{fontSize:FontSize.reText(22),color:colors.green}}>{'In-stock'}</Text>
+                        <Text  style={{fontSize:RFValue(14,FontSize.Height(100)),color:colors.green}}>{'In-stock'}</Text>
                         </View>
                     
                       </View>
@@ -148,7 +141,7 @@ import { showMessage, hideMessage } from "react-native-flash-message";
                               {data.color.map((item,index) =>{
                             return( 
                               <TouchableOpacity key={index} 
-                              onPress={() =>{this.setState({index:index})}}
+                              onPress={() =>{this.setState({index:index+1})}}
                               style={{...styles.selectcolor,backgroundColor:item.color}}>
                               </TouchableOpacity>
                             )

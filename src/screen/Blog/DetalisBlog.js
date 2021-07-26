@@ -9,6 +9,8 @@ import FontSize from '../../config/FontSize';
 import { colors } from '../../config/style';
 import { IMAGES } from '../../../assets/images/IndexImg';
 import Carousel from './Carousel';
+import { scale } from 'react-native-size-matters';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 const datablognew=[
     {
@@ -46,22 +48,22 @@ const datablognew=[
 // const cardWidth = width / 1.8;
 export default class DetalisBlog extends Component {
     render() {
-        const {data}=this.props.route.params
+        const {data,numbercart}=this.props.route.params
         return (
             <View style={{flex:1,backgroundColor:colors.white,paddingHorizontal:FontSize.scale(15)}}>
                 <HeadViewCustom
                     ViewLeft={
                         <TouchableOpacity onPress={() => Utils.goBack()}>
-                        <Icon type={TypeIcon.AntDesign} name={'left'} size={2}/>
+                        <Icon type={TypeIcon.AntDesign} name={'left'} size={scale(18)}/>
                         </TouchableOpacity>
                     }
                     ViewCenter={
-                        <Text style={{...FontSize.TextStyles.semiBold,fontSize:FontSize.sizes.sText18}}>{'Blog'}</Text>
+                        <Text style={{...FontSize.TextStyles.semiBold,fontSize:RFValue(18,FontSize.Height(100))}}>{'Blog'}</Text>
                     }
                     ViewRight={
                        <View style={{flexDirection:'row'}}>
                            <NumberCart
-                           number={0}
+                           number={numbercart}
                            />
                            <Icon />
                        </View>

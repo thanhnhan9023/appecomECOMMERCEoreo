@@ -17,6 +17,7 @@ export const IMAGES={
     imgBlog1:require('./blog1.jpeg'),
     imgBlog2:require('./blog2.jpeg'),
     imgBlog3:require('./blog3.jpeg'),
+    imgLogoOreo:require('./logoOreo.png')
 
 } 
 

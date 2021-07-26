@@ -10,7 +10,7 @@ import Config from '../../navigation/Config';
  class SplashScreen extends Component {
   render() {
     return (
-        <ImageBackground style={{width:FontSize.Width(100),height:FontSize.Height(100)}} resizeMode={'cover'} source={IMAGES.imgSplasScreen}></ImageBackground>
+        <ImageBackground style={{width:FontSize.Width(100),height:FontSize.Height(100)}} resizeMode={'stretch'} source={IMAGES.imgSplasScreen}></ImageBackground>
     );
   }
 }

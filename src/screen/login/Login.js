@@ -17,6 +17,9 @@ import AuthAction from '../../Redux/Actions/ActionAuth/AuthAction'
 import LoginSuccess from './LoginSuccess';
 import ConfigStack from '../../navigation/ConfigStack';
 import ButtonLinear from '../../container/ButtonLinear';
+import { ScrollView } from 'react-native-gesture-handler';
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+import { scale } from 'react-native-size-matters';
 
 const dataList = [
     {
@@ -129,7 +132,7 @@ const datasetings=[
                                 backgroundColor:colors.white,
                                 }}
                                 >
-                                    <Icon type={TypeIcon} name={NameIcon} color={ColorIcon} size={18}></Icon>
+                                    <Icon type={TypeIcon} name={NameIcon} color={ColorIcon} size={scale(18)}></Icon>
                                 </TouchableOpacity>
                                 <View style={{backgroundColor:null,width:FontSize.scale(8)}}>
                                 </View>
@@ -148,7 +151,7 @@ const datasetings=[
                         }}
                         onPress={() => Utils.navigate(Config.Settings)}
                     >
-                        <Icon  type={typeicon} name={iconLeft} size={FontSize.reText(30)} color={colors.grayLight}  />
+                        <Icon  type={typeicon} name={iconLeft} size={FontSize.scale(24)} color={colors.grayLight}  />
                         <View style={{paddingHorizontal:FontSize.scale(10)}}/>
                         <Text style={
                             {flex:7,
@@ -158,8 +161,8 @@ const datasetings=[
                             justifyContent:'center'}}>
                             {name}
                          </Text>
-                        {iconRight ?<Icon type={TypeIcon.AntDesign} name={textRight} size={20}></Icon>:
-                        <Text style={{color:colors.grayLight,fontSize:FontSize.reText(19)}}>{textRight}</Text>}
+                        {iconRight ?<Icon type={TypeIcon.AntDesign} name={textRight} size={FontSize.scale(18)}></Icon>:
+                        <Text style={{color:colors.grayLight,fontSize:RFValue(20,FontSize.Height(100))}}>{textRight}</Text>}
             </TouchableOpacity>
                 )
 
@@ -193,7 +196,7 @@ const datasetings=[
         return (
             <Context.Consumer>
                    {({ theme }) => (
-            <View style={{flex:1,backgroundColor:colors.white,paddingHorizontal:FontSize.scale(10)}}>
+            <ScrollView  showsVerticalScrollIndicator={false} style={{flex:1,backgroundColor:colors.white,paddingHorizontal:FontSize.scale(15)}}>
                 <HeadViewCustom
                    ViewLeft={
                        (
@@ -202,7 +205,7 @@ const datasetings=[
                    }
                     ViewCenter={
                         (
-                            <Text style={{...FontSize.TextStyles.largeBold,color:theme.colors.text}} >{'Me'}</Text>
+                            <Text style={{...FontSize.TextStyles.largeBold,color:theme.colors.text,fontSize:RFValue(18,FontSize.Height(100))}} >{'Me'}</Text>
                         )
                     }
                     CenterContainerStyle={{
@@ -215,7 +218,7 @@ const datasetings=[
                                  <NumberCart
                                          number={0}
                                     />
-                                    <Icon type={TypeIcon.AntDesign} name='down-square-o' size={22}/>
+                                    <Icon type={TypeIcon.AntDesign} name='down-square-o' size={FontSize.scale(22)}/>
                            </View>
                         )
                     }
@@ -224,11 +227,12 @@ const datasetings=[
                         <Text numberOfLines={2}  style={{...FontSize.TextStyles.roboto,fontSize:FontSize.sizes.sText17,textAlign:'center',color:colors.grayLight}}>
                             {'Sign in to receive exclusive offfers and Promotions'}</Text>
                 </View>
-                <View style={{flexDirection:'row',paddingVertical:FontSize.scale(10),paddingHorizontal:FontSize.scale(10)}} >
+                <View style={{flexDirection:'row',paddingVertical:FontSize.scale(10)}} >
                     <ButtonLinear
                     title={'Create an Account'}
-                    color={[colors.green,colors.yellowishOrange]}
-                    style={{flex:1,paddingVertical:FontSize.scale(10),paddingHorizontal:FontSize.scale(10),justifyContent:'center',alignItems:'center'}}
+                    color={[colors.white,colors.yellowishOrange]}
+                    styleContainer={{flex:1}}
+                    style={{paddingVertical:FontSize.scale(10),justifyContent:'center',alignItems:'center'}}
                     txtStyle={{...FontSize.TextStyles.roboto,fontSize:FontSize.sizes.sText17,color:colors.black}}
                     onPress={() =>Utils.navigate(ConfigStack.AuthStack,{screen:Config.Registration,initial: false})}
                     />
@@ -237,7 +241,7 @@ const datasetings=[
                     title={'Sign In'}
                     color={[colors.black,colors.black]}
                     styleContainer={{flex:1}}
-                    style={{paddingVertical:FontSize.scale(10),paddingHorizontal:FontSize.scale(10),justifyContent:'center',alignItems:'center'}}
+                    style={{paddingVertical:FontSize.scale(10),justifyContent:'center',alignItems:'center'}}
                     txtStyle={{...FontSize.TextStyles.roboto,fontSize:FontSize.sizes.sText17,color:colors.white}}
                     onPress={() =>Utils.navigate(ConfigStack.AuthStack,{screen:Config.Sign,initial: false})}
                     />
@@ -268,7 +272,7 @@ const datasetings=[
                     <View style={{paddingHorizontal:FontSize.scale(4),color:theme.colors.text}}/>
                     <Text  style={{fontSize:FontSize.reText(18),color:colors.grayLight}}>{i18n.t('home')}</Text>
                 </View>
-            </View>
+            </ScrollView>
                    )}
             </Context.Consumer>
            

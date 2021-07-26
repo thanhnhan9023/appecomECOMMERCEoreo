@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { ImageBackground } from 'react-native';
 import { FlatList } from 'react-native';
 import { View, Text,TouchableOpacity,StyleSheet} from 'react-native';
+import { RFValue } from 'react-native-responsive-fontsize';
 import Utils from '../../app/Utilis';
 import FontSize from '../../config/FontSize';
 import Icon, { TypeIcon } from '../../config/Icon';
 import { colors } from '../../config/style';
 import Loading from '../Loading';
-
 
 export default class ProductHorizontal extends Component {
     constructor(props) {
@@ -55,13 +55,13 @@ export default class ProductHorizontal extends Component {
                           <View style={{flex:2,justifyContent:'space-between',alignItems:'flex-end',paddingVertical:FontSize.verticalScale(8),paddingHorizontal:FontSize.scale(8)}}>
                               <TouchableOpacity onPress={() =>this._changeIcon(item)}>
                                       {this._checkWhishlist(item._id) ==true ? 
-                                      <Icon type={TypeIcon.AntDesign} name={'hearto'} size={22} color={colors.colorRed} />
-                                      :<Icon type={TypeIcon.AntDesign} name={'hearto'} size={22} color={colors.black} />
+                                      <Icon type={TypeIcon.AntDesign} name={'hearto'} size={FontSize.scale(22)} color={colors.colorRed} />
+                                      :<Icon type={TypeIcon.AntDesign} name={'hearto'} size={FontSize.scale(22)} color={colors.black} />
                                     }
                               </TouchableOpacity>
                               <TouchableOpacity  onPress={() =>this._AddCart(item)}>
                                 {!isLoangdingCart  ?
-                                  <Icon Icon type={TypeIcon.AntDesign} name={'plussquare'}   size={30}></Icon>:
+                                  <Icon Icon type={TypeIcon.AntDesign} name={'plussquare'}   size={FontSize.scale(27)}></Icon>:
                                   <Loading/>
                                 }
                              </TouchableOpacity>
@@ -69,8 +69,8 @@ export default class ProductHorizontal extends Component {
                   </View>
                   <View style={{height:FontSize.scale(10)}}>
                   </View>
-                  <Text style={{color:colors.grayLight,fontSize:FontSize.reText(18)}}>{item.nameproduct}</Text>
-                  <Text style={{fontSize:FontSize.reText(25)}}>{item.price}</Text>
+                  <Text style={{color:colors.grayLight,fontSize:RFValue(20,FontSize.Height(100))}}>{item.nameproduct}</Text>
+                  <Text style={{fontSize:RFValue(22,FontSize.Height(100))}}>{"$"+item.price+".00"}</Text>
 
               </View>
               )

@@ -15,6 +15,8 @@ import { TextInput } from 'react-native';
 import Button2 from '../../component/Button2';
 import { Context } from '../../config/ThemeProvider2';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { scale } from 'react-native-size-matters';
 
 class CartScreen extends Component {
   constructor(props) {
@@ -94,8 +96,8 @@ HeaderFlatList=() =>
         </View>
         {this.GetCountCart() >0?
           <View style={{flexDirection:'row',justifyContent:'space-between',paddingHorizontal:FontSize.scale(10)}}>
-            <Text style={{fontSize:FontSize.reText(20)}}>{'Total'}</Text>
-            <Text style={{fontSize:FontSize.reText(25),fontWeight:'bold'}}>{"$"+this.GetToal()+'.00'}</Text>
+            <Text style={{fontSize:RFValue(25,FontSize.Height(100))}}>{'Total'}</Text>
+            <Text style={{...FontSize.TextStyles.semiBold,fontSize:RFValue(24,FontSize.Height(100))}}>{"$"+this.GetToal()+'.00'}</Text>
           </View>:null
       }
     </View>
@@ -114,21 +116,21 @@ HeaderFlatList=() =>
         paddingHorizontal:FontSize.scale(10),
         borderBottomWidth:0.4,
         }}>
-                    <View style={{paddingHorizontal:FontSize.scale(8),width:FontSize.scale(100),height:FontSize.scale(90)}}>
-                      <Image source={{uri:item.imgproduct[0].img}} style={{width:'100%',height:'100%',resizeMode:'cover'}} ></Image>
+                    <View style={{paddingHorizontal:FontSize.scale(8),width:FontSize.scale(110),height:FontSize.scale(120)}}>
+                      <Image borderRadius={scale(10)} source={{uri:item.imgproduct[0].img}} style={{width:'100%',height:'100%',resizeMode:'stretch'}} ></Image>
                     </View>
                     <View style={{width:FontSize.scale(20)}} />
                     <View style={{flex:1,flexDirection:'row'}}>
                         <View style={{flex:1}}>
                               <View style={{flex:1}}>
-                                <Text style={{fontWeight:'bold'}}>{item.nameproduct}</Text>              
+                                <Text style={{color:colors.grayLight,...FontSize.TextStyles.roboto,fontSize:RFValue(17,FontSize.Height(100))}}>{item.nameproduct}</Text>              
                               </View>
                               <View style={{}}>
                                  <SniperInput valuenew={item.sltam} id={item._id}/>
                              </View>
                         </View>                      
                         <View style={{}}>
-                            <Text style={{fontWeight:'bold',fontSize:FontSize.reText(18)}}>{"$"+item.price+".00"}</Text>
+                            <Text style={{...FontSize.TextStyles.semiBold,fontSize:RFValue(19,FontSize.Height(100))}}>{"$"+item.price+".00"}</Text>
                         </View>
                       </View>
             </View>

@@ -6,6 +6,7 @@ import Icon, { TypeIcon } from '../../config/Icon';
 import FontSize from '../../config/FontSize';
 import Utils from '../../app/Utilis';
 import { connect } from 'react-redux';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 
 // const databottom=[
@@ -116,7 +117,7 @@ import { connect } from 'react-redux';
                 onPress={() =>this._moveScreen(item.configScreen,index)}
                 >
                   <View style={{flexDirection:'row'}}>
-                   <Icon  type={item.typeicon} name={item.nameicon} size={24} color={isFocused  ==true ? colors.black:colors.grayLight} ></Icon>
+                   <Icon  type={item.typeicon} name={item.nameicon} size={FontSize.scale(24)} color={isFocused  ==true ? colors.black:colors.grayLight} ></Icon>
                     {index==2 && this.props.datalike.length>0   || index==3 && this.props.datacart.length>0 ? 
                       <View style={{width:FontSize.scale(8),height:FontSize.scale(8),
                       backgroundColor:colors.redStar,borderRadius:FontSize.scale(8),
@@ -129,7 +130,7 @@ import { connect } from 'react-redux';
                         :null
                     }
                    </View>
-                   <Text style={{color:isFocused ==true ? colors.black:colors.grayLight,fontSize:FontSize.reText(14)}} >{item.NameScreen}</Text>     
+                   <Text style={{color:isFocused ==true ? colors.black:colors.grayLight,fontSize:RFValue(13,FontSize.Height(100))}} >{item.NameScreen}</Text>     
                 </TouchableOpacity>
                 <View style={{width:FontSize.scale(30)}}>
                 </View>

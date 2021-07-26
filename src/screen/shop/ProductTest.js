@@ -1,11 +1,40 @@
 import React, { Component } from 'react'
-import { Dimensions } from 'react-native';
+import { Dimensions,TouchableOpacity } from 'react-native';
 import { ImageBackground } from 'react-native';
 import { Text, View } from 'react-native'
+import { scale, verticalScale } from 'react-native-size-matters';
 import { FlatGrid } from 'react-native-super-grid';
+import Icon, { TypeIcon } from '../../config/Icon'
 import { connect } from 'react-redux';
 import FontSize from '../../config/FontSize';
+import HeadViewCustom from '../../container/HeadViewCustom';
 import ProductACtion from '../../Redux/Actions/ActionProduct/ProductAction'
+import HeaderImageScrollView, { ImageHeaderScrollView, TriggeringView } from 'react-native-image-header-scroll-view';
+import { ScrollView } from 'react-native-gesture-handler';
+import SwiperFlatList from 'react-native-swiper-flatlist';
+import { IMAGES } from '../../../assets/images/IndexImg';
+import { colors } from '../../config/style';
+
+
+const datacolors = [{
+  id:'1',
+  name: 'New Sweater',
+  saleoff: '50% OFF',
+  img: IMAGES.imgWomen,
+},
+{
+  id:'2',
+  name: 'New Sweater',
+  saleoff: '50% OFF',
+  img: IMAGES.imgDecor,
+},
+{
+  id:'3',
+  name: 'New Sweater',
+  saleoff: '50% OFF',
+  img: IMAGES.imgKids
+},
+]
 
 const {width,height}=Dimensions.get('window')
  class ProductTest extends Component {
@@ -16,8 +45,94 @@ const {width,height}=Dimensions.get('window')
         console.log(this.props)
         console.log(this.props.dataProduct)
         return (
-            <View style={{flex:1}}>
-                <FlatGrid
+            <View style={{flex:1,backgroundColor:colors.white}}>
+                    <ImageHeaderScrollView
+                    showsVerticalScrollIndicator={true}
+                      // minOverlayOpacity={0.6}
+                      // maxOverlayOpacity={0.6}
+                      // fixedForegroundContainerStyles={{backgroundColor:colors.white}}
+                      foregroundExtrapolate={'clamp'}
+                    maxHeight={FontSize.Height(50)}
+                    bounces={false}
+                    renderHeader={() =>{
+                        return(
+                        <HeadViewCustom
+                        ContainerStyle={{paddingHorizontal:scale(10)}}
+                        ViewLeft={
+                            <Icon name='left' type={TypeIcon.AntDesign} size={scale(20)}/>
+                        }
+                        />
+                        )
+                     }}
+                    renderForeground={() => {
+                        return(
+                          <View>
+
+                    <SwiperFlatList
+                    // index={index}
+                    showPagination
+                    data={datacolors}
+                    renderItem={({ item }) => (
+                        <View style={{  width:FontSize.Width(100),height:FontSize.Height(50)}}>
+                              <ImageBackground style={{width:FontSize.Width(100),height:'100%'}} resizeMode={'stretch'} source={item.img}  >
+                              <View style={{
+                                flexDirection:'row',
+                                flex:1,
+                                alignItems:'flex-end',
+                                justifyContent:'flex-end',
+                                paddingVertical:FontSize.scale(10),
+                                paddingHorizontal:FontSize.scale(10)
+                              }}>
+                                    <TouchableOpacity>
+                                      <Icon type={TypeIcon.AntDesign} name={'upload'} size={22}></Icon>
+                                    </TouchableOpacity>
+                                    <View
+                                    style={{width:FontSize.scale(15)}}
+                                    />
+                                    {/* <TouchableOpacity onPress={() => this.props.LikeProduct(data)}>
+                                      {this._checkWhishlist(data._id) ==true ? 
+                                          <Icon type={TypeIcon.AntDesign} name={'hearto'} size={22} color={colors.colorRed} />
+                                        :<Icon type={TypeIcon.AntDesign} name={'hearto'} size={22} color={colors.black} />
+                                      }
+                                    </TouchableOpacity> */}
+                              </View>
+                              </ImageBackground>
+                        </View>
+                    )}
+                    paginationStyleItem={ // custom dot
+                        {
+                            width:7,
+                            height:7, 
+                        }
+                    }
+                    paginationDefaultColor={colors.whiteTwo}
+                    paginationActiveColor={colors.grayLight}
+                    paginationStyle={
+                        {
+                            position:'absolute',
+                            left:0,
+                            top:FontSize.Height(40),
+                        }
+                    }
+                    />
+
+
+
+                                 </View>
+                            
+                        )
+                    }}
+                        
+                    
+                    >
+                        <TriggeringView>
+                              <View style={{height:verticalScale(600)}}>
+                             <Text >Overview</Text>
+                             </View>
+                         </TriggeringView>
+                    </ImageHeaderScrollView>
+              
+                {/* <FlatGrid
                 itemDimension={width/3}
                 style={{  marginTop: 10,
                     flex: 1,}}
@@ -35,7 +150,7 @@ const {width,height}=Dimensions.get('window')
                         />
                     </View>
                 )}
-                />
+                /> */}
             </View>
         )
     }
@@ -52,71 +167,3 @@ const mapDispatchToProps =(dispatch) =>{
   }
 export default  connect(mapStateToProps,mapDispatchToProps)(ProductTest)
 
-// import React from 'react';
-// import { StyleSheet, View, Text } from 'react-native';
-// import { FlatGrid } from 'react-native-super-grid';
-
-// export default function ProductTest() {
-//     const [items, setItems] = React.useState([
-//       { name: 'TURQUOISE', code: '#1abc9c' },
-//       { name: 'EMERALD', code: '#2ecc71' },
-//       { name: 'PETER RIVER', code: '#3498db' },
-//       { name: 'AMETHYST', code: '#9b59b6' },
-//       { name: 'WET ASPHALT', code: '#34495e' },
-//       { name: 'GREEN SEA', code: '#16a085' },
-//       { name: 'NEPHRITIS', code: '#27ae60' },
-//       { name: 'BELIZE HOLE', code: '#2980b9' },
-//       { name: 'WISTERIA', code: '#8e44ad' },
-//       { name: 'MIDNIGHT BLUE', code: '#2c3e50' },
-//       { name: 'SUN FLOWER', code: '#f1c40f' },
-//       { name: 'CARROT', code: '#e67e22' },
-//       { name: 'ALIZARIN', code: '#e74c3c' },
-//       { name: 'CLOUDS', code: '#ecf0f1' },
-//       { name: 'CONCRETE', code: '#95a5a6' },
-//       { name: 'ORANGE', code: '#f39c12' },
-//       { name: 'PUMPKIN', code: '#d35400' },
-//       { name: 'POMEGRANATE', code: '#c0392b' },
-//       { name: 'SILVER', code: '#bdc3c7' },
-//       { name: 'ASBESTOS', code: '#7f8c8d' },
-//     ]);
-  
-//     return (
-//       <FlatGrid
-//         itemDimension={130}
-//         data={items}
-//         style={styles.gridView}
-//         // staticDimension={300}
-//         // fixed
-//         spacing={10}
-//         renderItem={({ item }) => (
-//           <View style={[styles.itemContainer, { backgroundColor: item.code }]}>
-//             <Text style={styles.itemName}>{item.name}</Text>
-//             <Text style={styles.itemCode}>{item.code}</Text>
-//           </View>
-//         )}
-//       />
-//     );
-//   }
-  
-//   const styles = StyleSheet.create({
-//     gridView: {
-//       marginTop: 10,
-//       flex: 1,
-//     },
-//     itemContainer: {
-//       justifyContent: 'flex-end',
-//       borderRadius: 5,
-//       padding: 10,
-//       height: 100,
-//     },
-//     itemName: {
-//       fontSize: 16,
-//       color: '#fff',
-//       fontWeight: '600',
-//     },
-//     itemCode: {
-//       fontWeight: '600',
-//       fontSize: 12,
-//       color: '#fff',
-//     },
-//   });

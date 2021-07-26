@@ -15,6 +15,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import NumberCart from '../../container/NumberCart';
 import { Dimensions } from 'react-native';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+import { scale } from 'react-native-size-matters';
 
 const dataCategory=[
   {
@@ -121,20 +122,20 @@ const {width,height}=Dimensions.get('window')
                   <View style={{width:'100%',height:'85%',justifyContent:'space-between',alignItems:'flex-end',padding:FontSize.scale(10)}}>
                   <TouchableOpacity onPress={() =>this._changeIcon(item)}>
                       {this._checkWhishlist(item._id) ==true ? 
-                      <Icon type={TypeIcon.AntDesign} name={'hearto'} size={22} color={colors.colorRed} />
-                    :<Icon type={TypeIcon.AntDesign} name={'hearto'} size={22} color={colors.black} />
+                      <Icon type={TypeIcon.AntDesign} name={'hearto'} size={FontSize.scale(20)} color={colors.colorRed} />
+                    :<Icon type={TypeIcon.AntDesign} name={'hearto'} size={FontSize.scale(20)} color={colors.black} />
                       }
                       </TouchableOpacity>
                     <TouchableOpacity onPress={() =>this._AddCart(item) }>
                       {isLoangdingCart ? <ActivityIndicator size={'large'}  color={colors.grayLight}/>:
-                      <Icon type={TypeIcon.AntDesign} name={'plussquare'} size={30}></Icon>
+                      <Icon type={TypeIcon.AntDesign} name={'plussquare'} size={FontSize.scale(28)}></Icon>
                       }
                     </TouchableOpacity>
                   </View>
                   <View style={{height:FontSize.scale(10)}}/>
                   <View style={{paddingHorizontal:FontSize.scale(10)}}>
-                    <Text style={{color:colors.white,fontSize:RFValue(14,height)}} >{item.nameproduct}</Text>
-                    <Text style={{fontSize:RFValue(15,height)}}>{"$"+item.price+".00"}</Text>
+                    <Text style={{color:colors.white,fontSize:RFValue(16,height)}} >{item.nameproduct}</Text>
+                    <Text style={{fontSize:RFValue(16,height)}}>{"$"+item.price+".00"}</Text>
                   </View>
                 </ImageBackground>
        </LinearGradient>
@@ -194,16 +195,16 @@ const {width,height}=Dimensions.get('window')
             ContainerStyle={{paddingHorizontal:FontSize.scale(10)}}
             ViewLeft={
               <TouchableOpacity onPress={() =>{Utils.goBack()}}>
-              <Icon  name={'left'}  type={TypeIcon.AntDesign} size={22}/>
+              <Icon  name={'left'}  type={TypeIcon.AntDesign} size={scale(18)}/>
               </TouchableOpacity>
             }
             ViewCenter={
-              <Text style={{...FontSize.TextStyles.regular,fontSize:FontSize.sizes.sText22}} >{'Women'}</Text>
+              <Text style={{...FontSize.TextStyles.regular,fontSize:RFValue(22,FontSize.Height(100))}} >{'Women'}</Text>
             }
             ViewRight={
               <View style={{flexDirection:'row'}}>
-                <NumberCart number={0}/>
-                <Icon name={'cart'} type={TypeIcon.EvilIcons} size={30} />
+                <NumberCart number={this.props.dataCart.length}/>
+                <Icon name={'cart'} type={TypeIcon.EvilIcons} size={scale(20)} />
 
               </View>
             }
@@ -217,7 +218,7 @@ const {width,height}=Dimensions.get('window')
                   size={FontSize.scale(22)}
                   />
                   <View style={{width:FontSize.scale(10)}}></View>
-                  <Text style={{fontSize:FontSize.sizes.sText27}}>{'Refine'}</Text>
+                  <Text style={{fontSize:RFValue(22,FontSize.Height(100))}}>{'Refine'}</Text>
                   </TouchableOpacity>
                     <View style={{flex:8}}>
                     </View>
@@ -308,6 +309,7 @@ const mapStateToProps =(state) =>{
   return{
     data:state.CartReducer.ListSanPham,
     datalike:state.CartReducer.ListProductLike,
+    dataCart:state.CartReducer.ListCart,
   
   }
 }
