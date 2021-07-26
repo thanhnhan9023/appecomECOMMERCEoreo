@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Config from './Config';
 import ConfigScreen from './ConfigScreen';
 import {Animated, Easing } from 'react-native'
-import { createStackNavigator,CardStyleInterpolators } from '@react-navigation/stack';
+import { createStackNavigator,CardStyleInterpolators ,TransitionPresets, TransitionSpecs, HeaderStyleInterpolators} from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import DrawMenuComponent from '../navigation/ComponentDrawmenu/DrawMenuComponent'
 import MyTabBar from './ComponentBottomenu/MyTabBar';
@@ -170,11 +170,12 @@ class MainStackScreen extends Component{
   {
     return(
         <MainStack.Navigator
-        mode="modal"
+        // mode="modal"
         headerMode={false}
         initialRouteName={Config.bottomenu}
         >
         <MainStack.Screen name={Config.bottomenu} component={BottomMenu} /> 
+        <MainStack.Screen name={Config.Sign} component={Config.Sign}  /> 
         <MainStack.Screen name={Config.Shop} component={ConfigScreen.Shop} />
         <MainStack.Screen  name={Config.WishListScreen} component={ConfigScreen.WishListScreen} />
         <MainStack.Screen name={Config.Categories} component={ConfigScreen.Categories} />
@@ -208,6 +209,62 @@ class MainStackScreen extends Component{
     )
   }
 }
+const StackMoal=createStackNavigator();
+
+// class ModalSceen extends Component{
+//   render()
+//   {
+//     return(
+//     <StackMoal.Navigator
+//     headerMode={false}
+//     screenOptions={{
+//       cardStyle: { backgroundColor: 'transparent' },
+//       gestureDirection: 'vertical',
+//       transitionSpec: {
+//           open: TransitionSpecs.TransitionIOSSpec,
+//           close: TransitionSpecs.TransitionIOSSpec,
+//       },
+//       headerStyleInterpolator: HeaderStyleInterpolators.forFade,
+//       cardStyleInterpolator: ({ current, next, layouts }) => {
+//           return {
+//               cardStyle: {
+//                   opacity: current.progress.interpolate({
+//                       inputRange: [0, 0.5, 0.9, 1],
+//                       outputRange: [0, 0.25, 0.7, 1],
+//                   }),
+//                   transform: [
+//                       {
+//                           translateX: current.progress.interpolate({
+//                               inputRange: [0, 1],
+//                               outputRange: [layouts.screen.width, 1],
+//                           }),
+//                       },
+//                       {
+//                           scale: next
+//                               ? next.progress.interpolate({
+//                                   inputRange: [0, 1],
+//                                   outputRange: [1, 0.9],
+//                               })
+//                               : 1,
+//                       },
+//                   ],
+//               },
+//               overlayStyle: {
+//                   opacity: current.progress.interpolate({
+//                       inputRange: [0, 1],
+//                       outputRange: [0, 0.5],
+//                   }),
+//               },
+//           };
+//       },
+//   }}
+//     >
+//         <StackMoal.Screen name={Config.ModalCartSuccess} component={ConfigScreen.ModalModalCartSuccess} />
+  
+//     </StackMoal.Navigator>
+//     )
+//   }
+// }
 // Root Stack
  const RootSrceen =() => { 
     return (
@@ -217,24 +274,71 @@ class MainStackScreen extends Component{
         initialRouteName={'Main'}
         screenOptions={{
           cardStyle: { backgroundColor: 'transparent' },
-          cardStyleInterpolator: ({ current: { progress } }) => ({
-              cardStyle: {
-                  opacity: progress.interpolate({
-                      inputRange: [0, 0.5, 0.9, 1],
-                      outputRange: [0, 0.25, 0.7, 1],
-                  }),
-              },
-              overlayStyle: {
-                  opacity: progress.interpolate({
-                      inputRange: [0, 1],
-                      outputRange: [0, 0.1],
-                      extrapolate: 'clamp',
-                  }),
-              },
-          }),
+          gestureDirection: 'vertical-inverted',
+          transitionSpec: {
+              open: TransitionSpecs.TransitionIOSSpec,
+              close: TransitionSpecs.TransitionIOSSpec,
+          },
+          cardStyleInterpolator: ({ current, next, layouts }) => {
+              return {
+                  cardStyle: {
+                      opacity: current.progress.interpolate({
+                          inputRange: [0, 0.5, 0.9, 1],
+                          outputRange: [0, 0.25, 0.7, 1],
+                      }),
+                      transform: [
+                          {
+                              translateX: current.progress.interpolate({
+                                  inputRange: [0, 1],
+                                  outputRange: [layouts.screen.width, 1],
+                              }),
+                          },
+                      ],
+                  },
+                  overlayStyle: {
+                      opacity: current.progress.interpolate({
+                          inputRange: [0, 1],
+                          outputRange: [0, 0.5],
+                      }),
+                  },
+              };
+          },
       }}
+    //   screenOptions={{
+    //     headerShown: false,
+    //     gestureDirection: 'vertical',
+    //     cardStyle: { backgroundColor: 'transparent' },
+    //     transitionSpec: {
+    //               open: TransitionSpecs.TransitionIOSSpec,
+    //               close: TransitionSpecs.TransitionIOSSpec,
+    //           },
+    //           // cardStyleInterpolator:
+    //           //   CardStyleInterpolators.forRevealFromBottomAndroid,
+    //     cardStyleInterpolator: ({ current: { progress } }) => ({
+    //         cardStyle: {
+    //             opacity: progress.interpolate({
+    //                 inputRange: [0, 0.5, 0.9, 1],
+    //                 outputRange: [0, 0.25, 0.7, 1],
+    //             }),
+    //         },
+    //         overlayStyle: {
+    //             opacity: progress.interpolate({
+    //                 inputRange: [0, 1],
+    //                 outputRange: [0, 0.2],
+    //                 extrapolate: 'clamp',
+    //             }),
+    //         },
+
+    //     }),
+    //     ...TransitionPresets.ModalSlideFromBottomIOS
+
+    // }}
         >
-        <StackRoot.Screen name={'Main'} component={MainStackScreen}  options={{ headerShown: false }} /> 
+        <StackRoot.Screen name={'Main'} component={MainStackScreen}  /> 
+        {/* <StackRoot.Screen name={Config.Sign} component={Config.Sign}  options={{ headerShown: false }} />  */}
+        <StackRoot.Screen name={Config.ModalCartSuccess} component={ConfigScreen.ModalModalCartSuccess} />
+        {/* <StackRoot.Screen name={'Modal'} component={ModalSceen}  options={{ headerShown: false }} /> 
+         */}
         
       </StackRoot.Navigator>
     );

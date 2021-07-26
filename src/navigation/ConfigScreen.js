@@ -12,7 +12,7 @@ import ProductScreen from "../screen/shop/ProductScreen"
 import Shop from "../screen/shop/Shop"
 import WishListScreen from "../screen/WishList/WishListScreen"
 import CartScreen from "../screen/Cart/CartScreen"
-import Modal from "./Modal/Modal"
+import ModalCartSuccess from "./Modal/ModalCartSuccess"
 import Camera from "../screen/Camera/Camera"
 import CameraSelect from "../screen/Camera/CameraSelect"
 import ImageSelect from "../screen/Camera/ImageSelect"
@@ -30,7 +30,7 @@ const Screen={
     Shop:Shop,
     login:login,
     WishListScreen:WishListScreen,
-    Modal:Modal,
+    ModalModalCartSuccess:ModalCartSuccess,
     Sign:Sign,  
     Messbox:Messbox,
     Registration:Registration,

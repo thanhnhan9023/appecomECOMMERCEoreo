@@ -15,7 +15,7 @@ export default class HeadViewCustom extends Component {
         RightContainerStyle={}}
         =this.props
         return (
-                <View style={{...styles.Container,ContainerStyle}}>
+                <View style={{...styles.Container,...ContainerStyle}}>
                     {ViewLeft ? 
                     (
                         <View style={[{padding:0,flexDirection:'row'},LeftContainerStyle]}>
@@ -43,6 +43,6 @@ const styles = StyleSheet.create({
     Container:{
         height:FontSize.scale(60),
         justifyContent:'space-between',
-        flexDirection:'row'
+        flexDirection:'row',
     }
 })

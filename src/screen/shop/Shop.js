@@ -10,6 +10,7 @@ import Config from '../../navigation/Config'
 import { connect } from 'react-redux'
 import CartAction from '../../Redux/Actions/ActionCart/CartAction'
 import { Context } from '../../config/ThemeProvider2'
+import LinearGradient from 'react-native-linear-gradient'
 const data=[
     {
         id:1,
@@ -67,13 +68,17 @@ const data=[
             <TouchableOpacity key={`${index}`} style={{
                 paddingHorizontal:FontSize.scale(5),
                 backgroundColor:colors.colorGrayBgr,
-                marginBottom:FontSize.scale(10),
-                borderRadius:8,
+                marginBottom:FontSize.scale(20),
+                elevation:FontSize.scale(8),
+                borderRadius:FontSize.scale(10),
             }}
             onPress={() =>{
                 Utils.navigate(Config.ProductScreen,{maloai:item._id})
             }}
             >
+                {/* <LinearGradient colors={[colors.colorGrayBgr,colors.grayLight]}
+                style={{elevation:FontSize.scale(9)}}
+                > */}
                 <View style={{paddingVertical:FontSize.scale(4),paddingHorizontal:FontSize.scale(7),flexDirection:'row',alignItems:'center'}}>
                 <Image  style={{width:FontSize.scale(60),height:FontSize.scale(60),resizeMode:'cover',borderRadius:70}}   source={{uri:item.imgproduct}}></Image>
                 <View style={{width:FontSize.scale(10)}}>
@@ -92,6 +97,7 @@ const data=[
                        <Icon type={TypeIcon.AntDesign} name={'right'} size={14} ></Icon> 
                     </View>
                 </View>
+                {/* </LinearGradient> */}
             </TouchableOpacity>
         )
     }

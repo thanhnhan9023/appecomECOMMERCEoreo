@@ -7,10 +7,14 @@ import Utils from '../../app/Utilis';
 import FontSize from '../../config/FontSize';
 import Icon, { TypeIcon } from '../../config/Icon';
 import { colors } from '../../config/style';
-import HeaderView from '../../container/HeaderView';
+import HeaderViewCustom from '../../container/HeadViewCustom';
 import Config from '../../navigation/Config';
 import { connect } from 'react-redux';
 import CartAction from '../../Redux/Actions/ActionCart/CartAction';
+import LinearGradient from 'react-native-linear-gradient';
+import NumberCart from '../../container/NumberCart';
+import { Dimensions } from 'react-native';
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 const dataCategory=[
   {
@@ -34,6 +38,7 @@ const dataCategory=[
     name:'T-shirts',
   },
 ]
+const {width,height}=Dimensions.get('window')
  class ProductScreen extends Component {
   constructor(props) {
     super(props);
@@ -74,7 +79,8 @@ const dataCategory=[
     this.setState({isLoangdingCart:false})
     let type="success"
     let data="Add to cart !!"
-    Utils.showMessages(type,data)
+    // Utils.navigate('Modal',{screen:Config.ModalCartSuccess})
+    Utils.navigate(Config.ModalCartSuccess)
   }
   _AddCart  =  async (item,index) =>{
     const {isLoangdingCart,indexloang}=this.state
@@ -85,50 +91,55 @@ const dataCategory=[
       this.props.AddCart(item)
       setTimeout(() =>
      this._loadingAddcart(),200)
-  }
+    }
   }
   _renderItemGrid=({item,index})=>{
     const {isLoangdingCart,indexloang}=this.state
     return(
     <TouchableOpacity 
+    style={{  
+       width:width/2,
+       height:width/1.3,
+       padding:FontSize.scale(10),
+       marginTop:index%2!=0?FontSize.scale(20):0,
+       elevation:FontSize.scale(10)
+       
+    }}
     onPress={() =>{Utils.navigate(Config.DetalisProduct,{listimg:item.imgproduct,data:item})}}
-     style={{
-      height:FontSize.scale(270),
-      width:FontSize.scale(160-15),
-      elevation:FontSize.scale(4),
-      marginRight:FontSize.scale(30),
-      marginBottom:FontSize.scale(10),
-      marginTop:index%2!=0?FontSize.scale(20):0,
-      borderRadius:FontSize.scale(10),
-      backgroundColor:colors.whiteTwo,
-     }}>
-        <ImageBackground borderRadius={FontSize.scale(10)}
-        resizeMode={'stretch'} source={{uri:item.imgproduct[0].img}} style={{ widthL:FontSize.scale(160),height:FontSize.scale(200)}} >
-                <View style={{
-                  paddingVertical:FontSize.scale(10),
-                  paddingHorizontal:FontSize.scale(10),
-                  justifyContent:'space-between',
-                  alignItems:'flex-end',
-                  height:FontSize.scale(200),
-                  }}>
-                    <TouchableOpacity onPress={() =>this._changeIcon(item)}>
+     >
+       <LinearGradient  colors={[colors.whiteTwo,colors.green]} 
+       style={{flex:1,borderRadius:FontSize.scale(10),
+        elevation:FontSize.scale(10),
+        shadowColor: colors.green,
+        shadowOpacity: 0.8,
+        shadowRadius: FontSize.scale(10),
+        shadowOffset: {
+          height: FontSize.verticalScale(5),
+          width: FontSize.scale(5),
+        }
+        }}>
+                <ImageBackground style={{width:'100%',height:'85%'}}  borderTopRightRadius={FontSize.scale(20)}  borderTopLeftRadius={FontSize.scale(20)}
+                resizeMode={'stretch'} source={{uri:item.imgproduct[0].img}}>
+                  <View style={{width:'100%',height:'85%',justifyContent:'space-between',alignItems:'flex-end',padding:FontSize.scale(10)}}>
+                  <TouchableOpacity onPress={() =>this._changeIcon(item)}>
                       {this._checkWhishlist(item._id) ==true ? 
                       <Icon type={TypeIcon.AntDesign} name={'hearto'} size={22} color={colors.colorRed} />
                     :<Icon type={TypeIcon.AntDesign} name={'hearto'} size={22} color={colors.black} />
-                    }
+                      }
+                      </TouchableOpacity>
+                    <TouchableOpacity onPress={() =>this._AddCart(item) }>
+                      {isLoangdingCart ? <ActivityIndicator size={'large'}  color={colors.grayLight}/>:
+                      <Icon type={TypeIcon.AntDesign} name={'plussquare'} size={30}></Icon>
+                      }
                     </TouchableOpacity>
-                  <TouchableOpacity ref={ref => this.add}  onPress={() =>this._AddCart(item,index)}>
-                    {isLoangdingCart && index==indexloang ? <ActivityIndicator size={'large'}  color={colors.grayLight}/> :
-                    <Icon type={TypeIcon.AntDesign} name={'plussquare'} size={30}></Icon>
-                    }
-                  </TouchableOpacity>
-                </View>
-                <View style={{height:FontSize.scale(15)}}></View>
-                <View style={{paddingHorizontal:FontSize.scale(10)}} >
-                <Text  numberOfLines={2} style={{color:colors.grayLight,...FontSize.TextStyles.roboto,fontSize:FontSize.sizes.sText14}} >{item.nameproduct}</Text>
-                <Text style={{...FontSize.TextStyles.optionNormal}} >{"$"+item.price+".00"}</Text>
-                </View>
-            </ImageBackground> 
+                  </View>
+                  <View style={{height:FontSize.scale(10)}}/>
+                  <View style={{paddingHorizontal:FontSize.scale(10)}}>
+                    <Text style={{color:colors.white,fontSize:RFValue(17,height)}} >{item.nameproduct}</Text>
+                    <Text style={{fontSize:RFValue(17,height)}}>{"$"+item.price+".00"}</Text>
+                  </View>
+                </ImageBackground>
+       </LinearGradient>
     </TouchableOpacity>
     )
   }
@@ -147,8 +158,8 @@ const dataCategory=[
      <TouchableOpacity 
      style={{
       height:FontSize.scale(430),
-      marginBottom:FontSize.scale(20)
-      // backgroundColor:'red'
+      marginBottom:FontSize.scale(20),
+      paddingHorizontal:FontSize.scale(15)
      }} 
      onPress={()=>{Utils.navigate(Config.DetalisProduct,{listimg:item.imgproduct,data:item})}}
      >
@@ -170,7 +181,7 @@ const dataCategory=[
                     </View>
                 </ImageBackground>
                 <View style={{height:FontSize.scale(10)}} />
-                <Text numberOfLines={2} style={{color:colors.grayLight,...FontSize.TextStyles.roboto,fontSize:FontSize.sizes.sText17}} >{item.nameproduct}</Text>
+                <Text numberOfLines={2} style={{color:colors.grayLight,...FontSize.TextStyles.roboto,fontSize:RFValue(17,height)}} >{item.nameproduct}</Text>
                 <Text style={{...FontSize.TextStyles.optionNormal}} >{"$"+item.price+".00"}</Text>
      </TouchableOpacity>
    )
@@ -178,27 +189,37 @@ const dataCategory=[
    render() {
     const {isShowGrid,isLoading}=this.state
       const {data}=this.props
+      console.log(data)
     return (
       <View style={{flex:1,backgroundColor:colors.white}}>
-            <HeaderView
-            iconright={true}
-            IconLeftShow={true}
-            TitleCenter={'Women'}
-            IconLefType={TypeIcon.AntDesign}
-            IconNameLeft={'left'}
-            StyleTxtCenter={{fontSize:FontSize.reText(22)}}
-            onPressLeft={() =>Utils.goBack()}
+            <HeaderViewCustom
+            ContainerStyle={{paddingHorizontal:FontSize.scale(10)}}
+            ViewLeft={
+              <TouchableOpacity onPress={() =>{Utils.goBack()}}>
+              <Icon  name={'left'}  type={TypeIcon.AntDesign} size={22}/>
+              </TouchableOpacity>
+            }
+            ViewCenter={
+              <Text style={{...FontSize.TextStyles.regular,fontSize:FontSize.sizes.sText22}} >{'Women'}</Text>
+            }
+            ViewRight={
+              <View style={{flexDirection:'row'}}>
+                <NumberCart number={0}/>
+                <Icon name={'cart'} type={TypeIcon.EvilIcons} size={30} />
+
+              </View>
+            }
             />
             <View style={{paddingHorizontal:FontSize.scale(12),paddingVertical:FontSize.verticalScale(20)}}>
-              <View style={{flexDirection:'row',height:FontSize.scale(20)}}>
+              <View style={{flexDirection:'row',height:FontSize.scale(40)}}>
                   <TouchableOpacity style={{flexDirection:'row'}}>
                   <Icon
                   type={TypeIcon.FontAwesome5}
                   name={'grip-lines-vertical'}
-                  size={22}
+                  size={FontSize.scale(22)}
                   />
                   <View style={{width:FontSize.scale(10)}}></View>
-                  <Text style={{fontSize:FontSize.reText(20)}}>{'Refine'}</Text>
+                  <Text style={{fontSize:FontSize.sizes.sText27}}>{'Refine'}</Text>
                   </TouchableOpacity>
                     <View style={{flex:8}}>
                     </View>
@@ -227,8 +248,20 @@ const dataCategory=[
               >
                           {dataCategory.map((item,index) =>{
                             return(
-                              <TouchableOpacity key={index} style={{justifyContent:'center',borderWidth:1,borderColor:colors.grayLight,marginRight:FontSize.scale(10),paddingVertical:FontSize.verticalScale(10),paddingHorizontal:FontSize.scale(10)}}>
-                                      <Text style={{textAlign:'center'}} >{item.name}</Text>
+                              <TouchableOpacity key={index} style={{justifyContent:'center',
+                              }}
+                              onPress={() =>{}}
+                              >
+                                      <LinearGradient
+                                      style={{ 
+                                        paddingVertical:FontSize.verticalScale(10),
+                                        width:FontSize.Width(100)/3,
+                                        marginHorizontal:FontSize.scale(5),
+                                      }}
+                                          colors={[colors.white,colors.green,colors.yellowishOrange]}
+                                      >
+                                        <Text style={{textAlign:'center',...FontSize.TextStyles.semiBold,color:colors.white}} >{item.name}</Text>
+                                      </LinearGradient>
                               </TouchableOpacity>
                             )
                           })}
@@ -239,9 +272,13 @@ const dataCategory=[
              <FlatList
              key={isShowGrid}
              showsVerticalScrollIndicator={false}
-             style={{
-              //  backgroundColor:'red',
-             paddingHorizontal:FontSize.scale(15)}}
+              style={{
+                // backgroundColor:'red',
+                padding:FontSize.scale(10),
+             }}
+             columnWrapperStyle={{
+              justifyContent: 'space-around',
+            }}
              data={this.props.data}
              renderItem={ isShowGrid==true ? this._renderItemGrid:this._renderItemList}
              numColumns={isShowGrid==true? 2:1}

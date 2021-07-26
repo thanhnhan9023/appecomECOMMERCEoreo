@@ -10,7 +10,7 @@ const Config ={
       login:'login',
       WishListScreen:'WishListScreen',
       bottomenu:'bottomenu',
-      Modal:'Modal',
+      ModalCartSuccess:'ModalCartSuccess',
       Sign:'Sign',
       Messbox:'Messbox',
       Registration:'Registration',

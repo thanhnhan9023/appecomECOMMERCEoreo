@@ -70,7 +70,7 @@ _RenderItemHiden=({item}) =>{
       <View style={{
         flex: 1,
         paddingTop: FontSize.scale(10),
-        alignItems: 'flex-end'
+        alignItems: 'center'
     }}>
         <View style={{ flexDirection: 'row' ,flex:1}}>
                      <TouchableOpacity  
