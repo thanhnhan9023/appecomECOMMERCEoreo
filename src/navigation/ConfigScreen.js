@@ -20,6 +20,7 @@ import VideoItem from "../screen/Camera/VideoItem"
 import AppSetting from "../screen/login/AppSetting"
 import DetalisBlogAll  from "../screen/Blog/DetalisBlog"
 import LoginSuccess from "../screen/login/LoginSuccess"
+import ProductTest from "../screen/shop/ProductTest"
 
 
 const Screen={
@@ -45,5 +46,6 @@ const Screen={
     AppSetting:AppSetting,
     DetalisBlogAll:DetalisBlogAll,
     LoginSuccess:LoginSuccess,
+    ProductTest:ProductTest,
 }
 export default Screen

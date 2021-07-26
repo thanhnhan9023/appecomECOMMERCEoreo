@@ -25,6 +25,7 @@ const Config ={
       Settings:'Settings',
       DetalisBlogAll:'DetalisBlogAll',
       LoginSuccess:'LoginSuccess',
+      ProductTest:'ProductTest'
 }
 
 export default Config;

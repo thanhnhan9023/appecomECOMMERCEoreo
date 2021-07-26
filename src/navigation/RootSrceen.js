@@ -178,6 +178,7 @@ class MainStackScreen extends Component{
         <MainStack.Screen name={Config.Sign} component={Config.Sign}  /> 
         <MainStack.Screen name={Config.Shop} component={ConfigScreen.Shop} />
         <MainStack.Screen  name={Config.WishListScreen} component={ConfigScreen.WishListScreen} />
+        <MainStack.Screen  name={Config.ProductTest} component={ConfigScreen.ProductTest} />
         <MainStack.Screen name={Config.Categories} component={ConfigScreen.Categories} />
         <MainStack.Screen  name={Config.ProductScreen}  component={ConfigScreen.ProductScreen}
             options={{

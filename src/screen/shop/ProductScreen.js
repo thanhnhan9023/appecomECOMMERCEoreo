@@ -102,21 +102,19 @@ const {width,height}=Dimensions.get('window')
        height:width/1.3,
        padding:FontSize.scale(10),
        marginTop:index%2!=0?FontSize.scale(20):0,
-       elevation:FontSize.scale(10)
-       
+       elevation:FontSize.scale(10),
+       shadowColor: "#000000",
+       shadowOpacity: 0.8,
+       shadowRadius: FontSize.scale(10),
+       shadowOffset: {
+         height: FontSize.verticalScale(5),
+         width: FontSize.scale(5),
+       }
     }}
     onPress={() =>{Utils.navigate(Config.DetalisProduct,{listimg:item.imgproduct,data:item})}}
      >
        <LinearGradient  colors={[colors.whiteTwo,colors.green]} 
        style={{flex:1,borderRadius:FontSize.scale(10),
-        elevation:FontSize.scale(10),
-        shadowColor: colors.green,
-        shadowOpacity: 0.8,
-        shadowRadius: FontSize.scale(10),
-        shadowOffset: {
-          height: FontSize.verticalScale(5),
-          width: FontSize.scale(5),
-        }
         }}>
                 <ImageBackground style={{width:'100%',height:'85%'}}  borderTopRightRadius={FontSize.scale(20)}  borderTopLeftRadius={FontSize.scale(20)}
                 resizeMode={'stretch'} source={{uri:item.imgproduct[0].img}}>
@@ -135,8 +133,8 @@ const {width,height}=Dimensions.get('window')
                   </View>
                   <View style={{height:FontSize.scale(10)}}/>
                   <View style={{paddingHorizontal:FontSize.scale(10)}}>
-                    <Text style={{color:colors.white,fontSize:RFValue(17,height)}} >{item.nameproduct}</Text>
-                    <Text style={{fontSize:RFValue(17,height)}}>{"$"+item.price+".00"}</Text>
+                    <Text style={{color:colors.white,fontSize:RFValue(14,height)}} >{item.nameproduct}</Text>
+                    <Text style={{fontSize:RFValue(15,height)}}>{"$"+item.price+".00"}</Text>
                   </View>
                 </ImageBackground>
        </LinearGradient>
