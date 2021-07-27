@@ -130,7 +130,7 @@ import { RFValue } from 'react-native-responsive-fontsize';
                         :null
                     }
                    </View>
-                   <Text style={{color:isFocused ==true ? colors.black:colors.grayLight,fontSize:RFValue(13,FontSize.Height(100))}} >{item.NameScreen}</Text>     
+                   <Text style={{color:isFocused ==true ? colors.black:colors.grayLight,fontSize:RFValue(11,FontSize.Height(100))}} >{item.NameScreen}</Text>     
                 </TouchableOpacity>
                 <View style={{width:FontSize.scale(30)}}>
                 </View>

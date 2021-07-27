@@ -132,7 +132,7 @@ const datasetings=[
                                 backgroundColor:colors.white,
                                 }}
                                 >
-                                    <Icon type={TypeIcon} name={NameIcon} color={ColorIcon} size={scale(18)}></Icon>
+                                    <Icon type={TypeIcon} name={NameIcon} color={ColorIcon} size={scale(14)}></Icon>
                                 </TouchableOpacity>
                                 <View style={{backgroundColor:null,width:FontSize.scale(8)}}>
                                 </View>
@@ -151,18 +151,18 @@ const datasetings=[
                         }}
                         onPress={() => Utils.navigate(Config.Settings)}
                     >
-                        <Icon  type={typeicon} name={iconLeft} size={FontSize.scale(24)} color={colors.grayLight}  />
+                        <Icon  type={typeicon} name={iconLeft} size={FontSize.scale(22)} color={colors.grayLight}  />
                         <View style={{paddingHorizontal:FontSize.scale(10)}}/>
                         <Text style={
                             {flex:7,
-                            ...FontSize.TextStyles.option,
-                            fontSize:FontSize.sizes.sText18,
+                            ...FontSize.TextStyles.semiBold,
+                            fontSize:RFValue(17,FontSize.Height(100)),
                             color:theme.colors.text,
                             justifyContent:'center'}}>
                             {name}
                          </Text>
                         {iconRight ?<Icon type={TypeIcon.AntDesign} name={textRight} size={FontSize.scale(18)}></Icon>:
-                        <Text style={{color:colors.grayLight,fontSize:RFValue(20,FontSize.Height(100))}}>{textRight}</Text>}
+                        <Text style={{color:colors.grayLight,fontSize:RFValue(14,FontSize.Height(100))}}>{textRight}</Text>}
             </TouchableOpacity>
                 )
 
@@ -191,21 +191,22 @@ const datasetings=[
     }
     render() {
         const { t } = this.props;
-        if(this.props.token==null)
+        if(this.props.token==null && this.props.tokenSocial==null)
         {
+            console.log('va0 1')
         return (
             <Context.Consumer>
                    {({ theme }) => (
-            <ScrollView  showsVerticalScrollIndicator={false} style={{flex:1,backgroundColor:colors.white,paddingHorizontal:FontSize.scale(15)}}>
+            <ScrollView  showsVerticalScrollIndicator={false} style={{flex:1,backgroundColor:colors.white,paddingVertical:FontSize.scale(10),paddingHorizontal:FontSize.scale(15)}}>
                 <HeadViewCustom
                    ViewLeft={
                        (
-                        <View style={{width:FontSize.scale(22)}}/>
+                        <View style={{width:FontSize.scale(18)}}/>
                         )
                    }
                     ViewCenter={
                         (
-                            <Text style={{...FontSize.TextStyles.largeBold,color:theme.colors.text,fontSize:RFValue(18,FontSize.Height(100))}} >{'Me'}</Text>
+                            <Text style={{...FontSize.TextStyles.largeBold,color:theme.colors.text,fontSize:RFValue(19,FontSize.Height(100))}} >{'Me'}</Text>
                         )
                     }
                     CenterContainerStyle={{
@@ -218,22 +219,22 @@ const datasetings=[
                                  <NumberCart
                                          number={0}
                                     />
-                                    <Icon type={TypeIcon.AntDesign} name='down-square-o' size={FontSize.scale(22)}/>
+                                    <Icon type={TypeIcon.AntDesign} name='down-square-o' size={FontSize.scale(18)}/>
                            </View>
                         )
                     }
                 />
                 <View style={{paddingHorizontal:FontSize.scale(40),justifyContent:'center',alignItems:'center'}}>
-                        <Text numberOfLines={2}  style={{...FontSize.TextStyles.roboto,fontSize:FontSize.sizes.sText17,textAlign:'center',color:colors.grayLight}}>
+                        <Text numberOfLines={2}  style={{...FontSize.TextStyles.roboto,fontSize:RFValue(15,FontSize.Height(100)),textAlign:'center',color:colors.grayLight}}>
                             {'Sign in to receive exclusive offfers and Promotions'}</Text>
                 </View>
                 <View style={{flexDirection:'row',paddingVertical:FontSize.scale(10)}} >
                     <ButtonLinear
                     title={'Create an Account'}
-                    color={[colors.white,colors.yellowishOrange]}
-                    styleContainer={{flex:1}}
-                    style={{paddingVertical:FontSize.scale(10),justifyContent:'center',alignItems:'center'}}
-                    txtStyle={{...FontSize.TextStyles.roboto,fontSize:FontSize.sizes.sText17,color:colors.black}}
+                    color={[colors.white,colors.whiteTwo]}
+                    styleContainer={{flex:1,borderWidth:1,borderRadius:FontSize.scale(3)}}
+                    style={{paddingVertical:FontSize.scale(10),justifyContent:'center',alignItems:'center',borderRadius:FontSize.scale(3)}}
+                    txtStyle={{...FontSize.TextStyles.roboto,fontSize:RFValue(16,FontSize.Height(100)),color:colors.black}}
                     onPress={() =>Utils.navigate(ConfigStack.AuthStack,{screen:Config.Registration,initial: false})}
                     />
                     <View style={{paddingHorizontal:FontSize.scale(5)}}/>
@@ -241,8 +242,8 @@ const datasetings=[
                     title={'Sign In'}
                     color={[colors.black,colors.black]}
                     styleContainer={{flex:1}}
-                    style={{paddingVertical:FontSize.scale(10),justifyContent:'center',alignItems:'center'}}
-                    txtStyle={{...FontSize.TextStyles.roboto,fontSize:FontSize.sizes.sText17,color:colors.white}}
+                    style={{paddingVertical:FontSize.scale(10),justifyContent:'center',alignItems:'center',borderRadius:FontSize.scale(3)}}
+                    txtStyle={{...FontSize.TextStyles.roboto,fontSize:RFValue(16,FontSize.Height(100)),color:colors.white}}
                     onPress={() =>Utils.navigate(ConfigStack.AuthStack,{screen:Config.Sign,initial: false})}
                     />
                 </View>
@@ -278,16 +279,17 @@ const datasetings=[
            
         )
     }
-    else{
+    else
         return(
             <LoginSuccess/>
         )
-    }
+    
     }
 }
 const mapStateToProps =(state) =>{
     return{
-        token:state.AuthReducer.token
+        token:state.AuthReducer.token,
+        tokenSocial:state.AuthReducer.tokenSocial,
     }
   }
 

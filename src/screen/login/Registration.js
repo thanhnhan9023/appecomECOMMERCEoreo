@@ -255,6 +255,7 @@ const styles = StyleSheet.create({
       borderWidth:0.6,
       marginTop:FontSize.scale(10),
       borderColor:colors.grayLight,
+      borderRadius:FontSize.scale(3)
     },
     btnRegister:{
       height:FontSize.scale(40),

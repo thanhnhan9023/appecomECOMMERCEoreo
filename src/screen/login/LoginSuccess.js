@@ -12,6 +12,7 @@ import AuthAction from '../../Redux/Actions/ActionAuth/AuthAction'
 import Config from '../../navigation/Config'
 import ConfigStack from '../../navigation/ConfigStack'
 import { ScrollView } from 'react-native'
+import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 
  const dataiInformation=[
     {
@@ -112,14 +113,30 @@ class LoginSuccess extends Component {
                 typeicon2:TypeIcon.AntDesign,
                 phone:'0123 456 789',
                 onPress:() =>{
+                    if(this.props.token!=null)
+                    {
                     let a={RefreshToken:this.props.token.RefreshToken}
                     this.props.Logout(a);
+                    }
+                    if(this.props.tokenSocial!=null)
+                    {
+                        this.props.LogoutSocial();
+                        this.signOut();
+                    }
                     Utils.navigate(ConfigStack.AuthStack,{screen:Config.login,initial: false})
                 }
             },
         ]
     };
     }
+    signOut = async () => {
+        try {
+          await GoogleSignin.revokeAccess();
+          await GoogleSignin.signOut();
+        } catch (error) {
+          console.error(error);
+        }
+      };
     _renderItemInformation=(item,index,indexTxt,isTxt,isIcon) =>{
         return(
             <View key={index}>
@@ -199,7 +216,7 @@ class LoginSuccess extends Component {
                 />
                 <View style={{backgroundColor:colors.colorGrayBgr,height:FontSize.scale(100),paddingVertical:FontSize.scale(15),paddingHorizontal:FontSize.scale(12)}}>
                     <View style={{flex:1,flexDirection:'row'}}>
-                        <Image source={IMAGES.imgWomen} style={{width:FontSize.scale(50),height:FontSize.scale(50)}} borderRadius={FontSize.scale(50)}/>
+                        <Image source={this.props.userInfo==null?IMAGES.imgWomen:{uri:this.props.userInfo.photo}} style={{width:FontSize.scale(50),height:FontSize.scale(50)}} borderRadius={FontSize.scale(50)}/>
                         <View style={{alignItems:'center',justifyContent:'center',width:FontSize.scale(50),height:FontSize.scale(50)}}>
                             <Text style={{textAlign:'center'}}>{'Hello'}</Text>
                         </View>
@@ -242,13 +259,16 @@ const styles = StyleSheet.create({
  
 const mapStateToProps =(state) =>{
     return{
-        token:state.AuthReducer.token
+        token:state.AuthReducer.token,
+        tokenSocial:state.AuthReducer.tokenSocial,
+        userInfo:state.AuthReducer.user
     }
   }
 
   const mapDispatchToProps =(dispatch) =>{
     return {
       Logout:(data) => dispatch(AuthAction.Logout(data)),
+      LogoutSocial:()=>dispatch(AuthAction.LogOutSocial()),
     }
   }
 

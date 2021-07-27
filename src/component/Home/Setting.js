@@ -27,13 +27,14 @@ import { RFValue } from 'react-native-responsive-fontsize';
                 {({ theme, updateTheme }) => (
             <View style={{backgroundColor:theme.colors.background}}>
                 <HeadViewCustom
+                            ContainerStyle={{paddingHorizontal:FontSize.scale(15),paddingVertical:FontSize.scale(10)}}
                             ViewLeft={
                                 <Icon type={TypeIcon.Entypo} name='chevron-left' size={FontSize.scale(22)} onPress={() => Utils.goBack()} 
                                 color={theme.colors.backgroundicon}
                                 />
                             }
                             ViewCenter={
-                                <Text style={{...FontSize.TextStyles.optionBold,fontSize:RFValue(18,FontSize.Height(100)),color:theme.colors.text}}>{txtCenter}</Text>
+                                <Text style={{...FontSize.TextStyles.optionBold,fontSize:RFValue(19,FontSize.Height(100)),color:theme.colors.text}}>{txtCenter}</Text>
                             }
                             ViewRight={
                                 <View style={{flexDirection:'row'}}>
@@ -55,7 +56,7 @@ import { RFValue } from 'react-native-responsive-fontsize';
                         flexDirection:'row',
                         padding:FontSize.scale(12),
                         justifyContent:'space-between'}}>
-                            <Text style={{...FontSize.TextStyles.semiBold,fontSize:RFValue(14,FontSize.Height(100)),color:theme.colors.text}}>{item.name}</Text>
+                            <Text style={{...FontSize.TextStyles.semiBold,fontSize:RFValue(18,FontSize.Height(100)),color:theme.colors.text}}>{item.name}</Text>
                             <View style={{flexDirection:'row'}}>
                                 {item.txtright? (<Text style={{color:theme.colors.text}}>{item.txtright}</Text>):null}
                                 <View style={{width:FontSize.scale(10)}} />

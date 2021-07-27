@@ -1,11 +1,13 @@
 import TypesAction from "../Actions/ActionAuth/TypeContStant";
 import produce from "immer"
 import Utils from "../../app/Utilis";
+import TypesAciton from "../Actions/ActionCart/TypeContStant";
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 // import { persistReducer } from 'redux-persist';
 
 const initState = {
   isLogin:false,
+  tokenSocial:null,
   token:null,
   isLoading:false,
   user:null,
@@ -93,6 +95,28 @@ const initState = {
                 error:null,
                 }
         }
+        case TypesAction.LoginSocial:{
+            return{
+                ...state,
+                tokenSocial:payload.idToken,
+                user:payload.user,
+                }
+        }
+        case TypesAction.LogOutSocial:
+            {
+                return{
+                    ...state,
+                    tokenSocial:null,
+                    user:null,
+                }
+            }
+        case TypesAction.LoadUser:
+             {
+                return{
+                     ...state,
+                    user:payload,
+                    }
+            }
     }
     return state;
 }

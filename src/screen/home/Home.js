@@ -32,6 +32,8 @@ import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import HeadViewCustom from '../../container/HeadViewCustom';
 import { scale, verticalScale } from 'react-native-size-matters';
 import NumberCart from '../../container/NumberCart';
+import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
+import AuthAction from '../../Redux/Actions/ActionAuth/AuthAction';
 
 const {width,height}=Dimensions.get('window')
 
@@ -129,6 +131,12 @@ class Home extends Component {
         await this.props.FetchLoaiSp();
         await this.props.Datacart();
         await this.props.Datalike();
+        if(this.props.tokenSocial!=null)
+        {
+        const currentUser = await GoogleSignin.getCurrentUser();
+          this.props.LoadUser(currentUser.user)
+        }
+
       }
       _rendeitemCategory=({item,index}) =>{
           const {ListLoaisp}=this.props.dataCategory
@@ -204,7 +212,7 @@ class Home extends Component {
                             <NumberCart number={this.props.dataCart.length}/>
                             <Icon name='shoppingcart'
                             type={TypeIcon.AntDesign}
-                            size={scale(20)}
+                            size={scale(18)}
                             />
                         </TouchableOpacity>
                     }
@@ -347,6 +355,7 @@ const mapStateToProps =(state) =>{
           dataCategory:state.CategoriesReducer,
           dataProduct:state.ProductReducer,
           dataCart:state.CartReducer.ListCart,
+          tokenSocial:state.AuthReducer.tokenSocial,
         }
       }
 const mapDispatchToProps =(dispatch) =>{
@@ -358,6 +367,7 @@ const mapDispatchToProps =(dispatch) =>{
           AddCart:(data) => dispatch(CartAction.ActionAddCart(data)),
           Add_Remove:(data) => dispatch(CartAction.ActionAdd_RemoveLike(data)),
           LikeProduct:(id) =>dispatch(CartAction.ActionAdd_LikeProduct(id)),
+          LoadUser:(data) => dispatch(AuthAction.LoadUser(data))
         }
       }
 export default connect(mapStateToProps,mapDispatchToProps)(Home)

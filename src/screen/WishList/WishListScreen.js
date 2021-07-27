@@ -71,20 +71,37 @@ _RenderItemHiden=({item}) =>{
       <View style={{
         flex: 1,
         paddingTop: FontSize.scale(10),
-        alignItems: 'center'
+        alignItems: 'flex-end'
     }}>
         <View style={{ flexDirection: 'row' ,flex:1}}>
                      <TouchableOpacity  
-                     style={{backgroundColor:colors.redStar,
+                     style={{backgroundColor:colors.orangeyRed,
                       alignItems:'center',
                       justifyContent:'center',
-                      width:FontSize.scale(80)}}
+                      width:FontSize.scale(70)}}
                       onPress={() =>{this._RemoveLike(item._id,item)}}
                       >
-                          <Icon type={TypeIcon.FontAwesome} name={'trash-o'} size={24} color={colors.white}></Icon>
+                          <Icon type={TypeIcon.FontAwesome} name={'trash-o'} size={FontSize.scale(20)} color={colors.white}></Icon>
                      </TouchableOpacity>
         </View>
     </View>
+    //   <View style={{
+    //     flex: 1,
+    //     paddingTop: FontSize.scale(10),
+    //     alignItems: 'center'
+    // }}>
+    //     <View style={{ flexDirection: 'row' ,flex:1}}>
+    //                  <TouchableOpacity  
+    //                  style={{backgroundColor:colors.redStar,
+    //                   alignItems:'center',
+    //                   justifyContent:'center',
+    //                   width:FontSize.scale(80)}}
+    //                   onPress={() =>{this._RemoveLike(item._id,item)}}
+    //                   >
+    //                       <Icon type={TypeIcon.FontAwesome} name={'trash-o'} size={24} color={colors.white}></Icon>
+    //                  </TouchableOpacity>
+    //     </View>
+    // </View>
     )
 }
 _AddCart(item)
@@ -138,7 +155,7 @@ _RenderItem= ({item,index}) =>
            <View style={styles.container}>
              <HeadViewCustom
               ViewLeft={
-                <View style={{width:FontSize.scale(20)}}/>
+                <View style={{width:FontSize.scale(18)}}/>
               }
               ViewCenter={
                 <View>
@@ -151,7 +168,7 @@ _RenderItem= ({item,index}) =>
               ViewRight={
                 <TouchableOpacity style={{flexDirection:'row'}} onPress={Config.CartScreen} >
                   <NumberCart  number={0} />
-                  <Icon type={TypeIcon.AntDesign} name='down-square-o' size={scale(20)}/>
+                  <Icon type={TypeIcon.AntDesign} name='down-square-o' size={scale(18)}/>
                 </TouchableOpacity>
               }
              />
@@ -163,7 +180,7 @@ _RenderItem= ({item,index}) =>
             renderItem={this._RenderItem}
             ListEmptyComponent={this._RenderItemEmpty}
             renderHiddenItem={this._RenderItemHiden}
-            rightOpenValue={-FontSize.scale(160)}
+            rightOpenValue={-FontSize.scale(130)}
             />
           </View>
           )}

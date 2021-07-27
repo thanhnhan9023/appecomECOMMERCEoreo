@@ -23,19 +23,19 @@ const dataIcon=[
     TypeIcon:TypeIcon.AntDesign,
     NameIcon:'facebook-square',
     ColorIcon:colors.white,
-    backgroundColorIcon:colors.blue,
+    backgroundColorIcon:"#191970",
   },
   {
     TypeIcon:TypeIcon.FontAwesome,
     NameIcon:'google-plus-square',
     ColorIcon:colors.white,
-    backgroundColorIcon:colors.redStar,
+    backgroundColorIcon:"#DC143C",
   },
   {
     TypeIcon:TypeIcon.AntDesign,
     NameIcon:'message1',
     ColorIcon:colors.white,
-    backgroundColorIcon:colors.black,
+    backgroundColorIcon:colors.blackShadow,
   },
 ]
 
@@ -80,10 +80,10 @@ _Viewicon=(item,index) =>
   return(
     <View key={index} style={{flexDirection:'row',paddingVertical:FontSize.scale(30)}}>
     <TouchableOpacity 
-    style={{width:FontSize.scale(44),
-    height:FontSize.scale(44),
+    style={{width:FontSize.scale(40),
+    height:FontSize.scale(40),
     backgroundColor:item.backgroundColorIcon,
-    borderRadius:FontSize.scale(44),
+    borderRadius:FontSize.scale(40),
     justifyContent:'center',
     alignItems:'center'}} 
     onPress={() =>this._login(index)}
@@ -130,7 +130,7 @@ _login= async(index) =>
 
         // Create a Google credential with the token
         const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-        const userInfo = await GoogleSignin.signIn().then(res => this.setState({datalogin:res.user}) );
+        const userInfo = await GoogleSignin.signIn().then((res) => {this.props.LoginSocial(res)} );
         // Sign-in the user with the credential
         return auth().signInWithCredential(googleCredential);
       break;
@@ -172,16 +172,17 @@ componentDidUpdate=() =>{
   {
     Utils.showMessages('Danger',this.props.data.error.messge);
   }
-  if(this.props.data.token!=null)
+  if(this.props.data.token!=null || this.props.data.tokenSocial!=null)
   {
     Utils.navigate(ConfigStack.AuthStack,{screen:Config.login})
   }
 }
   render() {
     const {showpass,UserName,Password,datalogin}=this.state
+    console.log(this.props)
     return (
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>    
-        <View  style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor:'transparent' }}></View>     
+        <View  style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor:'transparent' }}/>
             <View style={{flexDirection:'row',paddingVertical:FontSize.scale(8),paddingHorizontal:FontSize.scale(10)}}>
                 <TouchableOpacity  onPress={() =>{
                   this.props.navigation.goBack()
@@ -214,7 +215,6 @@ componentDidUpdate=() =>{
                     />
                     <Icon style={{position:'absolute',right:20,bottom:10}}  onPress={this._showpass} type={TypeIcon.Ionicons} 
                      name={showpass?'eye-off-outline':'eye-outline'} size={22}/>
-                    {/* <Text style={{position:'absolute',left:20,top:-10}}>{'Email Address or Username *'}</Text> */}
              </View>
             <View View style={{height:FontSize.scale(10)}}/>
                 <View style={{paddingHorizontal:FontSize.scale(10)}}>
@@ -222,41 +222,41 @@ componentDidUpdate=() =>{
                     <TouchableOpacity 
                     onPress={() => this._LoginToken()}
                     >
-                      <LinearGradient colors={[colors.black, colors.orange]} style={styles.btnSign}>
+                      <LinearGradient colors={[colors.black, colors.blackShadow]} style={styles.btnSign}>
                          {this.props.data.isLoading ? <Loading/> :
-                          <Text style={{fontSize:RFValue(20,FontSize.Height(100)),color:colors.white,textAlign:'center'}}>
+                          <Text style={{fontSize:RFValue(17,FontSize.Height(100)),color:colors.white,textAlign:'center'}}>
                           {'Sign In'}
                         </Text>}
                      </LinearGradient>
                     </TouchableOpacity>
                     <TouchableOpacity style={{paddingVertical:FontSize.scale(20),alignItems:'center'}}>
-                            <Text style={{fontSize:RFValue(18,FontSize.Height(100)),fontWeight:'bold',color:colors.black}}>{'Forgot Password ?'}</Text>
+                            <Text style={{fontSize:RFValue(15,FontSize.Height(100)),fontWeight:'bold',color:colors.black}}>{'Forgot Password ?'}</Text>
                     </TouchableOpacity>
                     <View style={{flexDirection:'row',paddingVertical:FontSize.scale(10)}}>
-                    <View style={{flex:1,borderBottomWidth:0.2,borderBottomColor:colors.grayLight,marginBottom:FontSize.scale(6)}}></View>
+                    <View style={{flex:1,borderBottomWidth:0.3,borderBottomColor:colors.colorGrayBgr,marginBottom:FontSize.scale(6)}}></View>
                     <View style={{width:FontSize.scale(5)}}></View>
                     <Text style={{color:colors.grayLight}}>{'or'}</Text>
                     <View style={{width:FontSize.scale(5)}}></View>
-                    <View style={{flex:1,borderBottomWidth:0.2,marginBottom:FontSize.scale(6),borderBottomColor:colors.grayLight}}></View>
+                    <View style={{flex:1,borderBottomWidth:0.3,marginBottom:FontSize.scale(6),borderBottomColor:colors.colorGrayBgr}}></View>
                     </View>
                     <View style={{flexDirection:'row',justifyContent:'center'}}>
                     {dataIcon.map(this._Viewicon)} 
                     </View>
                 </View>
-                      <View style={{flex:1,justifyContent:'flex-end'}}>
-                            <View style={{backgroundColor:null,width:FontSize.Width(100),paddingVertical:FontSize.scale(20),paddingHorizontal:FontSize.scale(10)}}>
-                            <Text style={{textAlign:'center',color:colors.grayLight,fontSize:RFValue(22,FontSize.Height(100))}}  >{'Dont have an account ?'}</Text>
-                            <View style={{height:FontSize.scale(10)}}></View>
-                            <Button2
-                            title={'Register'}
-                            onPress={() =>{
-                             Utils.navigate(Config.Registration)
-                            }
-                            }
-                            style={{height:FontSize.scale(35),backgroundColor:null}}
-                            />
-                            </View>
-                        </View>
+                      <View style={{justifyContent:'center',alignItems:'center',paddingVertical:FontSize.scale(10)}}>
+                            <Text style={{textAlign:'center',color:colors.grayLight,fontSize:RFValue(15,FontSize.Height(100))}}  >{'Dont have an account ?'}</Text>
+                      </View>
+                      <View style={{flex:1,paddingHorizontal:FontSize.scale(10),paddingHorizontal:FontSize.scale(12)}}>
+                          <Button2
+                                  title={'Register'}
+                                  styleTxt={{...FontSize.TextStyles.semiBold,fontSize:RFValue(14,FontSize.Height(100))}}
+                                  onPress={() =>{
+                                  Utils.navigate(Config.Registration)
+                                  }
+                                  }
+                                  style={{borderWidth:1,paddingHorizontal:FontSize.scale(10),paddingVertical:FontSize.scale(11)}}
+                                  />
+                      </View>
       </ScrollView>
     );
 
@@ -271,6 +271,7 @@ const mapDispatchToProps =(dispatch) =>{
   return {
     LoginToken:(data) => dispatch(AuthAction.Login(data)),
     ClearError:() =>dispatch(AuthAction.ActionClearError()),
+    LoginSocial:(data)=>dispatch(AuthAction.LoginSocail(data)),
   }
 }
 
@@ -280,8 +281,8 @@ const styles = StyleSheet.create({
     backgroundColor:colors.white
   },
   btnSign:{
-    borderRadius:3,
-    paddingVertical:FontSize.scale(12),
+    borderRadius:FontSize.scale(3),
+    paddingVertical:FontSize.scale(10),
     backgroundColor:'red',
     backgroundColor:colors.black
   }

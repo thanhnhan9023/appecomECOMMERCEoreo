@@ -4,6 +4,18 @@ import TypesAciton from "../ActionAuth/TypeContStant"
 
 
 
+const LoginSocail=(data) =>{
+    return{
+        type:TypesAciton.LoginSocial,
+        payload:data,
+    }
+}
+const LogOutSocial=() =>{
+    return{
+        type:TypesAciton.LogOutSocial,
+    }
+}
+
 // const baseurl='http://192.168.1.55:5000'
 
 // login
@@ -16,6 +28,12 @@ const  Login=(data) =>async dispatch =>{
             dispatch(ActionClearError())
         }
        )
+}
+const LoadUser=(data) =>{
+    return{
+        type:TypesAciton.LoadUser,
+        payload:data
+    }
 }
 
 const ActionLoadingLogin=() =>{
@@ -111,5 +129,8 @@ const  AuthAction ={
     Resgistration,
     ActionClearIsRes,
     ActionClearError,
+    LoginSocail,
+    LogOutSocial,
+    LoadUser,
 }
 export default AuthAction
