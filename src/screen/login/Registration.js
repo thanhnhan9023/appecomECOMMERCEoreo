@@ -15,6 +15,7 @@ import Config from '../../navigation/Config'
 import LinearGradient from 'react-native-linear-gradient';
 import { ScrollView } from 'react-native';
 import { Dimensions } from 'react-native';
+import { moderateScale } from 'react-native-size-matters';
 
 const dataIcon=[
   {
@@ -255,7 +256,8 @@ const styles = StyleSheet.create({
       borderWidth:0.6,
       marginTop:FontSize.scale(10),
       borderColor:colors.grayLight,
-      borderRadius:FontSize.scale(3)
+      borderRadius:FontSize.scale(3),
+      padding:moderateScale(10)
     },
     btnRegister:{
       height:FontSize.scale(40),

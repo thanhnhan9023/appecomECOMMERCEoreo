@@ -1,5 +1,5 @@
-import React, { Component, createRef } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Alert,StyleSheet } from 'react-native';
+import React, { Component, createRef,PureComponent } from 'react';
+import { View, Text, TextInput, TouchableOpacity,StyleSheet } from 'react-native';
 import Utils from '../../app/Utilis';
 import Button2 from '../../component/Button2';
 import FontSize from '../../config/FontSize';
@@ -12,12 +12,12 @@ import { LoginManager,AccessToken ,Profile} from "react-native-fbsdk-next"
 import { connect } from 'react-redux'
 import AuthAction from '../../Redux/Actions/ActionAuth/AuthAction'
 import Loading from '../../component/Loading';
-import ConfigStack from '../../navigation/ConfigStack';
 import {  emailValidatorCheck }
  from '../../moudels/auth.validation';
 import LinearGradient from 'react-native-linear-gradient';
 import { ScrollView } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
+import { moderateScale } from 'react-native-size-matters';
 const dataIcon=[
   {
     TypeIcon:TypeIcon.AntDesign,
@@ -39,7 +39,7 @@ const dataIcon=[
   },
 ]
 
- class Sign extends Component {
+ class Sign extends PureComponent {
   constructor(props) {
     super(props);
     this.Texinput1=createRef();
@@ -167,6 +167,9 @@ _LoginToken=async () =>{
   }
    this.props.LoginToken(b)
 }
+
+
+
 componentDidUpdate=() =>{
   if(this.props.data.error!=null)
   {
@@ -174,12 +177,11 @@ componentDidUpdate=() =>{
   }
   if(this.props.data.token!=null || this.props.data.tokenSocial!=null)
   {
-    Utils.navigate(ConfigStack.AuthStack,{screen:Config.login})
-  }
+    Utils.navigate(Config.Sign);
+}
 }
   render() {
     const {showpass,UserName,Password,datalogin}=this.state
-    console.log(this.props)
     return (
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>    
         <View  style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor:'transparent' }}/>
@@ -198,7 +200,7 @@ componentDidUpdate=() =>{
             <View style={{paddingHorizontal:FontSize.scale(10)}}>
                     <TextInput
                     ref={ref => this.Texinput1=ref}
-                    style={{height:FontSize.scale(40),borderWidth:0.7,borderColor:colors.grayLight,borderRadius:FontSize.scale(4)}}
+                    style={styles.input}
                     placeholder={'Email Address or Username * '}
                     value={UserName}
                     autoFocus = {false}
@@ -206,12 +208,15 @@ componentDidUpdate=() =>{
                     />
                     <View style={{height:FontSize.scale(12)}}/>
                     <TextInput 
-                      style={{height:FontSize.scale(40),borderWidth:0.7,borderColor:colors.grayLight,borderRadius:FontSize.scale(4)}}
+                      style={styles.input}
                       autoFocus = {false}
                       placeholder={'Password'}
                       secureTextEntry={showpass}
                       value={Password}
                       onChangeText={val => this.setState({Password:val})}
+                      returnKeyType="google"
+                      // onSubmitEditing={() =>console.log('vao 1')}
+                    
                     />
                     <Icon style={{position:'absolute',right:20,bottom:10}}  onPress={this._showpass} type={TypeIcon.Ionicons} 
                      name={showpass?'eye-off-outline':'eye-outline'} size={22}/>
@@ -229,9 +234,13 @@ componentDidUpdate=() =>{
                         </Text>}
                      </LinearGradient>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{paddingVertical:FontSize.scale(20),alignItems:'center'}}>
-                            <Text style={{fontSize:RFValue(15,FontSize.Height(100)),fontWeight:'bold',color:colors.black}}>{'Forgot Password ?'}</Text>
-                    </TouchableOpacity>
+                    <TouchableOpacity
+                      
+                    style={{paddingVertical:FontSize.scale(20),alignItems:'center'}}>
+                            <View style={{backgroundColor:'white'}}>
+                            <Text style={{fontSize:RFValue(15,FontSize.Height(100)),fontWeight:'bold',color:colors.black}}>{'Forgot Password ?'}</Text>        
+                            </View>
+                                        </TouchableOpacity>
                     <View style={{flexDirection:'row',paddingVertical:FontSize.scale(10)}}>
                     <View style={{flex:1,borderBottomWidth:0.3,borderBottomColor:colors.colorGrayBgr,marginBottom:FontSize.scale(6)}}></View>
                     <View style={{width:FontSize.scale(5)}}></View>
@@ -285,6 +294,13 @@ const styles = StyleSheet.create({
     paddingVertical:FontSize.scale(10),
     backgroundColor:'red',
     backgroundColor:colors.black
+  },
+  input:{
+    height:FontSize.scale(40),
+    borderWidth:0.7,
+    borderColor:colors.grayLight,
+    borderRadius:FontSize.scale(4),
+    padding:moderateScale(10)
   }
 })
 export default connect(mapStateToProps,mapDispatchToProps)(Sign)

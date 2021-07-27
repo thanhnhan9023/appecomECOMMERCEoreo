@@ -20,6 +20,7 @@ import ButtonLinear from '../../container/ButtonLinear';
 import { ScrollView } from 'react-native-gesture-handler';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import { scale } from 'react-native-size-matters';
+import { PureComponent } from 'react';
 
 const dataList = [
     {
@@ -109,7 +110,7 @@ const datasetings=[
        },
 ]
 
- class login extends Component {
+ class login extends PureComponent {
                 constructor(props) {
                     super(props);
                 this.state = {
@@ -193,7 +194,6 @@ const datasetings=[
         const { t } = this.props;
         if(this.props.token==null && this.props.tokenSocial==null)
         {
-            console.log('va0 1')
         return (
             <Context.Consumer>
                    {({ theme }) => (
